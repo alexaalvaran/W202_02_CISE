@@ -16,7 +16,14 @@ describe('AppController', () => {
 
   describe('root', () => {
     it('should return "Hello World!"', () => {
-      expect(appController.getHello()).toBe('Hello World!');
+      expect(appController.getHello()).toBe('HI!');
     });
   });
+
+  describe('Addition', () => {
+    it('knows that 2 and 2 make 4', () => {
+    expect(2 + 2).toBe(4);
+    });
+    });
+    
 });
