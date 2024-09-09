@@ -68,9 +68,6 @@
       "^.+\\.(t|j)s$": "ts-jest"
       
     },
-    "transform": {
-      "^.+\\.(t|j)sx?$": "babel-jest"
-    },
     "collectCoverageFrom": [
       "**/*.(t|j)s"
     ],
