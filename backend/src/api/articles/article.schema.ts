@@ -11,7 +11,7 @@ export class Article {
     @Prop({required: true})
     authors: string;
 
-    @Prop({required:true})
+    @Prop()
     source: string;
 
     @Prop({required:true})
