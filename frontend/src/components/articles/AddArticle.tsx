@@ -30,10 +30,11 @@ const CreateArticleComponent = () => {
             <div className="container">
                 <div className="row">
                     <div className="flex-col m-auto">
-                        <h1 className="display-4 text-center ">Add an article</h1>
+                        <h1 className="addTitle display-4 text-center ">Add an article</h1>
                         <form noValidate onSubmit={onSubmit}>
                         <div className="form-group">
                             <h3>Title</h3>
+                            <p  className="submitInfo">Required</p>
                             <input
                             type="text"
                             placeholder="Title of Article"
@@ -46,6 +47,7 @@ const CreateArticleComponent = () => {
                         <br/ >
                         <div className="form-group">
                             <h3>Authors</h3>
+                            <p  className="submitInfo">Required</p>
                             <input
                             type="text"
                             placeholder="Author(s) of Article"
@@ -58,9 +60,10 @@ const CreateArticleComponent = () => {
                         <br/ >
                         <div className="form-group">
                             <h3>Sources</h3>
+                            <p  className="submitInfo">Optional</p>
                             <input
                             type="text"
-                            placeholder="Sources of Article"
+                            placeholder="Source of Article"
                             name="sources"
                             className="form-control"
                             value = {article.sources}
@@ -70,6 +73,7 @@ const CreateArticleComponent = () => {
                         <br/ >
                         <div className="form-group">
                             <h3>Publication Year</h3>
+                            <p  className="submitInfo">Required</p>
                             <input
                             type="text"
                             placeholder="Publication Year of Article"
@@ -82,6 +86,7 @@ const CreateArticleComponent = () => {
                         <br/ >
                         <div className="form-group">
                             <h3>DOI</h3>
+                            <p  className="submitInfo">Optional</p>
                             <input
                             type="text"
                             placeholder="DOI of Article"
@@ -94,10 +99,10 @@ const CreateArticleComponent = () => {
                         <br/ >
                         <div className="form-group">
                             <h3>Email</h3>
-                            <p>(Email of submitter to get notified of status of submitted article)</p>
+                            <p className="submitInfo">Email of submitter to get notified of status of submitted article - Optional</p>
                             <input
                             type="text"
-                            placeholder="example abc@email.com"
+                            placeholder="Example: abc@email.com"
                             name="email"
                             className="form-control"
                             value = {article.email}

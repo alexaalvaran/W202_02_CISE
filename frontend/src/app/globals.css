@@ -1,3 +1,33 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+.submitInfo{
+  font-size: 12px;
+  color: grey;
+}
+
+.btn{
+  color: cornflowerblue;
+  border-color: cornflowerblue;
+}
+
+.btn:hover{
+  background-color: cornflowerblue;
+  color:white;
+}
+
+.navBar{
+  background-color: cornflowerblue;
+  color: white;
+}
+
+.addTitle{
+  margin-top: 60px;
+  font-weight: 300;
+}
+
+.homeTitle{
+  font-weight: bold;
+  font-size: xx-large;
+}
