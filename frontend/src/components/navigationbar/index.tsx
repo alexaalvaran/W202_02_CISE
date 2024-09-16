@@ -6,7 +6,7 @@ const Navbar = () => {
         <>
          <div className="w-full h-20 bg-blue-500 sticky top-0">
             <div className="container mx-auto px-4 h-full">
-                <div className="flex justify-between items-center h-full">
+                <div className="flex justify-between items-center h-full text-white">
                     <ul>
                     <li>
                             <Link href="/">
@@ -14,7 +14,7 @@ const Navbar = () => {
                             </Link>
                     </li>
                     </ul>
-                    <ul className="flex gap-x-10 text-black justify-between items-center h-full">
+                    <ul className="flex gap-x-10 text-white justify-between items-center h-full">
                         <li>
                             <Link href="/search">
                             <p>Search</p>

@@ -29,8 +29,8 @@ const CreateArticleComponent = () => {
         <div className="CreateArticle">
             <div className="container">
                 <div className="row">
-                    <div className="col-md-10 m-auto">
-                        <h1 className="display-4 text-center">Add Book</h1>
+                    <div className="flex-col m-auto">
+                        <h1 className="display-4 text-center ">Add an article</h1>
                         <form noValidate onSubmit={onSubmit}>
                         <div className="form-group">
                             <h3>Title</h3>
