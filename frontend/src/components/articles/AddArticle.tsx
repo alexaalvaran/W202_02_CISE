@@ -18,7 +18,7 @@ const CreateArticleComponent = () => {
         .then((res) => {
             console.log(res);
             setArticle(DefaultArticle);
-            navigate.push("/");
+            navigate.push("/confirmSubmit");
         })
         .catch((err) => {
             console.log('Error from CreateBook: ' + err);
