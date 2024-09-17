@@ -30,7 +30,7 @@ describe('ArticleService', () => {
         articleModel = module.get<Model<Article>>(getModelToken(Article.name));
     });
 
-    describe('create', () => {
+    describe('createArticle', () => {
         it('should create article', async () => {
             //arrange
             const testArticle = new CreateArticleDto();
