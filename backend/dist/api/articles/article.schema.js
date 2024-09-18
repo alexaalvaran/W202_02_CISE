@@ -9,7 +9,7 @@ var __metadata = (this && this.__metadata) || function (k, v) {
     if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.Article = void 0;
+exports.ArticleSchema = exports.Article = void 0;
 const mongoose_1 = require("@nestjs/mongoose");
 let Article = class Article {
 };
@@ -18,7 +18,28 @@ __decorate([
     (0, mongoose_1.Prop)({ required: true }),
     __metadata("design:type", String)
 ], Article.prototype, "title", void 0);
+__decorate([
+    (0, mongoose_1.Prop)({ required: true }),
+    __metadata("design:type", String)
+], Article.prototype, "doi", void 0);
+__decorate([
+    (0, mongoose_1.Prop)({ required: true }),
+    __metadata("design:type", String)
+], Article.prototype, "author", void 0);
+__decorate([
+    (0, mongoose_1.Prop)({ type: Date }),
+    __metadata("design:type", Object)
+], Article.prototype, "publication_year", void 0);
+__decorate([
+    (0, mongoose_1.Prop)({ required: true }),
+    __metadata("design:type", String)
+], Article.prototype, "sources", void 0);
+__decorate([
+    (0, mongoose_1.Prop)({ required: true }),
+    __metadata("design:type", String)
+], Article.prototype, "email", void 0);
 exports.Article = Article = __decorate([
     (0, mongoose_1.Schema)()
 ], Article);
+exports.ArticleSchema = mongoose_1.SchemaFactory.createForClass(Article);
 //# sourceMappingURL=article.schema.js.map
