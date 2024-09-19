@@ -43,6 +43,7 @@ const AuthUserComponent = () => {
                                 className="form-control"
                                 value={user.email}
                                 onChange={onChange}
+                                required
                                 />
                             </div>
                             <br />
@@ -55,6 +56,7 @@ const AuthUserComponent = () => {
                                 className="form-control"
                                 value={user.password}
                                 onChange= {onChange}
+                                required
                                 />
                             </div>
                             <button

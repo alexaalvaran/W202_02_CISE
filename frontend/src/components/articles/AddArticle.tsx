@@ -42,6 +42,7 @@ const CreateArticleComponent = () => {
                             className="form-control"
                             value = {article.title}
                             onChange={onChange}
+                            required
                             />
                         </div>
                         <br/ >
@@ -55,6 +56,7 @@ const CreateArticleComponent = () => {
                             className="form-control"
                             value = {article.authors}
                             onChange={onChange}
+                            required
                             />
                         </div>
                         <br/ >
@@ -68,6 +70,7 @@ const CreateArticleComponent = () => {
                             className="form-control"
                             value = {article.sources}
                             onChange={onChange}
+                            required
                             />
                         </div>
                         <br/ >
@@ -81,6 +84,7 @@ const CreateArticleComponent = () => {
                             className="form-control"
                             value = {article.pubyear}
                             onChange={onChange}
+                            required
                             />
                         </div>
                         <br/ >
