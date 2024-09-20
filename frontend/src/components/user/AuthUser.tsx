@@ -14,9 +14,7 @@ const AuthUserComponent = () => {
     const onSubmit = (event: FormEvent<HTMLFormElement>) => {
         event.preventDefault();
         console.log(user);
-        fetch(process.env.NEXT_PUBLIC_BACKEND_URL + `<api />
-        <users />
-        <1>email</1>`, {method: 'GET', headers: {"Content-Type":"application/json"}, body:JSON.stringify(user)})
+        fetch(process.env.NEXT_PUBLIC_BACKEND_URL + `/api/users/${user.email}`, {method: 'GET', headers: {"Content-Type":"application/json"}, body:JSON.stringify(user)})
         .then((res) => {
             console.log(res);
             setUser(DefaultUser);

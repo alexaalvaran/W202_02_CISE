@@ -7,28 +7,43 @@ import {
     } from "@nestjs/common";
 import { error } from 'console';
 import { UserService } from "./user.service";
-import { User } from "./user.schema";
 
 @Controller('/api/users')
 export class UserController {
     constructor (private readonly userService: UserService) {}
 
-
-    // Find a user
-    @Get('/:email')
-    async findOne(@Param('email') email: string) {
+    // Get all articles
+    @Get('/')
+    async findAll() {
         try{
-            return await this.userService.findOne(email);
-        } catch{
+            return this.userService.findAll();
+        }catch{
             throw new HttpException(
                 {
                     status: HttpStatus.NOT_FOUND,
-                    error: 'No user found',
+                    error: 'No articles found',
                 },
                 HttpStatus.NOT_FOUND,
-                {cause: error},
+                { cause: error },
             );
         }
     }
-
-}
+   
+       // Find a user
+       @Get('/:email')
+       async findOne(@Param('email') email: string) {
+           try{
+               return await this.userService.findOne(email);
+           } catch{
+               throw new HttpException(
+                   {
+                       status: HttpStatus.NOT_FOUND,
+                       error: 'No user found',
+                   },
+                   HttpStatus.NOT_FOUND,
+                   {cause: error},
+               );
+           }
+       }
+   
+   }
