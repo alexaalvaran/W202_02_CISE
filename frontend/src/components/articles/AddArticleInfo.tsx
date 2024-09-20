@@ -9,7 +9,7 @@ function AddArticleInfo(){
     const router = useRouter();
 
     useEffect(()=>{
-        fetch(process.env.NEXT_PUBLIC_BACKEND + 'api/articles/${id}')
+        fetch(process.env.NEXT_PUBLIC_BACKEND_URL + `/api/articles/${id}`)
         .then((res)=>{
             return res.json();
         })
@@ -17,7 +17,7 @@ function AddArticleInfo(){
             setArticle(json);
         })
         .catch((err) => {
-            console.log('Error from AddArticleInfo' + err);
+            console.log('Error from AddArticleInfo: ' + err);
         });
     }, [id]);
 
@@ -34,7 +34,7 @@ const onSubmit = (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault();
 }
 
-fetch(process.env.NEXT_PUBLIC_BACKEND + 'api/articles/${id}', 
+fetch(process.env.NEXT_PUBLIC_BACKEND_URL + `/api/articles/${id}`, 
     {method: 'PUT', headers: {"Content-Type": "application/json"}, 
     body: JSON.stringify(article)})
     .then((res) => {

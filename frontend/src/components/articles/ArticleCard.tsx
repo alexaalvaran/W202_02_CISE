@@ -1,9 +1,10 @@
+/* eslint-disable @next/next/no-img-element */
 import React from 'react';
 import { Article } from './Article';
-import { useRouter } from 'next/router';
+import { useRouter } from 'next/navigation';
 
 interface IProp {
-    article ?: Article;
+    article?: Article;
 }
 
 const ArticleCard = ({ article }: IProp ) => {
@@ -16,6 +17,11 @@ const ArticleCard = ({ article }: IProp ) => {
     };
     return (
         <div className='card-container' onClick={onClick}>
+            <img
+            src='https://images.unsplash.com/photo-1495446815901-a7297e633e8d'
+            alt='Books'
+            height={200}
+            />
             <div className='desc'>
                 <h2> {article.title} </h2>
                 <h3> {article.authors}</h3>

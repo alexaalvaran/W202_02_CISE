@@ -1,5 +1,4 @@
 'use client'
-
 import React, {useState, useEffect} from 'react';
 import { useParams, useRouter } from 'next/navigation';
 import { Article, DefaultArticle } from './Article';
@@ -11,7 +10,7 @@ function ShowArticleDetails(){
     const navigate = useRouter();
 
     useEffect(() => {
-        fetch((process.env.NEXT_PUBLIC_BACKEND + 'api/articles/${id}'))
+        fetch(process.env.NEXT_PUBLIC_BACKEND_URL + `/api/articles/${id}`)
         .then((res) => {
             return res.json()
         })
@@ -19,7 +18,7 @@ function ShowArticleDetails(){
             setArticle(json);
         })
         .catch((err) => {
-            console.log("Error from ShowArticleDetails" + err);
+            console.log('Error from ShowArticleDetails: ' + err);
         });
     },[id]);
 

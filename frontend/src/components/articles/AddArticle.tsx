@@ -1,5 +1,6 @@
 import React, {ChangeEvent,FormEvent,useState} from "react";
 import {useRouter} from "next/navigation";
+import Link from "next/link";
 import {Article, DefaultArticle} from "./Article";
 
 const CreateArticleComponent = () => {
@@ -19,7 +20,7 @@ const CreateArticleComponent = () => {
         .then((res) => {
             console.log(res);
             setArticle(DefaultArticle);
-            navigate.push("/confirmSubmit"); //Pushing to submit
+            navigate.push("/confirmSubmit"); //Push to submit
         })
         .catch((err) => {
             console.log('Error from CreateBook: ' + err);

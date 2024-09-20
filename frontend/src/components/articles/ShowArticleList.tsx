@@ -7,7 +7,7 @@ function ShowArticleList() {
     const [articles, setArticles] = useState<[Article?]>([]);
 
     useEffect(() => {
-        fetch(process.env.NEXT_PUBLIC_BACKEND + 'api/articles/${id}')
+        fetch(process.env.NEXT_PUBLIC_BACKEND_URL + `/api/articles`)
         .then((res) => {
             return res.json();
         })
@@ -21,8 +21,8 @@ function ShowArticleList() {
 
     const articleList =
     articles.length === 0
-        ? 'There is no article record right now'
-        : articles.map((articles,k) => <ArticleCard article={articles} key={k}/>);
+        ? 'There is no article record'
+        :articles.map((articles,k) => <ArticleCard article={articles} key={k}/>);
 
 
 return(
