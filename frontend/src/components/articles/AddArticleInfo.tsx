@@ -5,7 +5,7 @@ import Link from 'next/link';
 
 function AddArticleInfo(){
     const [article, setArticle] = useState<Article>(DefaultArticle);
-    const id = useParams<{id: string}>().id;
+    const id = useParams<{ id: string }>().id;
     const router = useRouter();
 
     useEffect(()=>{
@@ -38,7 +38,7 @@ fetch(process.env.NEXT_PUBLIC_BACKEND_URL + `/api/articles/${id}`,
     {method: 'PUT', headers: {"Content-Type": "application/json"}, 
     body: JSON.stringify(article)})
     .then((res) => {
-        router.push('/show-article/${id}');
+        router.push('/show-articles/${id}');
     })
     .catch((err) => {
         console.log("Error ffrom AddArticleInfo: " + err);
@@ -49,14 +49,6 @@ return(
     <div className='UpdateArticleInfo'>
         <div className='container'>
             <div className='row'>
-                <div
-                className='col-md-8 m-auto'>
-                    <br />
-                    <Link href='/' className='btn btn-outline-warning float-left'>
-                    Show Article List
-                    </Link>
-                    );
-                    </div>
                     <div className='col-md-8 m-auto'>
                         <h1 className='display-4 text-center'>Edit Article</h1> <p 
                         className='lead text-center'>Update Article Info</p>
@@ -74,6 +66,7 @@ return(
                                     onChange={inputOnChange}/>
                                     </div>
                                     <br />
+
                                     <div className='form-group'>
                                         <label htmlFor='sources'>Sources</label>
                                         <input
@@ -86,6 +79,7 @@ return(
                                         />
                                         </div>
                                         <br />
+
                                         <div
                                         className='form-group'>
                                             <label
@@ -99,6 +93,7 @@ return(
                                             onChange={inputOnChange}/>
                                             </div>
                                             <br />
+
                                             <div className='form-group'>
                                                 <label
                                                 htmlFor='description'>Publication Year</label>
@@ -109,6 +104,7 @@ return(
                                                 onChange={textAreaOnChange}/>
                                                 </div>
                                                 <br />
+
                                                 <div className='form-group'>
                                                     <label
                                                     htmlFor='email'>Email</label>
@@ -120,6 +116,7 @@ return(
                                                     onChange={inputOnChange}/>
                                                     </div>
                                                     <br />
+                                                    
                                                     <div
                                                     className='form-group'>
                                                         <label

@@ -35,9 +35,6 @@ return(
                     className='display-4 text-center'>List of Articles</h2>
                     </div>
                     <div className='col-md-11'>
-                        <Link href='/create-article' className='btn btn-outline-warning float-right'>
-                        + Add Evidence and Claim
-                        </Link>
                         <br />
                         <br />
                         <hr />

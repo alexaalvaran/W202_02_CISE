@@ -13,12 +13,12 @@ const ArticleCard = ({ article }: IProp ) => {
         return null;
     }
     const onClick = () => {
-        router.push('/show-article/${article._id}')
+        router.push('/show-articles/${article._id}')
     };
     return (
         <div className='card-container' onClick={onClick}>
             <img
-            src='https://images.unsplash.com/photo-1495446815901-a7297e633e8d'
+            src='https://png.pngtree.com/png-vector/20240201/ourlarge/pngtree-aesthetic-book-illustration-png-image_11530249.png'
             alt='Books'
             height={200}
             />

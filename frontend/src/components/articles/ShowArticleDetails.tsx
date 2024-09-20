@@ -1,4 +1,5 @@
 'use client'
+
 import React, {useState, useEffect} from 'react';
 import { useParams, useRouter } from 'next/navigation';
 import { Article, DefaultArticle } from './Article';
@@ -21,8 +22,7 @@ function ShowArticleDetails(){
             console.log('Error from ShowArticleDetails: ' + err);
         });
     },[id]);
-
-
+    
 
     const ArticleItem = (
         <div>
@@ -75,27 +75,23 @@ function ShowArticleDetails(){
 
     return (
         <div
-        className='ShowBookDetails'>
-        <div
-        className='container'>
-        <div
-        className='row'>
-        <div
-        className='col-md-10 m-auto'>
-        <br /> <br />
-        <Link
-        href='/'
-        className='btn btn-outline-warning float-left'>
-        Show Book List
-        </Link>
-        </div>
-        <br />
+        className='ShowArticleDetails'>
+            <div className='container'>
+                <div className='row'>
+                    <div className='col-md-10 m-auto'>
+                        <br /> <br />
+                        <Link href='/'
+                        className='btn btn-outline-warning float-left'>
+                            Show Article List 
+                            </Link>
+                            </div>
+                            <br />
         <div
         className='col-md-8 m-auto'>
         <h1
-        className='display-4 text-center'>Book&quot;s Record</h1>
+        className='display-4 text-center'>Article&quot;s Record</h1>
         <p
-        className='lead text-center'>View Book&quot;s Info</p>
+        className='lead text-center'>View Article&quot;s Info</p>
         <hr /> <br />
         </div>
         <div
@@ -106,7 +102,7 @@ function ShowArticleDetails(){
         </div>
         <div className='col-md-6 m-auto'>
             <Link
-            href={`/edit-book/${article._id}`} className='btn btn-outline-info btn-lg btn-block'>
+            href={`/edit-claims/${article._id}`} className='btn btn-outline-info btn-lg btn-block'>
                 Edit Article
                 </Link>
                 </div>
