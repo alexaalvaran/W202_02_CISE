@@ -26,12 +26,12 @@ function ShowArticleDetails(){
 
     const ArticleItem = (
         <div>
-            <table className='table table-hover table-dark table-striped table-bordered'>
+            <table className='table table-hover table-striped table-bordered'>
                 <tbody>
                     <tr>
                         <th scope='row'>1</th>
                         <td>Title</td>
-                        <td>(article.title)</td>
+                        <td>{article.title}</td>
                     </tr>
                     <tr>
                         <th scope='row'>2</th>
@@ -73,7 +73,7 @@ function ShowArticleDetails(){
         </div>
     );
 
-//delete edit button after testing
+
     return (
         <div
         className='ShowArticleDetails'>
@@ -96,15 +96,7 @@ function ShowArticleDetails(){
         className='col-md-10 m-auto'>{ArticleItem}</div>
         <div
         className='col-md-6 m-auto'>
-
         </div>
-        <div className='col-md-6 m-auto'>
-            <Link
-            href={`/edit-claims/${article._id}`} 
-            className='btn btn-outline-info btn-lg btn-block'>
-                Edit Article
-                </Link>
-                </div>
              </div>
          </div>
     </div>
