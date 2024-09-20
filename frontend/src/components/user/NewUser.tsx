@@ -30,7 +30,7 @@ const NewUserComponent = () => {
             <div className="container">
                 <div className="row">
                     <div className="flex-col m-auto">
-                        <h1 className="LoginTitle display-4 text-center">Login</h1>
+                        <h1 className="LoginTitle display-4 text-center">Register</h1>
                         <form noValidate onSubmit={onSubmit}>
                             <div className="form-group">
                                 <h3>Email</h3>

@@ -7,8 +7,8 @@ import {
     Param, 
     Post,
     Body,
-    UnauthorizedException
-    
+    UnauthorizedException,
+    ForbiddenException
     } from "@nestjs/common";
 import { error } from 'console';
 import { UserService } from "./user.service";
@@ -62,6 +62,10 @@ export class UserController {
         }
         if (isUser.password !== password) {
             throw new UnauthorizedException('Incorrect password');
+        }
+
+        if (!isUser.isModerator) {
+            throw new ForbiddenException('You do not have permission to access this area.');
         }
         return isUser;  // Return the user if email and password match
         }

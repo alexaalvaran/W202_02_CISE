@@ -48,8 +48,10 @@ let UserController = class UserController {
             throw new common_1.NotFoundException('User not found');
         }
         if (isUser.password !== password) {
-            console.log("Incorrect password");
             throw new common_1.UnauthorizedException('Incorrect password');
+        }
+        if (!isUser.isModerator) {
+            throw new common_1.ForbiddenException('You do not have permission to access this area.');
         }
         return isUser;
     }

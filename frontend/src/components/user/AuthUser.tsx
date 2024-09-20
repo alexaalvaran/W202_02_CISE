@@ -26,6 +26,9 @@ const AuthUserComponent = () => {
                 alert("User not found");
             } else if (res.status === 401) {
                 alert("Incorrect password. Please try again.");
+            }  else if (res.status === 403) {
+                console.log("User authenticated:", res);
+                navigate.push("/analyse");
             } else if (res.ok) {
                 console.log("User authenticated:", res);
                 navigate.push("/moderate");
