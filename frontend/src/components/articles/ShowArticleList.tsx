@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import Link from 'next/link';
 import ArticleCard from './ArticleCard';
-import{ Article } from './Article';
+import { Article } from './Article';
 
 function ShowArticleList() {
     const [articles, setArticles] = useState<[Article?]>([]);
