@@ -13,17 +13,32 @@ const AuthUserComponent = () => {
 
     const onSubmit = (event: FormEvent<HTMLFormElement>) => {
         event.preventDefault();
+    
         console.log(user);
-        fetch(process.env.NEXT_PUBLIC_BACKEND_URL + `/api/users/${user.email}`, {method: 'GET', headers: {"Content-Type":"application/json"}, body:JSON.stringify(user)})
+        
+        fetch(process.env.NEXT_PUBLIC_BACKEND_URL + `/api/users`, { 
+            method: 'POST', 
+            headers: { "Content-Type": "application/json" }, 
+            body: JSON.stringify(user)
+        })
         .then((res) => {
-            console.log(res);
-            setUser(DefaultUser);
-            navigate.push("/");
+            if (res.status === 404) {
+                alert("User not found");
+            } else if (res.status === 401) {
+                alert("Incorrect password. Please try again.");
+            } else if (res.ok) {
+                console.log("User authenticated:", res);
+                navigate.push("/moderate");
+            } else {
+                alert("An error occurred. Please try again.");
+            }
         })
         .catch((err) => {
-            console.log('No user' + err);
+            console.log('Error: ' + err);
+            alert("A network error occurred. Please try again.");
         });
     };
+    
 
     return(
         <div className="AuthUser">

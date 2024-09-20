@@ -3,8 +3,11 @@ import { User } from './user.schema';
 import { InjectModel } from '@nestjs/mongoose';
 import { Model } from 'mongoose';
 
+import { forwardRef, Logger } from '@nestjs/common';
+
 @Injectable()
 export class UserService {
+    logger: Logger;
     constructor(@InjectModel(User.name)private userModel: Model<User>) {}
 
 
@@ -15,4 +18,9 @@ export class UserService {
     async findAll(): Promise<User[]>{
         return await this.userModel.find().exec();
     }
+
+   
+
+
+    
 }

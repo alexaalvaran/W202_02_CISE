@@ -42,6 +42,17 @@ let UserController = class UserController {
             }, common_1.HttpStatus.NOT_FOUND, { cause: console_1.error });
         }
     }
+    async create({ email, password }) {
+        const isUser = await this.userService.findOne(email);
+        if (!isUser) {
+            throw new common_1.NotFoundException('User not found');
+        }
+        if (isUser.password !== password) {
+            console.log("Incorrect password");
+            throw new common_1.UnauthorizedException('Incorrect password');
+        }
+        return isUser;
+    }
 };
 exports.UserController = UserController;
 __decorate([
@@ -57,6 +68,13 @@ __decorate([
     __metadata("design:paramtypes", [String]),
     __metadata("design:returntype", Promise)
 ], UserController.prototype, "findOne", null);
+__decorate([
+    (0, common_1.Post)('/'),
+    __param(0, (0, common_1.Body)()),
+    __metadata("design:type", Function),
+    __metadata("design:paramtypes", [Object]),
+    __metadata("design:returntype", Promise)
+], UserController.prototype, "create", null);
 exports.UserController = UserController = __decorate([
     (0, common_1.Controller)('/api/users'),
     __metadata("design:paramtypes", [user_service_1.UserService])

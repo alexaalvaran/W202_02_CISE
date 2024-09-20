@@ -1,9 +1,14 @@
 import { 
+    NotFoundException,
     Controller,
     Get, 
     HttpException, 
     HttpStatus, 
     Param, 
+    Post,
+    Body,
+    UnauthorizedException
+    
     } from "@nestjs/common";
 import { error } from 'console';
 import { UserService } from "./user.service";
@@ -44,6 +49,23 @@ export class UserController {
                    {cause: error},
                );
            }
-       }
+       } 
+       
+       @Post('/')
+       async create(@Body() { email, password }: { email: string, password: string }) {
+        // Validate if user exists by email
+        const isUser = await this.userService.findOne(email);
+
+        
+        if (!isUser) {
+            throw new NotFoundException('User not found');
+        }
+        if (isUser.password !== password) {
+            throw new UnauthorizedException('Incorrect password');
+        }
+        return isUser;  // Return the user if email and password match
+        }
+
+     }
    
-   }
+   
