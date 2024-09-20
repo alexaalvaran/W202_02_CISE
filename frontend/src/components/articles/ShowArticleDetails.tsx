@@ -73,6 +73,7 @@ function ShowArticleDetails(){
         </div>
     );
 
+//delete edit button after testing
     return (
         <div
         className='ShowArticleDetails'>
@@ -80,18 +81,15 @@ function ShowArticleDetails(){
                 <div className='row'>
                     <div className='col-md-10 m-auto'>
                         <br /> <br />
-                        <Link href='/'
-                        className='btn btn-outline-warning float-left'>
-                            Show Article List 
-                            </Link>
+                        
                             </div>
                             <br />
         <div
         className='col-md-8 m-auto'>
         <h1
-        className='display-4 text-center'>Article&quot;s Record</h1>
+        className='display-4 text-center'>Article Record</h1>
         <p
-        className='lead text-center'>View Article&quot;s Info</p>
+        className='lead text-center'>View Article Detail</p>
         <hr /> <br />
         </div>
         <div
@@ -102,7 +100,8 @@ function ShowArticleDetails(){
         </div>
         <div className='col-md-6 m-auto'>
             <Link
-            href={`/edit-claims/${article._id}`} className='btn btn-outline-info btn-lg btn-block'>
+            href={`/edit-claims/${article._id}`} 
+            className='btn btn-outline-info btn-lg btn-block'>
                 Edit Article
                 </Link>
                 </div>
