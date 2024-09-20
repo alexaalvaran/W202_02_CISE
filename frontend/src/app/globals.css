@@ -38,25 +38,25 @@
   width: 100%;
   min-height: 100vh;
   min-width: 100px;
-  color: cornflowerblue;
+  color: black;
 }
 
 .ArticleCard{
   background-color: cornflowerblue;
   min-height: 100vh;
-  color: white;
-}
-
-.AddArticleInfo{
-  background-color: cornflower;
-  min-height: 100vh;
-  color: white
+  color: black;
 }
 
 .AddArticleInfo{
   background-color: cornflowerblue;
   min-height: 100vh;
-  color: white;
+  color: black
+}
+
+.AddArticleInfo{
+  background-color: cornflowerblue;
+  min-height: 100vh;
+  color: black;
 }
 
 .list{
@@ -69,7 +69,7 @@
 
 .card-container{
   width: 250px;
-  border: 1px solic rgba(0,0,125);
+  border: 1px solid rgba(0,0,125);
   margin: 0 auto;
   border-radius: 5px;
   overflow: hidden;
