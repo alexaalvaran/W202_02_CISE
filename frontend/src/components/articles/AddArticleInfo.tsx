@@ -44,26 +44,105 @@ fetch(process.env.NEXT_PUBLIC_BACKEND + 'api/articles/${id}',
         console.log("Error ffrom AddArticleInfo: " + err);
     });
 
-
+//placeholder only will change
 return( 
-    <div className='UpdateBookInfo'>
+    <div className='UpdateArticleInfo'>
         <div className='container'>
             <div className='row'>
-                <div className='col-md-8 m-auto'>
+                <div
+                className='col-md-8 m-auto'>
                     <br />
-                    <Link
-                    href='/' className='btn btn-outline-warning float-left'>
-                        Show Article List
+                    <Link href='/' className='btn btn-outline-warning float-left'>
+                    Show Article List
                     </Link>
+                    );
+                    </div>
+                    <div className='col-md-8 m-auto'>
+                        <h1 className='display-4 text-center'>Edit Article</h1> <p 
+                        className='lead text-center'>Update Article Info</p>
+                        </div>
+                        </div>
+                        <div className='col-md-8 m-auto'>
+                            <form noValidate onSubmit={onSubmit}>
+                                <div className='form-group'>
+                                    <label htmlFor='title'>Title</label>
+                                    <input type='text'
+                                    placeholder='Title of the Book'
+                                    name='title'
+                                    className='form-control'
+                                    value={article.title}
+                                    onChange={inputOnChange}/>
+                                    </div>
+                                    <br />
+                                    <div className='form-group'>
+                                        <label htmlFor='sources'>Sources</label>
+                                        <input
+                                        type='text'
+                                        placeholder='Sources'
+                                        name='sources'
+                                        className='form-control'
+                                        value={article.sources}
+                                        onChange={inputOnChange}
+                                        />
+                                        </div>
+                                        <br />
+                                        <div
+                                        className='form-group'>
+                                            <label
+                                            htmlFor='authors'>Author</label>
+                                            <input
+                                            type='text'
+                                            placeholder='Authors'
+                                            name='authors'
+                                            className='form-control'
+                                            value={article.authors}
+                                            onChange={inputOnChange}/>
+                                            </div>
+                                            <br />
+                                            <div className='form-group'>
+                                                <label
+                                                htmlFor='description'>Publication Year</label>
+                                                <textarea placeholder='Publication Year'
+                                                name='pubyear'
+                                                className='form-control'
+                                                value={article.pubyear}
+                                                onChange={textAreaOnChange}/>
+                                                </div>
+                                                <br />
+                                                <div className='form-group'>
+                                                    <label
+                                                    htmlFor='email'>Email</label>
+                                                    <input type='text'
+                                                    placeholder='Published Date'
+                                                    name='email'
+                                                    className='form-control'
+                                                    value={article.email}
+                                                    onChange={inputOnChange}/>
+                                                    </div>
+                                                    <br />
+                                                    <div
+                                                    className='form-group'>
+                                                        <label
+                                                        htmlFor='doi'>DOI</label>
+                                                        <input
+                                                        type='text'
+                                                        placeholder='DOI'
+                                                        name='doi'
+                                                        className='form-control'
+                                                        value={article.doi}
+                                                        onChange={inputOnChange}/>
+                                                        </div>
+                                                        <br />
+                                                        <button
+                                                        type='submit' 
+                                                        className='btn btn-outline-info btn-lg btn-block'>
+                                                            Update Article
+                                                        </button>
+                            </form>
+                        </div>
                 </div>
-                <div className='col-md-8 m-auto'>
-                    <h1 className='display-4 text-center'>Edit Article</h1>
-                    <p className='lead text-center'>Update Article Info</p>
-                </div>
-            </div>
-        </div>
-    </div>
-
+         </div>
     );
+
 }
 export default AddArticleInfo;

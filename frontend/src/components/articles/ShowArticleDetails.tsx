@@ -5,7 +5,7 @@ import { useParams, useRouter } from 'next/navigation';
 import { Article, DefaultArticle } from './Article';
 import Link from 'next/link';
 
-function ShowArticleList(){
+function ShowArticleDetails(){
     const [article, setArticle] = useState<Article>(DefaultArticle);
     const id = useParams<{id:string}>().id;
     const navigate = useRouter();
@@ -73,4 +73,4 @@ function ShowArticleList(){
     );
 
 }
-export default ShowArticleList;
+export default ShowArticleDetails;

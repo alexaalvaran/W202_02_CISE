@@ -7,11 +7,8 @@ const Analyse = () => {
     return(
     <main> 
         <ShowArticleList/>
-        <p>This is a paragraph</p>
     </main>
     ) 
-
-
 
 }
 

@@ -1,6 +1,6 @@
 import React from 'react';
 import { Article } from './Article';
-import { useRouter } from 'next/router';
+import { useRouter } from 'next/navigation';
 
 interface IProp {
     article ?: Article;
