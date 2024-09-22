@@ -15,7 +15,10 @@ function ShowArticleDetails(){
     useEffect(() => {
         fetch(process.env.NEXT_PUBLIC_BACKEND_URL + `/api/articles/${id}`)
         .then((res) => {
-            return res.json()
+            if (!res.ok) {
+                throw new Error('Failed to fetch article');
+            }
+            return res.json();
         })
         .then((json) => {
             setArticle(json);
@@ -26,7 +29,7 @@ function ShowArticleDetails(){
     },[id]);
     
     const onDeleteClick = (id: string) => {
-        fetch(process.env.NEXT_PUBLIC_BACKEND_URL + `/api/articles/${id}`, { method: 'DELETE' })
+        fetch(process.env.NEXT_PUBLIC_BACKEND_URL + `/api/articles/${id}}`, { method: 'DELETE' })
         .then((res) => {
         navigate.push('/');
         })
@@ -115,6 +118,13 @@ function ShowArticleDetails(){
                 Delete Article
             </button>
             </div>
+            <div className='col-md-6 m-auto'>
+                <Link
+                href ={'/edit-claims/${article._id}'}
+                className='btn btn-outline-info btn-lg btn-block'>
+                    Add Claim and Evidence
+                </Link>
+                </div>
             </div>
          </div>
     </div>

@@ -34,17 +34,17 @@ const onSubmit = (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault();
 }
 
-fetch(process.env.NEXT_PUBLIC_BACKEND_URL + `/api/articles/${id}`, 
+fetch(process.env.NEXT_PUBLIC_BACKEND_URL + `/api/articles/${id}}`, 
     {method: 'PUT', headers: {"Content-Type": "application/json"}, 
     body: JSON.stringify(article)})
     .then((res) => {
-        router.push('/show-articles/${id}');
+        router.push('/show-articles/${id}}');
     })
     .catch((err) => {
         console.log("Error ffrom AddArticleInfo: " + err);
     });
 
-//placeholder only will change
+
 return( 
     <div className='UpdateArticleInfo'>
         <div className='container'>
