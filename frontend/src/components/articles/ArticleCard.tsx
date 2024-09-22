@@ -13,7 +13,7 @@ const ArticleCard = ({ article }: IProp ) => {
         return null;
     }
     const onClick = () => {
-        router.push('/show-articles/${article._id}')
+        router.push(`/show-articles/${article._id}`)
     };
     return (
         <div className='card-container' onClick={onClick}>
