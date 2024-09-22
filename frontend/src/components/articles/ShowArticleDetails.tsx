@@ -120,7 +120,7 @@ function ShowArticleDetails(){
             </div>
             <div className='col-md-6 m-auto'>
                 <Link
-                href ={'/edit-claims/${article._id}'}
+                href ={`/edit-claims/${article._id}`}
                 className='btn btn-outline-info btn-lg btn-block'>
                     Add Claim and Evidence
                 </Link>
