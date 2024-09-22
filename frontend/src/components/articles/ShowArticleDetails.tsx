@@ -89,43 +89,36 @@ function ShowArticleDetails(){
     );
 
     return (
-        <div
-        className='ShowArticleDetails'>
+        <div className='ShowArticleDetails'>
             <div className='container'>
                 <div className='row'>
                     <div className='col-md-10 m-auto'>
-                        <br /> <br />
                             </div>
+
                             <br />
-        <div
-        className='col-md-8 m-auto'>
-        <h1
-        className='display-4 text-center'>Article Records</h1>
-        <p
-        className='lead text-center'>View Article Details</p>
-        <hr /> <br />
-        </div>
-        <div
-        className='col-md-10 m-auto'>{ArticleItem}</div>
-        <div className='col-md-6 m-auto'>
-            <button 
-            type = 'button'
-            className='btn btn-outline-danger btn-lg btn block'
-            onClick={() => {
-                onDeleteClick(article._id || "");
-            }}
-            >
-                Delete Article
-            </button>
-            </div>
-            <div className='col-md-6 m-auto'>
-                <Link
-                href ={`/edit-claims/${article._id}`}
-                className='btn btn-outline-info btn-lg btn-block'>
-                    Add Claim and Evidence
-                </Link>
+                            <div className='col-md-8 m-auto'>
+                                <h1 className='display-4 text-center'>Article Records</h1>
+                                <p className='lead text-center'>View Article Details</p>
+                            <br />
+                            </div>
+                                <div className='col-md-10 m-auto'>{ArticleItem}</div>
+                                <div className='col-md-6 m-auto'>
+                                    <button 
+                                    type = 'button'
+                                    className='btn btn-outline-danger btn-lg btn block'
+                                    onClick={() => {
+                                        onDeleteClick(article._id || "");
+                                    }}
+                                    >Delete Article</button>
+                                </div>
+                                    <div className='col-md-6 m-auto'>
+                                        <Link
+                                        href ={`/edit-claims/${article._id}`}
+                                        className='btn btn-outline-info btn-lg btn-block'>
+                                            Add Claim and Evidence
+                                            </Link>
+                                    </div>
                 </div>
-            </div>
          </div>
     </div>
 );

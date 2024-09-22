@@ -47,71 +47,75 @@ fetch(process.env.NEXT_PUBLIC_BACKEND_URL + `{/api/articles/${id}}`,
 
 return( 
     <div className='UpdateArticleInfo'>
-                <div>
-            <table className='table table-hover table-striped table-bordered'>
-                <tbody>
+        <div className='container'>
+            <div className='row'>
+                <div className='col-md-10 m-auto'>
+                    <div className='col-md-8 m-auto'>
+                        <h1 className='display-4 text-center'>Add Claim & Evidence</h1>
+                        <p className='lead text-center'>Article Details</p>
+                        <table className='table table-hover table-striped table-bordered'> 
+                            <tbody>
                     <tr>
-                        <th scope='row'>1</th>
                         <td>Title</td>
                         <td>{article?.title || 'No title available'}</td>
                     </tr>
 
                     <tr>
-                    <th scope='colummn'>2</th>
                         <td>Author</td>
                         <td>{article?.authors || 'No author available'}</td>
                     </tr>
 
                     <tr>
-                        <th scope='colummn'>3</th>
                         <td>Source</td>
                         <td>{article?.sources || 'No sources available'}</td>
                     </tr>
 
                     <tr>
-                        <th scope='colummn'>5</th>
                         <td>Publication Year</td>
                         <td>{article?.pubyear || 'No publication year available'}</td>
                     </tr>
 
                     <tr>
-                        <th scope='row'>6</th>
                         <td>Email</td>
                         <td>{article?.email || 'No email available'}</td>
                     </tr>
 
                     <tr>
-                        <th scope='row'>7</th>
                         <td>DOI</td>
                         <td>{article?.doi || 'No DOI available'}</td>
                     </tr>
 
-                    <div className='form-group'>
-                        <input
-                        type='text'
-                        placeholder='Enter Claim'
-                        name='claim'
-                        className='form-control'
-                        value={article.claim}
-                        onChange={inputOnChange}/>
-                        </div>
+                    <tr>
+                    <td>Chose an Evidence</td>
+                        <select name='evidence' id='evidence'>
+                            <option value=''>select</option>
+                            <option value='scrum'>Scrum</option>
+                            <option value='agile'>Agile</option>
+                            <option value='TDD'>TDD</option>
+                            <option value='other'>Other</option>
+                        </select>
+                       </tr>
 
-                    <div className='form-group'>
-                        <input
-                        type='text'
-                        placeholder='Enter Evidence'
-                        name='evidence'
-                        className='form-control'
-                        value={article.evidence}
-                        onChange={inputOnChange}/>
-                    </div>
+                    <tr>
+                    <td>Chose a Claim</td>
+                        <select name='claim' id='claim'>
+                            <option value=''>select</option>
+                            <option value='Agree'>Agree</option>
+                            <option value='Disagree'>Disagree</option>
+                        </select>
+                    </tr>
 
                     <button type='submit' 
-                    className='btn btn-outline-info btn-lg btn-block'>Update Book</button>
+                    className='btn btn-outline-info btn-lg btn-block'
+                    >Update Article
+                    </button>
                 </tbody>
-            </table>
+            </table>  
         </div>
-        </div>
+    </div>
+    </div>
+    </div>
+    </div>
     );
 
 }
