@@ -35,11 +35,9 @@ return(
                     className='display-4 text-center'>List of Articles</h2>
                     </div>
                     <div className='col-md-11'>
-                        <br />
-                        <br />
-                        <hr />
                     </div>
                 </div>
+
             <div className='list'>{articleList}</div>
         </div>
     </div>

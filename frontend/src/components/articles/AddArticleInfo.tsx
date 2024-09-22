@@ -58,7 +58,8 @@ return(
                             <form noValidate onSubmit={onSubmit}>
                                 <div className='form-group'>
                                     <label htmlFor='title'>Title</label>
-                                    <input type='text'
+                                    <input 
+                                    type='text'
                                     placeholder='Title of the Book'
                                     name='title'
                                     className='form-control'
