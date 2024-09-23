@@ -29,7 +29,7 @@ function ShowArticleDetails(){
     },[id]);
     
     const onDeleteClick = (id: string) => {
-        fetch(process.env.NEXT_PUBLIC_BACKEND_URL + `/api/articles/${id}}`, { method: 'DELETE' })
+        fetch(process.env.NEXT_PUBLIC_BACKEND_URL + `/api/articles/${id}`, { method: 'DELETE' })
         .then((res) => {
         navigate.push('/');
         })
