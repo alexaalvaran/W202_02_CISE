@@ -75,13 +75,13 @@ function ShowArticleDetails(){
                     </tr>
                     <tr>
                         <th scope='row'>8</th>
-                        <td>Claim</td>
-                        <td>{article?.claim || 'No claim available'}</td>
+                        <td>Evidence</td>
+                        <td>{article?.evidence || 'No evidence available'}</td>
                     </tr>
                     <tr>
                         <th scope='row'>9</th>
-                        <td>Evidence</td>
-                        <td>{article?.evidence || 'No evidence available'}</td>
+                        <td>Claim</td>
+                        <td>{article?.claim || 'No claim available'}</td>
                     </tr>
                 </tbody>
             </table>
