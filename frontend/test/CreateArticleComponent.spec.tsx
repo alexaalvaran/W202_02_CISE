@@ -1,6 +1,5 @@
 import React from 'react';
 import { render, screen, fireEvent } from '@testing-library/react';
-//import CreateArticleComponent from './CreateArticleComponent.spec'; 
 import { useRouter } from 'next/navigation';
 import '@testing-library/jest-dom';
 import CreateArticleComponent from '@/components/articles/AddArticle';
