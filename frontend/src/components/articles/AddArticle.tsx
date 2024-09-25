@@ -1,5 +1,6 @@
 import React, {ChangeEvent,FormEvent,useState} from "react";
 import {useRouter} from "next/navigation";
+import Link from "next/link";
 import {Article, DefaultArticle} from "./Article";
 
 const CreateArticleComponent = () => {
@@ -14,11 +15,12 @@ const CreateArticleComponent = () => {
     const onSubmit = (event: FormEvent<HTMLFormElement>) => {
         event.preventDefault()
         console.log(article);
-        fetch(process.env.NEXT_PUBLIC_BACKEND_URL + '/api/articles', {method: 'POST', headers:{"Content-Type":"application/json"},body:JSON.stringify(article)})
+        fetch(process.env.NEXT_PUBLIC_BACKEND_URL + '/api/articles', {method: 'POST', headers:{"Content-Type":"application/json"},
+            body:JSON.stringify(article)})
         .then((res) => {
             console.log(res);
             setArticle(DefaultArticle);
-            navigate.push("/confirmSubmit");
+            navigate.push("/confirmSubmit"); //Push to submit
         })
         .catch((err) => {
             console.log('Error from CreateBook: ' + err);
