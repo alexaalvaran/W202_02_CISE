@@ -27,6 +27,9 @@ let UserService = class UserService {
     async findAll() {
         return await this.userModel.find().exec();
     }
+    async userLogin(userDto) {
+        return await this.userModel.create(userDto);
+    }
 };
 exports.UserService = UserService;
 exports.UserService = UserService = __decorate([
