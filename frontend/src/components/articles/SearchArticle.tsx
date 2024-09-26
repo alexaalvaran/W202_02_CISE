@@ -3,28 +3,22 @@ import { useState } from "react";
 import { useRouter } from 'next/navigation';
 import { Article } from "./Articles";
 
-
 export default function SearchArticle() {
     const [title, setTitle] = useState('');
     const [author, setAuthor] = useState('');
     const [pubYear, setPubYear] = useState('');
+    const [searchType, setSearchType] = useState('practice'); // New state for search type (SE Practice/Claim)
+    const [searchInput, setSearchInput] = useState(''); // Input for claim or practice
     const [results, setResults] = useState<Article[]>([]);
 
     const router = useRouter();
 
-    /* const handleSearch = () => {
-        const filteredResults = mockResults.filter(article => 
-            (!title || article.title?.toLowerCase().includes(title.toLowerCase())) &&
-            (!author || article.authors?.toLowerCase().includes(author.toLowerCase())) &&
-            (!pubYear || article.pubyear === pubYear)
-        );
-    
-        setResults(filteredResults);
-    }; */
-
     const handleSearch = async () => {
         try {
-            const response = await fetch('http://localhost:2002/api/articles/');
+            /* const response = await fetch('http://localhost:2002/api/articles/'); */
+            const response = await fetch(`${process.env.NEXT_PUBLIC_BACKEND_URL}/api/articles/`);
+
+
             if (!response.ok) throw new Error('Failed to fetch articles');
     
             const allArticles = await response.json();
@@ -32,16 +26,16 @@ export default function SearchArticle() {
             setResults(allArticles.filter((article: Article) =>
                 (!title || article.title?.toLowerCase().includes(title.toLowerCase())) &&
                 (!author || article.authors?.toLowerCase().includes(author.toLowerCase())) &&
-                (!pubYear || article.pubyear === pubYear)
+                (!pubYear || article.pubyear === pubYear) &&
+                (searchType === 'practice'
+                    ? article.practice?.toLowerCase().includes(searchInput.toLowerCase()) 
+                    : article.claim?.toLowerCase().includes(searchInput.toLowerCase()))
             ));
         } catch (error) {
             console.error(error);
         }
     };
     
-    
-    
-
     const handleCardClick = (article: Article) => {
         router.push(`/show-article/${article._id}`);
     };
@@ -84,6 +78,33 @@ export default function SearchArticle() {
                                     placeholder="Enter publication year"
                                     value={pubYear}
                                     onChange={(e) => setPubYear(e.target.value)}
+                                />
+                            </div>
+                            {/* Dropdown to select between SE Practice or SE Claim */}
+                            <div className="mb-3">
+                                <label htmlFor="searchType" className="form-label">Search By</label>
+                                <select
+                                    id="searchType"
+                                    className="form-select"
+                                    value={searchType}
+                                    onChange={(e) => setSearchType(e.target.value)}
+                                >
+                                    <option value="practice">SE Practice</option>
+                                    <option value="claim">SE Claim</option>
+                                </select>
+                            </div>
+                            {/* Input for either SE Practice or SE Claim */}
+                            <div className="mb-3">
+                                <label htmlFor="searchInput" className="form-label">
+                                    {searchType === 'practice' ? 'Software Engineering Practice' : 'Software Engineering Claim'}
+                                </label>
+                                <input
+                                    type="text"
+                                    id="searchInput"
+                                    className="form-control"
+                                    placeholder={searchType === 'practice' ? 'Enter SE Practice' : 'Enter SE Claim'}
+                                    value={searchInput}
+                                    onChange={(e) => setSearchInput(e.target.value)}
                                 />
                             </div>
                             <div className="d-flex justify-content-end">
