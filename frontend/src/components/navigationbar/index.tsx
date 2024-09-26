@@ -26,12 +26,12 @@ const Navbar = () => {
                             </Link>
                         </li>
                         <li>
-                            <Link href="/moderate">
+                            <Link href="/login">
                             <p>Moderate</p>
                             </Link>
                         </li>
                         <li>
-                            <Link href="/analyse">
+                            <Link href="/login">
                             <p>Analyse</p>
                             </Link>
                         </li>
