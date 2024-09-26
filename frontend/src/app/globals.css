@@ -17,6 +17,16 @@
   color:white;
 }
 
+.btn:focus{
+  background-color: darkblue;
+  color: white;
+}
+
+.btn:active{
+  background-color: darkblue;
+  color: white;
+}
+
 .navBar{
   background-color: cornflowerblue;
   color: white;
