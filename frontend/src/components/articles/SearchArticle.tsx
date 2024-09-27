@@ -16,8 +16,7 @@ export default function SearchArticle() {
     const handleSearch = async () => {
         try {
             /* const response = await fetch('http://localhost:2002/api/articles/'); */
-            const response = await fetch(`${process.env.NEXT_PUBLIC_BACKEND_URL}/api/articles/`);
-
+            const response = await fetch(process.env.NEXT_PUBLIC_BACKEND_URL + '/api/articles/');
 
             if (!response.ok) throw new Error('Failed to fetch articles');
     
