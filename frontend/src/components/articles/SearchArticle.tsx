@@ -15,7 +15,6 @@ export default function SearchArticle() {
 
     const handleSearch = async () => {
         try {
-            /* const response = await fetch('http://localhost:2002/api/articles/'); */
             const response = await fetch(process.env.NEXT_PUBLIC_BACKEND_URL + '/api/articles/');
 
             if (!response.ok) throw new Error('Failed to fetch articles');
@@ -120,9 +119,16 @@ export default function SearchArticle() {
                         <div key={article._id} className="col-md-4 mb-4">
                             <div className="card h-100" onClick={() => handleCardClick(article)} style={{ cursor: 'pointer' }}>
                                 <div className="card-body">
-                                    <h5 className="card-title">{article.title}</h5>
+                                    <h5 className="card-title"><strong>{article.title}</strong></h5>
                                     <p className="card-text"><strong>Author:</strong> {article.authors}</p>
                                     <p className="card-text"><strong>Year:</strong> {article.pubyear}</p>
+                                    {/* Conditionally display either practice or claim based on search type */}
+                                    {searchType === 'practice' && (
+                                        <p className="card-text"><strong>Practice:</strong> {article.practice}</p>
+                                    )}
+                                    {searchType === 'claim' && (
+                                        <p className="card-text"><strong>Claim:</strong> {article.claim}</p>
+                                    )}
                                 </div>
                             </div>
                         </div>

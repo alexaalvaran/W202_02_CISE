@@ -8,14 +8,6 @@ export default function ShowArticle() {
     const { id } = useParams(); // Get the ID from the route
     const [article, setArticle] = useState<Article | null>(null);
     const router = useRouter(); // To navigate between pages
-    
-    /* useEffect(() => {
-        // Ensure that the component is mounted and id exists
-        if (id) {
-            const foundArticle = mockResults.find((article) => article._id === id);
-            setArticle(foundArticle || null);
-        }
-    }, [id]); */
 
 
     useEffect(() => {
@@ -42,10 +34,12 @@ export default function ShowArticle() {
     return (
         <div className="d-flex justify-content-center align-items-center vh-100">
             <div className="card p-12" style={{ maxWidth: '600px', width: '100%' }}>
-                <h1><strong>{article.title}</strong></h1>
+                <h1><strong>Title:</strong> {article.title} </h1>
                 <p><strong>Author:</strong> {article.authors}</p>
                 <p><strong>Publication Year:</strong> {article.pubyear}</p>
+                <p><strong>Email:</strong> {article.email}</p>
                 <p><strong>DOI:</strong> {article.doi}</p>
+                <p><strong>Practice:</strong> {article.practice}</p>
                 <p><strong>Claim:</strong> {article.claim}</p>
                 <p><strong>Evidence:</strong> {article.evidence}</p>
                 <button
