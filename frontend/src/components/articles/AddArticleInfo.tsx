@@ -21,11 +21,6 @@ function AddArticleInfo() {
         setArticle({ ...article, [event.target.name]: event.target.value });
     };
 
-    // Handle textarea changes
-    const textAreaOnChange = (event: ChangeEvent<HTMLTextAreaElement>) => {
-        setArticle({ ...article, [event.target.name]: event.target.value });
-    };
-
     // Handle select changes for dropdowns
     const selectOnChange = (event: ChangeEvent<HTMLSelectElement>) => {
         setArticle({ ...article, [event.target.name]: event.target.value });
@@ -96,9 +91,12 @@ function AddArticleInfo() {
 
                                         {/* Dropdown for Evidence */}
                                         <tr>
-                                            <td>Choose an Evidence</td>
+                                            <td>
+                                                <label htmlFor="evidence">Choose an Evidence</label>
+                                            </td>
                                             <td>
                                                 <select
+                                                    id="evidence"
                                                     name="evidence"
                                                     value={article.evidence || ''}
                                                     onChange={selectOnChange}
@@ -114,9 +112,12 @@ function AddArticleInfo() {
 
                                         {/* Dropdown for Claim */}
                                         <tr>
-                                            <td>Choose a Claim</td>
+                                            <td>
+                                                <label htmlFor="claim">Choose a Claim</label>
+                                            </td>
                                             <td>
                                                 <select
+                                                    id="claim"
                                                     name="claim"
                                                     value={article.claim || ''}
                                                     onChange={selectOnChange}
