@@ -8,11 +8,12 @@ var __decorate = (this && this.__decorate) || function (decorators, target, key,
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.AppModule = void 0;
 const common_1 = require("@nestjs/common");
+const config_1 = require("@nestjs/config");
+const mongoose_1 = require("@nestjs/mongoose");
+const article_module_1 = require("./api/articles/article.module");
+const rejectArticle_module_1 = require("./api/rejectArticles/rejectArticle.module");
 const app_controller_1 = require("./app.controller");
 const app_service_1 = require("./app.service");
-const mongoose_1 = require("@nestjs/mongoose");
-const config_1 = require("@nestjs/config");
-const article_module_1 = require("./api/articles/article.module");
 let AppModule = class AppModule {
 };
 exports.AppModule = AppModule;
@@ -22,6 +23,7 @@ exports.AppModule = AppModule = __decorate([
             config_1.ConfigModule.forRoot(),
             mongoose_1.MongooseModule.forRoot(process.env.DB_URI),
             article_module_1.ArticleModule,
+            rejectArticle_module_1.RejectArticleModule,
         ],
         controllers: [app_controller_1.AppController],
         providers: [app_service_1.AppService],

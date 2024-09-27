@@ -1,6 +1,7 @@
+import ModArticleDetails from "@/components/articles/ModArticleDetails";
 
-const modArticles = () => {
-    return <div>modArticles</div>
+export default function ShowArticle() {
+    return(
+        <ModArticleDetails />
+    )
 }
-
-export default modArticles;

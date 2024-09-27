@@ -1,21 +1,21 @@
 import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
 import { HydratedDocument } from 'mongoose';
 
-export type RejectArticleDocument = HydratedDocument<Article>;
+export type RejectArticleDocument = HydratedDocument<RejectArticle>;
 
 @Schema()
-export class Article {
-    @Prop({required: true})
+export class RejectArticle {
+    @Prop({ required: true })
     title: string;
 
-    @Prop({required: true})
+    @Prop({ required: true })
     authors: string;
 
     @Prop()
     source: string;
 
-    @Prop({required:true})
-    pubyear: string;
+    @Prop({ required: true })
+    pubyear: string;  // Keeping pubyear as a string
 
     @Prop()
     email: string;
@@ -28,6 +28,9 @@ export class Article {
 
     @Prop()
     evidence: string;
+
+    @Prop({ default: new Date() })
+    rejectedDate: Date;  // When the article was rejected
 }
 
-export const RejectArticleSchema = SchemaFactory.createForClass(Article);
+export const RejectArticleSchema = SchemaFactory.createForClass(RejectArticle);
