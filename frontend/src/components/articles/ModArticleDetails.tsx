@@ -53,6 +53,23 @@ function ModArticleDetails(){
         }
     };
 
+    const AcceptClick = async (id: string) => {
+        try {
+            const res = await fetch(`${process.env.NEXT_PUBLIC_BACKEND_URL}/api/acceptArticles/${id}`, {
+                method: 'POST',
+            });
+
+            if (!res.ok) {
+                throw new Error('Failed to accept article');
+            }
+            const json = await res.json();
+            console.log('Article accepted:', json);
+            router.push('/');
+        } catch (err) {
+            console.error('Error from ModArticleDetails_AcceptClick:', err);
+        }
+    };
+
     // const RejectClick = async (id: string) => {
     //     try {
     //         // Step 1: Fetch the article data first
@@ -87,6 +104,40 @@ function ModArticleDetails(){
     //         router.push('/');
     //     } catch (error) {
     //         console.error('Error handling article rejection:', error);
+    //     }
+    // };
+
+    // const AcceptClick = async (id: string) => {
+    //     try {
+    //         // Step 1: Fetch the article data first
+    //         const articleRes = await fetch(`${process.env.NEXT_PUBLIC_BACKEND_URL}/api/articles/${id}`, {
+    //             method: 'GET',
+    //         });
+    
+    //         if (!articleRes.ok) {
+    //             throw new Error('Failed to fetch article');
+    //         }
+    
+    //         const articleData = await articleRes.json();
+    //         console.log('Fetched Article:', articleData);
+    
+    //         const confirmAccept = window.confirm('Are you sure you want to accept this article?');
+    //         if (!confirmAccept) return;
+    
+    //         const accpetRes = await fetch(`${process.env.NEXT_PUBLIC_BACKEND_URL}/api/acceptArticles/${id}`, {
+    //             method: 'POST',
+    //         });
+    
+    //         if (!accpetRes.ok) {
+    //             throw new Error('Failed to accept article');
+    //         }
+    
+    //         const acceptData = await accpetRes.json();
+    //         console.log('Article accept:', acceptData);
+    
+    //         router.push('/');
+    //     } catch (error) {
+    //         console.error('Error acceptting article:', error);
     //     }
     // };
 
@@ -143,7 +194,7 @@ function ModArticleDetails(){
                             </button>
                             <button
                             className='btn btn-primary float-right' style={{ color: 'black' }}
-                            onClick={() => navigate.push(`/update-articles/${id}`)}>
+                            onClick={() => AcceptClick(id)}>
                                 Accept Article
                             </button>
                         </div>
