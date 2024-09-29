@@ -47,7 +47,7 @@ function ModArticleDetails(){
             }
             const json = await res.json();
             console.log('Article rejected:', json);
-            router.push('/');
+            router.push('/moderate');
         } catch (err) {
             console.error('Error from ModArticleDetails_RejectClick:', err);
         }
@@ -64,11 +64,12 @@ function ModArticleDetails(){
             }
             const json = await res.json();
             console.log('Article accepted:', json);
-            router.push('/');
+            router.push('/moderate');
         } catch (err) {
             console.error('Error from ModArticleDetails_AcceptClick:', err);
         }
     };
+
 
     // const RejectClick = async (id: string) => {
     //     try {
