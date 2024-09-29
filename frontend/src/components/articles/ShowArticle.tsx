@@ -42,12 +42,14 @@ export default function ShowArticle() {
                 <p><strong>Practice:</strong> {article.practice}</p>
                 <p><strong>Claim:</strong> {article.claim}</p>
                 <p><strong>Evidence:</strong> {article.evidence}</p>
+                <div className="d-flex justify-content-end">
                 <button
                     className="btn btn-secondary mt-3"
                     onClick={() => router.push('/search')} // Navigate to /search page
                 >
-                    Return to Search
+                    Return
                 </button>
+                </div>
             </div>
         </div>
     );
