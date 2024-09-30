@@ -1,7 +1,12 @@
+'use client'
 import React from "react";
+import AddArticleComponent from "../../components/articles/AddArticle";
 
-const Add = () => {
-    return <div> add articles</div>
+
+export default function AddBook() {
+    return (
+        <main>
+            <AddArticleComponent/>
+        </main>
+    );
 }
-
-export default Add;

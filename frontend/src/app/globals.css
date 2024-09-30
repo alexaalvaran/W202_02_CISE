@@ -1,3 +1,100 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+.submitInfo{
+  font-size: 12px;
+  color: grey;
+}
+
+.btn{
+  color: cornflowerblue;
+  border-color: cornflowerblue;
+}
+
+.btn:hover{
+  background-color: cornflowerblue;
+  color:white;
+}
+
+.btn:focus{
+  background-color: darkblue;
+  color: white;
+}
+
+.btn:active{
+  background-color: darkblue;
+  color: white;
+}
+
+.navBar{
+  background-color: cornflowerblue;
+  color: white;
+}
+
+.addTitle{
+  margin-top: 60px;
+  font-weight: 300;
+}
+
+.homeTitle{
+  font-weight: bold;
+  font-size: xx-large;
+}
+
+.ShowArticleList{
+  background-color: white;
+  height: 100%;
+  width: 100%;
+  min-height: 100vh;
+  min-width: 100px;
+  color: black;
+}
+
+.ArticleCard{
+  background-color: cornflowerblue;
+  min-height: 100vh;
+  color: black;
+}
+
+.AddArticleInfo{
+  background-color: cornflowerblue;
+  min-height: 100vh;
+  color: black;
+}
+
+.AddArticleInfo{
+  background-color: cornflowerblue;
+  min-height: 100vh;
+  color: black;
+}
+
+.list{
+  display: grid;
+  margin: 20px 0 50px 0;
+  grid-template-columns: repeat(4,1fr);
+  grid-auto-rows: 1fr;
+  grid-gap: 2em;
+}
+
+.card-container{
+  width: 250px;
+  border: 1.5px solid cornflowerblue;
+  margin: 0 auto;
+  border-radius: 5px;
+  overflow: hidden;
+}
+
+desc {
+  height: 130px;
+  padding: 10px;
+  }
+
+  .desc h2 {
+  font-size: 1em;
+  font-weight: 400;
+  }
+  
+  .desc h3, p {
+  font-weight: 300;
+  }

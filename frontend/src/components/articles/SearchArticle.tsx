@@ -106,7 +106,7 @@ export default function SearchArticle() {
                                 />
                             </div>
                             <div className="d-flex justify-content-end">
-                                <button type="button" className="btn btn-primary btn-outline" onClick={handleSearch}>Search</button>
+                                <button type="button" className="btn btn-outline-primary" onClick={handleSearch}>Search</button>
                             </div>
                         </form>
                     </div>
