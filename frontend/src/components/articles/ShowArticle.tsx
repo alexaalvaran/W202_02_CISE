@@ -44,7 +44,7 @@ export default function ShowArticle() {
                 <p><strong>Evidence:</strong> {article.evidence}</p>
                 <div className="d-flex justify-content-end">
                 <button
-                    className="btn btn-secondary mt-3"
+                    className="btn btn-secondary btn-outline mt-3"
                     onClick={() => router.push('/search')} // Navigate to /search page
                 >
                     Return
