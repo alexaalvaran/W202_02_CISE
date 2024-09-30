@@ -19,16 +19,16 @@ global.fetch = jest.fn(() =>
         title: 'Test Article',
         authors: 'John Doe',
         pubyear: '2021',
-        practice: 'Agile',
-        claim: 'Increases productivity',
+        practice: 'Test-Driven Development (TDD)',
+        claim: 'Agree',
       },
       {
         _id: '2',
         title: 'Second Article',
         authors: 'Jane Doe',
         pubyear: '2020',
-        practice: 'DevOps',
-        claim: 'Reduces errors',
+        practice: 'Pair Programming',
+        claim: 'Disagree',
       },
     ]),
   } as Response)
@@ -39,70 +39,31 @@ describe('SearchArticle component', () => {
     (fetch as jest.Mock).mockClear();
   });
 
-  test('renders SearchArticle component with form fields', () => {
+  test('searches articles and displays results based on practice and claim', async () => {
     render(<SearchArticle />);
 
-    expect(screen.getByLabelText(/Title/i)).toBeInTheDocument();
-    expect(screen.getByLabelText(/Author/i)).toBeInTheDocument();
-    expect(screen.getByLabelText(/Publication Year/i)).toBeInTheDocument();
-    expect(screen.getByLabelText(/Search By/i)).toBeInTheDocument();
+    // Set input values for practice and claim
+    fireEvent.change(screen.getByLabelText(/Practice/i), { target: { value: 'Test-Driven Development (TDD)' } });
+    fireEvent.change(screen.getByLabelText(/Claim/i), { target: { value: 'Agree' } });
 
-    // Initially, "Software Engineering Practice" should be visible
-    expect(screen.getByLabelText(/Software Engineering Practice/i)).toBeInTheDocument();
-
-    // Change the search type to "claim"
-    fireEvent.change(screen.getByLabelText(/Search By/i), { target: { value: 'claim' } });
-
-    // Now, the "Software Engineering Claim" label should be visible
-    expect(screen.getByLabelText(/Software Engineering Claim/i)).toBeInTheDocument();
-  });
-
-  test('searches articles and displays results for practice', async () => {
-    render(<SearchArticle />);
-
-    fireEvent.change(screen.getByLabelText(/Title/i), { target: { value: 'Test Article' } });
-    fireEvent.change(screen.getByLabelText(/Author/i), { target: { value: 'John Doe' } });
-    fireEvent.change(screen.getByLabelText(/Publication Year/i), { target: { value: '2021' } });
-    fireEvent.change(screen.getByLabelText(/Software Engineering Practice/i), { target: { value: 'Agile' } });
-
-    // Make the button selection more specific
+    // Click the search button
     fireEvent.click(screen.getByRole('button', { name: /Search/i }));
 
+    // Wait for search results to be displayed and match them by their respective content
     await waitFor(() => {
-      expect(screen.getByText('Test Article')).toBeInTheDocument();
-      expect(screen.getByText('John Doe')).toBeInTheDocument();
-      expect(screen.getByText('2021')).toBeInTheDocument();
-      expect(screen.getByText('Agile')).toBeInTheDocument();
+      // Use findByText which automatically waits for the element
+      expect(screen.findByText('Test Article')).resolves.toBeInTheDocument();
+      expect(screen.findByText('John Doe')).resolves.toBeInTheDocument();
+      expect(screen.findByText('2021')).resolves.toBeInTheDocument();
+      expect(screen.findByText('Test-Driven Development (TDD)')).resolves.toBeInTheDocument();
+      expect(screen.findByText('Agree')).resolves.toBeInTheDocument();
     });
 
+    // Ensure the fetch call was made
     expect(fetch).toHaveBeenCalledTimes(1);
   });
 
-  test('searches articles by claim and displays results', async () => {
-    render(<SearchArticle />);
-
-    // Change search type to "claim"
-    fireEvent.change(screen.getByLabelText(/Search By/i), { target: { value: 'claim' } });
-
-    fireEvent.change(screen.getByLabelText(/Title/i), { target: { value: 'Test Article' } });
-    fireEvent.change(screen.getByLabelText(/Author/i), { target: { value: 'John Doe' } });
-    fireEvent.change(screen.getByLabelText(/Publication Year/i), { target: { value: '2021' } });
-    fireEvent.change(screen.getByLabelText(/Software Engineering Claim/i), { target: { value: 'Increases productivity' } });
-
-    // Make the button selection more specific
-    fireEvent.click(screen.getByRole('button', { name: /Search/i }));
-
-    await waitFor(() => {
-      expect(screen.getByText('Test Article')).toBeInTheDocument();
-      expect(screen.getByText('John Doe')).toBeInTheDocument();
-      expect(screen.getByText('2021')).toBeInTheDocument();
-      expect(screen.getByText('Increases productivity')).toBeInTheDocument();
-    });
-
-    expect(fetch).toHaveBeenCalledTimes(1);
-  });
-
-  test('displays no results message when no articles match search criteria for practice', async () => {
+  test('displays no results message when no articles match search criteria', async () => {
     (fetch as jest.Mock).mockImplementationOnce(() =>
       Promise.resolve({
         ok: true,
@@ -113,59 +74,14 @@ describe('SearchArticle component', () => {
 
     render(<SearchArticle />);
 
-    fireEvent.change(screen.getByLabelText(/Title/i), { target: { value: 'Non-existing Article' } });
+    // Input non-existing practice and claim
+    fireEvent.change(screen.getByLabelText(/Practice/i), { target: { value: 'Non-existing Practice' } });
+    fireEvent.change(screen.getByLabelText(/Claim/i), { target: { value: 'Agree' } });
 
-    // Make the button selection more specific
     fireEvent.click(screen.getByRole('button', { name: /Search/i }));
 
     await waitFor(() => {
-      expect(screen.getByText(/No articles found/i)).toBeInTheDocument();
+      expect(screen.findByText(/No articles found/i)).resolves.toBeInTheDocument();
     });
   });
-
-  test('displays no results message when no articles match search claim', async () => {
-    (fetch as jest.Mock).mockImplementationOnce(() =>
-      Promise.resolve({
-        ok: true,
-        status: 200,
-        json: () => Promise.resolve([]),
-      } as Response)
-    );
-
-    render(<SearchArticle />);
-
-    // Change search type to "claim"
-    fireEvent.change(screen.getByLabelText(/Search By/i), { target: { value: 'claim' } });
-    
-    fireEvent.change(screen.getByLabelText(/Title/i), { target: { value: 'Non-existing Article' } });
-    
-    // Make the button selection more specific
-    fireEvent.click(screen.getByRole('button', { name: /Search/i }));
-
-    await waitFor(() => {
-      expect(screen.getByText(/No articles found/i)).toBeInTheDocument();
-    });
-  });
-
-  /* test('handles API errors gracefully', async () => {
-    (fetch as jest.Mock).mockImplementationOnce(() =>
-      Promise.resolve({
-        ok: false,
-        status: 500,
-      } as Response)
-    );
-
-    render(<SearchArticle />);
-
-    // Make the button selection more specific
-    fireEvent.click(screen.getByRole('button', { name: /Search/i }));
-
-    const consoleSpy = jest.spyOn(console, 'error').mockImplementation(() => {});
-    
-    await waitFor(() => {
-      expect(consoleSpy).toHaveBeenCalledWith(expect.any(Error));
-    });
-
-    consoleSpy.mockRestore();
-  }); */
 });

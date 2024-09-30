@@ -4,11 +4,8 @@ import { useRouter } from 'next/navigation';
 import { Article } from "./Articles";
 
 export default function SearchArticle() {
-    const [title, setTitle] = useState('');
-    const [author, setAuthor] = useState('');
-    const [pubYear, setPubYear] = useState('');
-    const [searchType, setSearchType] = useState('practice'); // New state for search type (SE Practice/Claim)
-    const [searchInput, setSearchInput] = useState(''); // Input for claim or practice
+    const [practice, setPractice] = useState(''); // Input for SE Practice
+    const [claim, setClaim] = useState(''); // Input for SE Claim
     const [results, setResults] = useState<Article[]>([]);
 
     const router = useRouter();
@@ -20,14 +17,10 @@ export default function SearchArticle() {
             if (!response.ok) throw new Error('Failed to fetch articles');
     
             const allArticles = await response.json();
-    
+
             setResults(allArticles.filter((article: Article) =>
-                (!title || article.title?.toLowerCase().includes(title.toLowerCase())) &&
-                (!author || article.authors?.toLowerCase().includes(author.toLowerCase())) &&
-                (!pubYear || article.pubyear === pubYear) &&
-                (searchType === 'practice'
-                    ? article.practice?.toLowerCase().includes(searchInput.toLowerCase()) 
-                    : article.claim?.toLowerCase().includes(searchInput.toLowerCase()))
+                (!practice || article.practice?.toLowerCase().includes(practice.toLowerCase())) &&
+                (!claim || article.claim?.toLowerCase() === claim) // Ensure exact match for claim
             ));
         } catch (error) {
             console.error(error);
@@ -40,69 +33,32 @@ export default function SearchArticle() {
 
     return (
         <div className="container mt-5">
-            <h2 className="mb-4 text-center">Search Articles</h2>
+            <h2 className="mb-4 text-center"><strong>Search Articles</strong></h2>
             <div className="row justify-content-center">
                 <div className="col-md-6">
                     <div className="card p-4 mb-4">
                         <form>
+                            {/* Separate fields for SE Practice and SE Claim */}
                             <div className="mb-3">
-                                <label htmlFor="title" className="form-label">Title</label>
+                                <label htmlFor="practice" className="form-label">Practice</label>
                                 <input
                                     type="text"
-                                    id="title"
+                                    id="practice"
                                     className="form-control"
-                                    placeholder="Enter article title"
-                                    value={title}
-                                    onChange={(e) => setTitle(e.target.value)}
+                                    placeholder="Enter SE Practice"
+                                    value={practice}
+                                    onChange={(e) => setPractice(e.target.value)}
                                 />
                             </div>
                             <div className="mb-3">
-                                <label htmlFor="author" className="form-label">Author</label>
+                                <label htmlFor="claim" className="form-label">Claim</label>
                                 <input
                                     type="text"
-                                    id="author"
+                                    id="claim"
                                     className="form-control"
-                                    placeholder="Enter author's name"
-                                    value={author}
-                                    onChange={(e) => setAuthor(e.target.value)}
-                                />
-                            </div>
-                            <div className="mb-3">
-                                <label htmlFor="pubYear" className="form-label">Publication Year</label>
-                                <input
-                                    type="number"
-                                    id="pubYear"
-                                    className="form-control"
-                                    placeholder="Enter publication year"
-                                    value={pubYear}
-                                    onChange={(e) => setPubYear(e.target.value)}
-                                />
-                            </div>
-                            {/* Dropdown to select between SE Practice or SE Claim */}
-                            <div className="mb-3">
-                                <label htmlFor="searchType" className="form-label">Search By</label>
-                                <select
-                                    id="searchType"
-                                    className="form-select"
-                                    value={searchType}
-                                    onChange={(e) => setSearchType(e.target.value)}
-                                >
-                                    <option value="practice">SE Practice</option>
-                                    <option value="claim">SE Claim</option>
-                                </select>
-                            </div>
-                            {/* Input for either SE Practice or SE Claim */}
-                            <div className="mb-3">
-                                <label htmlFor="searchInput" className="form-label">
-                                    {searchType === 'practice' ? 'Software Engineering Practice' : 'Software Engineering Claim'}
-                                </label>
-                                <input
-                                    type="text"
-                                    id="searchInput"
-                                    className="form-control"
-                                    placeholder={searchType === 'practice' ? 'Enter SE Practice' : 'Enter SE Claim'}
-                                    value={searchInput}
-                                    onChange={(e) => setSearchInput(e.target.value)}
+                                    placeholder="Enter SE Claim (Agree/Disagree)"
+                                    value={claim}
+                                    onChange={(e) => setClaim(e.target.value)}
                                 />
                             </div>
                             <div className="d-flex justify-content-end">
@@ -122,13 +78,9 @@ export default function SearchArticle() {
                                     <h5 className="card-title"><strong>{article.title}</strong></h5>
                                     <p className="card-text"><strong>Author:</strong> {article.authors}</p>
                                     <p className="card-text"><strong>Year:</strong> {article.pubyear}</p>
-                                    {/* Conditionally display either practice or claim based on search type */}
-                                    {searchType === 'practice' && (
-                                        <p className="card-text"><strong>Practice:</strong> {article.practice}</p>
-                                    )}
-                                    {searchType === 'claim' && (
-                                        <p className="card-text"><strong>Claim:</strong> {article.claim}</p>
-                                    )}
+                                    {/* Display both practice and claim */}
+                                    <p className="card-text"><strong>Practice:</strong> {article.practice}</p>
+                                    <p className="card-text"><strong>Claim:</strong> {article.claim}</p>
                                 </div>
                             </div>
                         </div>
