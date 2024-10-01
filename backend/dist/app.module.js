@@ -10,6 +10,7 @@ exports.AppModule = void 0;
 const common_1 = require("@nestjs/common");
 const config_1 = require("@nestjs/config");
 const mongoose_1 = require("@nestjs/mongoose");
+const acceptedArticle_module_1 = require("./api/acceptedArticles/acceptedArticle.module");
 const article_module_1 = require("./api/articles/article.module");
 const rejectArticle_module_1 = require("./api/rejectArticles/rejectArticle.module");
 const user_module_1 = require("./api/users/user.module");
@@ -25,7 +26,8 @@ exports.AppModule = AppModule = __decorate([
             mongoose_1.MongooseModule.forRoot(process.env.DB_URI),
             article_module_1.ArticleModule,
             user_module_1.UserModule,
-            rejectArticle_module_1.RejectArticleModule
+            rejectArticle_module_1.RejectArticleModule,
+            acceptedArticle_module_1.AcceptArticleModule
         ],
         controllers: [app_controller_1.AppController],
         providers: [app_service_1.AppService],

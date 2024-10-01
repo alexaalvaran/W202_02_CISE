@@ -84,7 +84,7 @@ function ModArticleDetails(){
             const articleData = await articleRes.json();
             console.log('Fetched Article:', articleData);
     
-            const confirmReject = window.confirm('Are you sure you want to reject this article?');
+            const confirmReject = window.confirm('Are you sure you want to reject this article? \nYou will be redirected to the moderation page after clicking "OK".');
             if (!confirmReject) return;
     
             const rejectRes = await fetch(`${process.env.NEXT_PUBLIC_BACKEND_URL}/api/rejectArticles/${id}`, {
@@ -117,7 +117,7 @@ function ModArticleDetails(){
             const articleData = await articleRes.json();
             console.log('Fetched Article:', articleData);
     
-            const confirmAccept = window.confirm('Are you sure you want to accept this article?');
+            const confirmAccept = window.confirm('Are you sure you want to accept this article? \nYou will be redirected to the moderation page after clicking "OK".');
             if (!confirmAccept) return;
     
             const accpetRes = await fetch(`${process.env.NEXT_PUBLIC_BACKEND_URL}/api/acceptArticles/${id}`, {
