@@ -1,7 +1,7 @@
-'use client'
-import { useState } from "react";
+'use client';
+import { useState } from 'react';
 import { useRouter } from 'next/navigation';
-import { Article } from "./Articles";
+import { Article } from './Articles';
 
 export default function SearchArticle() {
     const [practice, setPractice] = useState(''); // Input for SE Practice
@@ -15,7 +15,7 @@ export default function SearchArticle() {
             const response = await fetch(process.env.NEXT_PUBLIC_BACKEND_URL + '/api/articles/');
 
             if (!response.ok) throw new Error('Failed to fetch articles');
-    
+
             const allArticles = await response.json();
 
             setResults(allArticles.filter((article: Article) =>
@@ -26,8 +26,8 @@ export default function SearchArticle() {
             console.error(error);
         }
     };
-    
-    const handleCardClick = (article: Article) => {
+
+    const handleRowClick = (article: Article) => {
         router.push(`/show-article/${article._id}`);
     };
 
@@ -71,20 +71,30 @@ export default function SearchArticle() {
 
             <div className="row">
                 {results.length > 0 ? (
-                    results.map(article => (
-                        <div key={article._id} className="col-md-4 mb-4">
-                            <div className="card h-100" onClick={() => handleCardClick(article)} style={{ cursor: 'pointer' }}>
-                                <div className="card-body">
-                                    <h5 className="card-title"><strong>{article.title}</strong></h5>
-                                    <p className="card-text"><strong>Author:</strong> {article.authors}</p>
-                                    <p className="card-text"><strong>Year:</strong> {article.pubyear}</p>
-                                    {/* Display both practice and claim */}
-                                    <p className="card-text"><strong>Practice:</strong> {article.practice}</p>
-                                    <p className="card-text"><strong>Claim:</strong> {article.claim}</p>
-                                </div>
-                            </div>
-                        </div>
-                    ))
+                    <div className="col-12">
+                        <table className="table table-bordered table-hover">
+                            <thead>
+                                <tr>
+                                    <th>Title</th>
+                                    <th>Author(s)</th>
+                                    <th>Year</th>
+                                    <th>Practice</th>
+                                    <th>Claim</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                {results.map(article => (
+                                    <tr key={article._id} onClick={() => handleRowClick(article)} style={{ cursor: 'pointer' }}>
+                                        <td>{article.title}</td>
+                                        <td>{article.authors}</td>
+                                        <td>{article.pubyear}</td>
+                                        <td>{article.practice}</td>
+                                        <td>{article.claim}</td>
+                                    </tr>
+                                ))}
+                            </tbody>
+                        </table>
+                    </div>
                 ) : (
                     <div className="col-12">
                         <p className="text-center">No articles found. Please adjust your search criteria.</p>
