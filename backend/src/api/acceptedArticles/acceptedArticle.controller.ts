@@ -5,10 +5,13 @@ import { AcceptedArticleService } from './acceptedArticle.service';
 export class AcceptedArticleController {
     constructor(private readonly acceptArticleService: AcceptedArticleService) {}
 
-    // Get all accepted articles
     @Get()
     async findAll() {
-        return this.acceptArticleService.findAll();
+        try {
+            return await this.acceptArticleService.findAll();
+        } catch (error) {
+            throw new HttpException('Failed to retrieve rejected articles', HttpStatus.INTERNAL_SERVER_ERROR);
+        }
     }
 
     // Accept an article and move it to the acceptedArticles collection

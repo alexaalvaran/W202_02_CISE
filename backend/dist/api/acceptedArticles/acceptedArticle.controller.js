@@ -20,7 +20,12 @@ let AcceptedArticleController = class AcceptedArticleController {
         this.acceptArticleService = acceptArticleService;
     }
     async findAll() {
-        return this.acceptArticleService.findAll();
+        try {
+            return await this.acceptArticleService.findAll();
+        }
+        catch (error) {
+            throw new common_1.HttpException('Failed to retrieve rejected articles', common_1.HttpStatus.INTERNAL_SERVER_ERROR);
+        }
     }
     async acceptedArticle(id) {
         try {
