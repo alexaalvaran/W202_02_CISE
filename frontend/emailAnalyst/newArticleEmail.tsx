@@ -30,9 +30,9 @@ const transporter = nodemailer.createTransport({
     //function to find errors from transporter
      transporter.sendMail(mailOptions, function(error: string, info: { response: string; }){
     if (error) {
-      console.log("Error:" + error);
+      console.log("Error recieved: " + error);
     } else {
-      console.log("Email sent: " + info.response);
+      console.log("Email was sent: " + info.response);
     }
   });
 
