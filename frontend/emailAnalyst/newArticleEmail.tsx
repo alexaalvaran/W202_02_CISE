@@ -27,8 +27,6 @@ const transporter = nodemailer.createTransport({
     
   }
 
-
-
     //function to find errors from transporter
      transporter.sendMail(mailOptions, function(error: string, info: { response: string; }){
     if (error) {
