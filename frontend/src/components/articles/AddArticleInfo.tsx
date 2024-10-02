@@ -38,6 +38,12 @@ function AddArticleInfo() {
         })
         .then((res) => {
             if (res.ok) {
+                fetch(process.env.NEXT_PUBLIC_BACKEND_URL + `/api/submittedStatus`,{
+                    method: 'POST',
+                    headers: {'Content-Type': 'application/json'},
+                    body: JSON.stringify(article
+                    ),
+                })
                 router.push(`/show-articles/${id}`);
             } else {
                 console.log("Failed to update article");
@@ -46,6 +52,7 @@ function AddArticleInfo() {
         .catch((err) => {
             console.log("Error from AddArticleInfo: " + err);
         });
+
     };
 
     return (
