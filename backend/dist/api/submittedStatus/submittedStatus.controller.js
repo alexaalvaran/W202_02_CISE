@@ -19,16 +19,25 @@ let SubmittedStatusController = class SubmittedStatusController {
     constructor(submittedStatusService) {
         this.submittedStatusService = submittedStatusService;
     }
-    async sendEmail({ email }) {
+    async sendEmail({ email, type }) {
+        if (!email || !type) {
+            throw new common_1.BadRequestException('Missing email or email type');
+        }
+        const emailTemplate = this.submittedStatusService.getEmailTemplate(type);
+        if (!emailTemplate) {
+            throw new common_1.BadRequestException('Invalid email type');
+        }
         try {
             const foundEmail = await this.submittedStatusService.findEmail(email);
             if (!foundEmail) {
                 throw new common_1.HttpException('Email not found', common_1.HttpStatus.NOT_FOUND);
             }
-            await this.submittedStatusService.sendEmail(foundEmail.email);
+            await this.submittedStatusService.sendEmail(foundEmail.email, emailTemplate.subject, emailTemplate.text, emailTemplate.html);
             return { status: 200, message: 'Email sent successfully' };
+            console.log('Email sent successfully');
         }
         catch (error) {
+            console.error('Error sending email:', error);
             console.error('Error:', error);
             throw new common_1.HttpException('Failed to send email', common_1.HttpStatus.INTERNAL_SERVER_ERROR);
         }

@@ -3,7 +3,7 @@ import * as nodemailer from 'nodemailer';
 
 @Injectable()
 export class SubmittedStatusService {
-  async sendEmail(email: string): Promise<void> {
+  async sendEmail(email: string, subject: string, text: string, html: string) {
     const transporter = nodemailer.createTransport({
       service: 'gmail',
       host: 'smtp.gmail.com',
@@ -19,9 +19,9 @@ export class SubmittedStatusService {
       await transporter.sendMail({
         from: process.env.GMAIL_USER, // sender address
         to: email, // receiver email
-        subject: `SPEED Article Status`, // Subject line
-        text: 'SPEED Article Approved', // plain text body
-        html: '<p>Approved</p>', // HTML body
+        subject: subject, // Subject line
+        text: text, // plain text body
+        html: html, // HTML body
       });
     } catch (error) {
       console.error('Error sending email:', error);
@@ -29,9 +29,33 @@ export class SubmittedStatusService {
     }
   }
 
-  // Simulate a method to find the email in your database
+  getEmailTemplate(emailType: string){
+    const emailTemplates = {
+      approved: {
+        subject: 'SPEED Article Status',
+        text: 'Your submitted SPEED article has been approved',
+        html: '<h1> SPEED ARTILCE STATUS </h1> <p> Your submitted SPEED article has been approved. </p> <p> You can check your submitted article at ... </p>',
+      },
+      rejected: {
+        subject: 'SPEED Article Status',
+        text: 'Your submitted SPEED article has been rejected',
+        html: '<h1> SPEED ARTILCE STATUS </h1> <p> Your submitted SPEED article has been rejected. </p> <p> You can submit a new article</p>',
+      },
+      analyst: {
+        subject: 'SPEED Article',
+        text: 'New Articles',
+        html: '<h1> NEW SPEED ARTILCES </h1> <p> There are new articles to be analysed in SPEED. </p> <p> You can check the queue here </p>',
+      },
+      moderator: {
+        subject: 'SPEED Article',
+        text: 'New Articles',
+        html: '<h1> NEW SPEED ARTILCES </h1> <p> There are new articles to be moderated in SPEED. </p> <p> You can check the queue here </p>',
+      },
+    };
+
+    return emailTemplates[emailType] || null;
+  }
   async findEmail(email: string): Promise<{ email: string }> {
-    // Add your logic here to find the email from the database
     return { email };
   }
 }

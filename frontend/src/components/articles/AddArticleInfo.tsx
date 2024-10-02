@@ -29,6 +29,11 @@ function AddArticleInfo() {
     // Submit form and update article
     const onSubmit = (event: FormEvent<HTMLFormElement>) => {
         event.preventDefault();
+
+        const emailType = "approved";
+
+        // Merge the emailType into the article object
+        const updatedArticle = { article, emailType};
         
         // Perform the PUT request to update the article
         fetch(process.env.NEXT_PUBLIC_BACKEND_URL + `/api/articles/${id}`, {
