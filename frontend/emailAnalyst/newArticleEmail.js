@@ -1,6 +1,7 @@
-import { Button } from "@react-email/components";
+
 
 const nodemailer = require("nodemailer");
+const newArticleEmail = require('./newArticleEmail');
 //require("dotenv").config();
 
 //Creates resusable transporter object
@@ -17,23 +18,23 @@ const transporter = nodemailer.createTransport({
 
   const mailOptions = {
     from: {
-        name: 'Adrienne Chiu',
+        name: 'W202_02 SPEED APP',
         address:'rienne0203@gmail.com'
     }, //sender email
     to: "achiu.heart@gmail.com, ymw7320@autuni.ac.nz",  //reciever email
-    subject: "APP new articles", //email subject line 
-    text: "New articles waiting to be reviewed", //email body text
+    subject: "APP new articles for analyst", //email subject line 
+    text: "New articles waiting to be reviewed by analyst. Please use button below to redirect to analyst page.", //email body text
     html: "<b>You have new articles waiting to be reviewed. Please login and check.</b>", //html body text
     
   }
 
     //function to find errors from transporter
-     transporter.sendMail(mailOptions, function(error: string, info: { response: string; }){
-    if (error) {
-      console.log("Error recieved: " + error);
-    } else {
-      console.log("Email was sent: " + info.response);
-    }
-  });
+    transporter.sendMail(mailOptions, (error, info) => {
+      if (error) {
+        return console.log(error);
+      }
+      console.log('Email sent successfully: ' + info.response);
+    });
 
   
+
