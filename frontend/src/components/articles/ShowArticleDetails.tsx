@@ -1,10 +1,9 @@
 'use client'
 
-import React, {useState, useEffect} from 'react';
-import { useParams, useRouter } from 'next/navigation';
-import { Article, DefaultArticle } from './Article';
 import Link from 'next/link';
-import ArticleCard from './ArticleCard';
+import { useParams, useRouter } from 'next/navigation';
+import { useEffect, useState } from 'react';
+import { Article, DefaultArticle } from './Article';
 
 
 function ShowArticleDetails(){
@@ -13,7 +12,7 @@ function ShowArticleDetails(){
     const navigate = useRouter();
 
     useEffect(() => {
-        fetch(process.env.NEXT_PUBLIC_BACKEND_URL + `/api/articles/${id}`)
+        fetch(process.env.NEXT_PUBLIC_BACKEND_URL + `/api/acceptArticles/${id}`)
         .then((res) => {
             if (!res.ok) {
                 throw new Error('Failed to fetch article');
@@ -29,7 +28,7 @@ function ShowArticleDetails(){
     },[id]);
     
     const onDeleteClick = (id: string) => {
-        fetch(process.env.NEXT_PUBLIC_BACKEND_URL + `/api/articles/${id}`, { method: 'DELETE' })
+        fetch(process.env.NEXT_PUBLIC_BACKEND_URL + `/api/rejectArticles/${id}`, { method: 'DELETE' })
         .then((res) => {
         navigate.push('/');
         })

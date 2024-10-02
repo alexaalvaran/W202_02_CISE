@@ -6,5 +6,6 @@ export declare class AcceptedArticleService {
     private articleModel;
     constructor(acceptedArticleModel: Model<AcceptedArticleDocument>, articleModel: Model<ArticleDocument>);
     findAll(): Promise<AcceptedArticle[]>;
+    findOne(id: string): Promise<AcceptedArticle>;
     acceptArticle(id: string): Promise<AcceptedArticle>;
 }
