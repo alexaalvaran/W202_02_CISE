@@ -1,3 +1,4 @@
+import { HttpStatus } from '@nestjs/common';
 import { SubmittedStatusService } from './submittedStatus.service';
 export declare class SubmittedStatusController {
     private readonly submittedStatusService;
@@ -6,7 +7,7 @@ export declare class SubmittedStatusController {
         email: string;
         type: string;
     }): Promise<{
-        status: number;
+        status: HttpStatus;
         message: string;
     }>;
 }

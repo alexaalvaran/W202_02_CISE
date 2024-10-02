@@ -3,7 +3,14 @@ import * as nodemailer from 'nodemailer';
 
 @Injectable()
 export class SubmittedStatusService {
-  async sendEmail(email: string, subject: string, text: string, html: string) {
+  // Other methods...
+
+  async sendEmailBasedOnType(email: string, type: string): Promise<void> {
+    const emailTemplate = this.getEmailTemplate(type);
+    if (!emailTemplate) {
+      throw new Error('Invalid email type');
+    }
+
     const transporter = nodemailer.createTransport({
       service: 'gmail',
       host: 'smtp.gmail.com',
@@ -17,11 +24,11 @@ export class SubmittedStatusService {
 
     try {
       await transporter.sendMail({
-        from: process.env.GMAIL_USER, // sender address
-        to: email, // receiver email
-        subject: subject, // Subject line
-        text: text, // plain text body
-        html: html, // HTML body
+        from: process.env.GMAIL_USER,
+        to: email,
+        subject: emailTemplate.subject,
+        text: emailTemplate.text,
+        html: emailTemplate.html,
       });
     } catch (error) {
       console.error('Error sending email:', error);
@@ -29,33 +36,27 @@ export class SubmittedStatusService {
     }
   }
 
-  getEmailTemplate(emailType: string){
-    const emailTemplates = {
+  getEmailTemplate(type: string) {
+    const templates = {
       approved: {
-        subject: 'SPEED Article Status',
-        text: 'Your submitted SPEED article has been approved',
-        html: '<h1> SPEED ARTILCE STATUS </h1> <p> Your submitted SPEED article has been approved. </p> <p> You can check your submitted article at ... </p>',
+        subject: 'SPEED Article Approved',
+        text: 'Your article has been approved.',
+        html: '<p>Your article has been approved.</p>',
       },
       rejected: {
-        subject: 'SPEED Article Status',
-        text: 'Your submitted SPEED article has been rejected',
-        html: '<h1> SPEED ARTILCE STATUS </h1> <p> Your submitted SPEED article has been rejected. </p> <p> You can submit a new article</p>',
+        subject: 'SPEED Article Rejected',
+        text: 'Your article has been rejected.',
+        html: '<p>Your article has been rejected.</p>',
       },
-      analyst: {
-        subject: 'SPEED Article',
-        text: 'New Articles',
-        html: '<h1> NEW SPEED ARTILCES </h1> <p> There are new articles to be analysed in SPEED. </p> <p> You can check the queue here </p>',
-      },
-      moderator: {
-        subject: 'SPEED Article',
-        text: 'New Articles',
-        html: '<h1> NEW SPEED ARTILCES </h1> <p> There are new articles to be moderated in SPEED. </p> <p> You can check the queue here </p>',
-      },
+      moderate : {
+        subject: 'New SPEED Article',
+        text: 'There are new articles to be moderated',
+        html: '<p>There are new articles to be moderated</p>',
+      }
     };
 
-    return emailTemplates[emailType] || null;
+    return templates[type] || null;
   }
-  async findEmail(email: string): Promise<{ email: string }> {
-    return { email };
-  }
+
+
 }

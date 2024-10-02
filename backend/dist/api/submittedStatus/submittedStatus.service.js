@@ -10,7 +10,11 @@ exports.SubmittedStatusService = void 0;
 const common_1 = require("@nestjs/common");
 const nodemailer = require("nodemailer");
 let SubmittedStatusService = class SubmittedStatusService {
-    async sendEmail(email, subject, text, html) {
+    async sendEmailBasedOnType(email, type) {
+        const emailTemplate = this.getEmailTemplate(type);
+        if (!emailTemplate) {
+            throw new Error('Invalid email type');
+        }
         const transporter = nodemailer.createTransport({
             service: 'gmail',
             host: 'smtp.gmail.com',
@@ -25,9 +29,9 @@ let SubmittedStatusService = class SubmittedStatusService {
             await transporter.sendMail({
                 from: process.env.GMAIL_USER,
                 to: email,
-                subject: subject,
-                text: text,
-                html: html,
+                subject: emailTemplate.subject,
+                text: emailTemplate.text,
+                html: emailTemplate.html,
             });
         }
         catch (error) {
@@ -35,33 +39,25 @@ let SubmittedStatusService = class SubmittedStatusService {
             throw new Error('Failed to send email');
         }
     }
-    getEmailTemplate(emailType) {
-        const emailTemplates = {
+    getEmailTemplate(type) {
+        const templates = {
             approved: {
-                subject: 'SPEED Article Status',
-                text: 'Your submitted SPEED article has been approved',
-                html: '<h1> SPEED ARTILCE STATUS </h1> <p> Your submitted SPEED article has been approved. </p> <p> You can check your submitted article at ... </p>',
+                subject: 'SPEED Article Approved',
+                text: 'Your article has been approved.',
+                html: '<p>Your article has been approved.</p>',
             },
             rejected: {
-                subject: 'SPEED Article Status',
-                text: 'Your submitted SPEED article has been rejected',
-                html: '<h1> SPEED ARTILCE STATUS </h1> <p> Your submitted SPEED article has been rejected. </p> <p> You can submit a new article</p>',
+                subject: 'SPEED Article Rejected',
+                text: 'Your article has been rejected.',
+                html: '<p>Your article has been rejected.</p>',
             },
-            analyst: {
-                subject: 'SPEED Article',
-                text: 'New Articles',
-                html: '<h1> NEW SPEED ARTILCES </h1> <p> There are new articles to be analysed in SPEED. </p> <p> You can check the queue here </p>',
-            },
-            moderator: {
-                subject: 'SPEED Article',
-                text: 'New Articles',
-                html: '<h1> NEW SPEED ARTILCES </h1> <p> There are new articles to be moderated in SPEED. </p> <p> You can check the queue here </p>',
-            },
+            moderate: {
+                subject: 'New SPEED Article',
+                text: 'There are new articles to be moderated',
+                html: '<p>There are new articles to be moderated</p>',
+            }
         };
-        return emailTemplates[emailType] || null;
-    }
-    async findEmail(email) {
-        return { email };
+        return templates[type] || null;
     }
 };
 exports.SubmittedStatusService = SubmittedStatusService;
