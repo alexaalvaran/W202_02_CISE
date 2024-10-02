@@ -1,5 +1,6 @@
-import { Controller, Get, HttpException, HttpStatus, Param, Post } from '@nestjs/common';
+import { Body, Controller, Get, HttpException, HttpStatus, Param, Post, Put } from '@nestjs/common';
 import { error } from 'console';
+import { CreateArticleDto } from '../articles/create-article.dto';
 import { AcceptedArticleService } from './acceptedArticle.service';
 
 @Controller('/api/acceptArticles')
@@ -27,6 +28,27 @@ export class AcceptedArticleController {
                 },
                 HttpStatus.NOT_FOUND,
                 {cause:error},
+            );
+        }
+    }
+
+    //Update an article
+    @Put('/:id')
+    async updateArticle(
+        @Param("id")id:string,
+        @Body() createArticleDto:CreateArticleDto,
+    ){
+        try {
+            await this.acceptArticleService.update(id, createArticleDto);
+            return {message: 'Article updated'};
+        } catch {
+            throw new HttpException(
+                {
+                    status: HttpStatus.BAD_REQUEST,
+                    error: 'Unable to update book',
+                },
+                HttpStatus.BAD_REQUEST,
+                { cause: error},
             );
         }
     }

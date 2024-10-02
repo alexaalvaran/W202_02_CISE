@@ -29,6 +29,9 @@ let AcceptedArticleService = class AcceptedArticleService {
     async findOne(id) {
         return await this.acceptedArticleModel.findById(id).exec();
     }
+    async update(id, createArticleDto) {
+        return await this.articleModel.findByIdAndUpdate(id, createArticleDto).exec();
+    }
     async acceptArticle(id) {
         const article = await this.articleModel.findById(id).exec();
         if (!article) {

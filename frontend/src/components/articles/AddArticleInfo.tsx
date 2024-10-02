@@ -1,7 +1,6 @@
-import React, { useState, useEffect, ChangeEvent, FormEvent } from 'react';
 import { useParams, useRouter } from 'next/navigation';
+import { ChangeEvent, FormEvent, useEffect, useState } from 'react';
 import { Article, DefaultArticle } from './Article';
-import Link from 'next/link';
 
 function AddArticleInfo() {
     const [article, setArticle] = useState<Article>(DefaultArticle);
@@ -9,12 +8,28 @@ function AddArticleInfo() {
     const router = useRouter();
 
     // Fetch article data when the component mounts
+    // useEffect(() => {
+    //     fetch(process.env.NEXT_PUBLIC_BACKEND_URL + `/api/articles/${id}`)
+    //         .then((res) => res.json())
+    //         .then((json) => setArticle(json))
+    //         .catch((err) => console.log('Error from AddArticleInfo: ' + err));
+    // }, [id]);
+
     useEffect(() => {
-        fetch(process.env.NEXT_PUBLIC_BACKEND_URL + `/api/articles/${id}`)
-            .then((res) => res.json())
-            .then((json) => setArticle(json))
-            .catch((err) => console.log('Error from AddArticleInfo: ' + err));
-    }, [id]);
+        fetch(process.env.NEXT_PUBLIC_BACKEND_URL + `/api/acceptArticles/${id}`)
+        .then((res) => {
+            if (!res.ok) {
+                throw new Error('Failed to fetch article');
+            }
+            return res.json();
+        })
+        .then((json) => {
+            setArticle(json);
+        })
+        .catch((err) => {
+            console.log('Error from ShowArticleDetails: ' + err);
+        });
+    },[id]);
 
     // Handle input changes for text inputs
     const inputOnChange = (event: ChangeEvent<HTMLInputElement>) => {
@@ -27,26 +42,48 @@ function AddArticleInfo() {
     };
 
     // Submit form and update article
-    const onSubmit = (event: FormEvent<HTMLFormElement>) => {
-        event.preventDefault();
+    // const onSubmit = (event: FormEvent<HTMLFormElement>) => {
+    //     event.preventDefault();
         
-        // Perform the PUT request to update the article
-        fetch(process.env.NEXT_PUBLIC_BACKEND_URL + `/api/articles/${id}`, {
-            method: 'PUT',
-            headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify(article),
-        })
-        .then((res) => {
+    //     // Perform the PUT request to update the article
+    //     fetch(process.env.NEXT_PUBLIC_BACKEND_URL + `/api/acceptArticles/${id}`, {
+    //         method: 'PUT',
+    //         headers: { 'Content-Type': 'application/json' },
+    //         body: JSON.stringify(article),
+    //     })
+    //     .then((res) => {
+    //         if (res.ok) {
+    //             router.push(`/show-articles/${id}`);
+    //         } else {
+    //             console.log("Failed to update article");
+    //         }
+    //     })
+    //     .catch((err) => {
+    //         console.log("Error from AddArticleInfo: " + err);
+    //     });
+    // };
+
+    const onSubmit = async (event: FormEvent<HTMLFormElement>) => {
+        event.preventDefault();
+    
+        try {
+            const res = await fetch(process.env.NEXT_PUBLIC_BACKEND_URL + `/api/acceptArticles/${id}`, {
+                method: 'PUT',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify(article),
+            });
+    
             if (res.ok) {
                 router.push(`/show-articles/${id}`);
             } else {
-                console.log("Failed to update article");
+                const errorData = await res.json();
+                console.error("Failed to update article:", errorData);
             }
-        })
-        .catch((err) => {
-            console.log("Error from AddArticleInfo: " + err);
-        });
+        } catch (err) {
+            console.error("Error from AddArticleInfo:", err);
+        }
     };
+    
 
     return (
         <div className='UpdateArticleInfo'>

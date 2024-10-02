@@ -2,6 +2,7 @@ import { HttpException, HttpStatus, Injectable } from '@nestjs/common';
 import { InjectModel } from '@nestjs/mongoose';
 import { Model } from 'mongoose';
 import { Article, ArticleDocument } from '../articles/article.schema';
+import { CreateArticleDto } from '../articles/create-article.dto';
 import { AcceptedArticle, AcceptedArticleDocument } from './acceptedArticle.schema';
 
 @Injectable()
@@ -19,6 +20,11 @@ export class AcceptedArticleService {
     async findOne(id:string): Promise<AcceptedArticle>{
         return await this.acceptedArticleModel.findById(id).exec();
     }
+
+    async update(id: string, createArticleDto:CreateArticleDto){
+        return await this.articleModel.findByIdAndUpdate(id, createArticleDto).exec();
+    }
+    
     // Accept an article and move it to the acceptedArticles collection
     async acceptArticle(id: string): Promise<AcceptedArticle> {
         // Step 1: Find the article in the articles collection

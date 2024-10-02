@@ -15,6 +15,7 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.AcceptedArticleController = void 0;
 const common_1 = require("@nestjs/common");
 const console_1 = require("console");
+const create_article_dto_1 = require("../articles/create-article.dto");
 const acceptedArticle_service_1 = require("./acceptedArticle.service");
 let AcceptedArticleController = class AcceptedArticleController {
     constructor(acceptArticleService) {
@@ -37,6 +38,18 @@ let AcceptedArticleController = class AcceptedArticleController {
                 status: common_1.HttpStatus.NOT_FOUND,
                 error: 'No article found',
             }, common_1.HttpStatus.NOT_FOUND, { cause: console_1.error });
+        }
+    }
+    async updateArticle(id, createArticleDto) {
+        try {
+            await this.acceptArticleService.update(id, createArticleDto);
+            return { message: 'Article updated' };
+        }
+        catch {
+            throw new common_1.HttpException({
+                status: common_1.HttpStatus.BAD_REQUEST,
+                error: 'Unable to update book',
+            }, common_1.HttpStatus.BAD_REQUEST, { cause: console_1.error });
         }
     }
     async acceptedArticle(id) {
@@ -63,6 +76,14 @@ __decorate([
     __metadata("design:paramtypes", [String]),
     __metadata("design:returntype", Promise)
 ], AcceptedArticleController.prototype, "findOne", null);
+__decorate([
+    (0, common_1.Put)('/:id'),
+    __param(0, (0, common_1.Param)("id")),
+    __param(1, (0, common_1.Body)()),
+    __metadata("design:type", Function),
+    __metadata("design:paramtypes", [String, create_article_dto_1.CreateArticleDto]),
+    __metadata("design:returntype", Promise)
+], AcceptedArticleController.prototype, "updateArticle", null);
 __decorate([
     (0, common_1.Post)('/:id'),
     __param(0, (0, common_1.Param)('id')),
