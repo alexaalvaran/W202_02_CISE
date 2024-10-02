@@ -1,7 +1,11 @@
-import React from "react";
+'use client'
 
-const Search = () => {
-    return <div> search articles</div>
+import SearchArticle from "../../components/articles/SearchArticle";
+
+export default function SearchBook() {
+    return (
+        <main>
+            <SearchArticle/>
+        </main>
+    );
 }
-
-export default Search;
