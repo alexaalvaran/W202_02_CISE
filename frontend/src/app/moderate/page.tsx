@@ -1,7 +1,12 @@
-import React from "react";
+'use client'
+import ShowModList from "@/components/articles/ShowModList";
 
 const Moderate = () => {
-    return <div> moderate articles</div>
+    return (
+        <main>
+            <ShowModList/>
+        </main>
+    )
 }
 
 export default Moderate;
