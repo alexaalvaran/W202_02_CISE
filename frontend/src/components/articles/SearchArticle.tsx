@@ -20,7 +20,7 @@ export default function SearchArticle() {
 
             setResults(allArticles.filter((article: Article) =>
                 (!practice || article.practice?.toLowerCase().includes(practice.toLowerCase())) &&
-                (!claim || article.claim?.toLowerCase() === claim) // Ensure exact match for claim
+                (!claim || article.claim?.toLowerCase().includes(claim.toLowerCase())) 
             ));
         } catch (error) {
             console.error(error);
@@ -38,7 +38,6 @@ export default function SearchArticle() {
                 <div className="col-md-6">
                     <div className="card p-4 mb-4">
                         <form>
-                            {/* Separate fields for SE Practice and SE Claim */}
                             <div className="mb-3">
                                 <label htmlFor="practice" className="form-label">Practice</label>
                                 <input

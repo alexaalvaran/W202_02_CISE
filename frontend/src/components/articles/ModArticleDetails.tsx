@@ -4,36 +4,36 @@ import { useParams, useRouter } from 'next/navigation';
 import { useEffect, useState } from 'react';
 import { Article, DefaultArticle } from './Article';
 
-function ModArticleDetails(){
+function ModArticleDetails() {
     const [article, setArticle] = useState<Article>(DefaultArticle);
-    const id = useParams<{id:string}>().id;
+    const id = useParams<{ id: string }>().id;
     const navigate = useRouter();
     const router = useRouter();
 
     useEffect(() => {
         fetch(process.env.NEXT_PUBLIC_BACKEND_URL + `/api/articles/${id}`)
-        .then((res) => {
-            if (!res.ok) {
-                throw new Error('Failed to fetch article');
-            }
-            return res.json();
-        })
-        .then((json) => {
-            setArticle(json);
-        })
-        .catch((err) => {
-            console.log('Error from ModArticleDetails: ' + err);
-        });
-    },[id]);
-    
+            .then((res) => {
+                if (!res.ok) {
+                    throw new Error('Failed to fetch article');
+                }
+                return res.json();
+            })
+            .then((json) => {
+                setArticle(json);
+            })
+            .catch((err) => {
+                console.log('Error from ModArticleDetails: ' + err);
+            });
+    }, [id]);
+
     const onDeleteClick = (id: string) => {
         fetch(process.env.NEXT_PUBLIC_BACKEND_URL + `/api/rejectArticles/${id}`, { method: 'DELETE' })
-        .then((res) => {
-        navigate.push('/');
-        })
-        .catch((err) => {
-        console.log('Error form ModArticlesDetails_deleteClick: ' + err);
-        });
+            .then((res) => {
+                navigate.push('/');
+            })
+            .catch((err) => {
+                console.log('Error form ModArticlesDetails_deleteClick: ' + err);
+            });
     }
 
     // const RejectClick = async (id: string) => {
@@ -41,7 +41,7 @@ function ModArticleDetails(){
     //         const res = await fetch(process.env.NEXT_PUBLIC_BACKEND_URL + `/api/rejectArticles/${id}`, {
     //             method: 'POST',
     //         });
-            
+
     //         if (!res.ok) {
     //             throw new Error('Failed to reject article');
     //         }
@@ -76,28 +76,28 @@ function ModArticleDetails(){
             const articleRes = await fetch(`${process.env.NEXT_PUBLIC_BACKEND_URL}/api/articles/${id}`, {
                 method: 'GET',
             });
-    
+
             if (!articleRes.ok) {
                 throw new Error('Failed to fetch article');
             }
-    
+
             const articleData = await articleRes.json();
             console.log('Fetched Article:', articleData);
-    
+
             const confirmReject = window.confirm('Are you sure you want to reject this article? \nYou will be redirected to the moderation page after clicking "OK".');
             if (!confirmReject) return;
-    
+
             const rejectRes = await fetch(`${process.env.NEXT_PUBLIC_BACKEND_URL}/api/rejectArticles/${id}`, {
                 method: 'POST',
             });
-    
+
             if (!rejectRes.ok) {
                 throw new Error('Failed to reject article');
             }
-    
+
             const rejectData = await rejectRes.json();
             console.log('Article rejected:', rejectData);
-    
+
             router.push('/moderate');
         } catch (error) {
             console.error('Error handling article rejection:', error);
@@ -109,28 +109,28 @@ function ModArticleDetails(){
             const articleRes = await fetch(`${process.env.NEXT_PUBLIC_BACKEND_URL}/api/articles/${id}`, {
                 method: 'GET',
             });
-    
+
             if (!articleRes.ok) {
                 throw new Error('Failed to fetch article');
             }
-    
+
             const articleData = await articleRes.json();
             console.log('Fetched Article:', articleData);
-    
+
             const confirmAccept = window.confirm('Are you sure you want to accept this article? \nYou will be redirected to the moderation page after clicking "OK".');
             if (!confirmAccept) return;
-    
+
             const accpetRes = await fetch(`${process.env.NEXT_PUBLIC_BACKEND_URL}/api/acceptArticles/${id}`, {
                 method: 'POST',
             });
-    
+
             if (!accpetRes.ok) {
                 throw new Error('Failed to accept article');
             }
-    
+
             const acceptData = await accpetRes.json();
             console.log('Article accept:', acceptData);
-    
+
             router.push('/moderate');
         } catch (error) {
             console.error('Error acceptting article:', error);
@@ -147,7 +147,7 @@ function ModArticleDetails(){
                         <td>{article?.title || 'No title available'}</td>
                     </tr>
                     <tr>
-                    <th scope='colummn'>2</th>
+                        <th scope='colummn'>2</th>
                         <td>Author</td>
                         <td>{article?.authors || 'No author available'}</td>
                     </tr>
@@ -185,13 +185,20 @@ function ModArticleDetails(){
                             <h1 className='display-4 text-center'>Article Details</h1>
                             {ModArticleItem}
                             <button className='btn btn-danger' style={{ color: 'black' }}
-                            onClick={() => RejectClick(id)}>
+                                onClick={() => RejectClick(id)}>
                                 Reject Article
                             </button>
                             <button
-                            className='btn btn-primary float-right' style={{ color: 'black' }}
-                            onClick={() => AcceptClick(id)}>
+                                className='btn btn-primary float-right' style={{ color: 'black' }}
+                                onClick={() => AcceptClick(id)}>
                                 Accept Article
+                            </button>
+                        </div>
+                        <div className="d-flex justify-content-end">
+                            <button
+                                className="btn btn-outline-secondary mt-3"
+                                onClick={() => router.push('/moderate')}>
+                                Return
                             </button>
                         </div>
                     </div>
