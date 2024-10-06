@@ -23,7 +23,7 @@ function ShowModList() {
     };
 
     const handleRejectedArticles = () => {
-        router.push('/rejected-articles');  // Navigate to rejected articles page
+        router.push('/rejected-articles');  
     };
 
     const articleList =
@@ -39,7 +39,7 @@ function ShowModList() {
                         <br />
                         <h2 className='display-4 text-center'>Articles to Moderate</h2>
 
-                        {/* Buttons added below the title */}
+                        
                         <div className='text-center'>
                             <button className='btn btn-outline-primary m-2' onClick={handleCheckDuplicate}>
                                 Check Duplicate

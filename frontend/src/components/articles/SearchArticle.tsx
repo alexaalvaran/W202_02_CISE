@@ -4,8 +4,8 @@ import { useRouter } from 'next/navigation';
 import { Article } from './Articles';
 
 export default function SearchArticle() {
-    const [practice, setPractice] = useState(''); // Input for SE Practice
-    const [claim, setClaim] = useState(''); // Input for SE Claim
+    const [practice, setPractice] = useState(''); 
+    const [claim, setClaim] = useState('');
     const [results, setResults] = useState<Article[]>([]);
 
     const router = useRouter();
@@ -55,7 +55,7 @@ export default function SearchArticle() {
                                     type="text"
                                     id="claim"
                                     className="form-control"
-                                    placeholder="Enter SE Claim (Agree/Disagree)"
+                                    placeholder="Enter SE Claim"
                                     value={claim}
                                     onChange={(e) => setClaim(e.target.value)}
                                 />

@@ -1,14 +1,15 @@
 import { useEffect, useState } from 'react';
 import { useRouter } from 'next/navigation';
-import { Article } from './Article';
+import { Article } from './Articles';
 
 function CheckDuplicateList() {
     const [articles, setArticles] = useState<Article[]>([]);
     const [duplicateArticles, setDuplicateArticles] = useState<Article[]>([]);
+    const [searchPractice, setSearchPractice] = useState('');
+    const [searchClaim, setSearchClaim] = useState('');    
     const router = useRouter();
 
     useEffect(() => {
-        // Fetch all articles
         fetch(process.env.NEXT_PUBLIC_BACKEND_URL + `/api/articles`)
             .then((res) => res.json())
             .then((articles) => {
@@ -20,7 +21,7 @@ function CheckDuplicateList() {
             });
     }, []);
 
-    // Function to find duplicate articles based on title
+
     const findDuplicates = (articles: Article[]) => {
         const seenTitles = new Set();
         const duplicates = articles.filter((article) => {
@@ -34,7 +35,6 @@ function CheckDuplicateList() {
         setDuplicateArticles(duplicates);
     };
 
-    // Function to remove the rejected article from the list without redirecting
     const RejectClick = async (_id: string) => {
         try {
             const confirmReject = window.confirm('Are you sure you want to reject this article?');
@@ -51,7 +51,6 @@ function CheckDuplicateList() {
             const rejectData = await rejectRes.json();
             console.log('Article rejected:', rejectData);
 
-            // Remove the rejected article from the duplicate list
             setDuplicateArticles((prevArticles) => prevArticles.filter(article => article._id !== _id));
         } catch (error) {
             console.error('Error rejecting article:', error);
@@ -62,6 +61,17 @@ function CheckDuplicateList() {
         router.push('/moderate');
     };
 
+    const filteredArticles = duplicateArticles.filter(article => {
+        return (
+            (searchPractice === '' || article.practice?.toLowerCase().includes(searchPractice.toLowerCase())) &&
+            (searchClaim === '' || article.claim?.toLowerCase().includes(searchClaim.toLowerCase()))
+        );
+    });
+
+    const handleSearch = () => {
+
+    };
+
     return (
         <div className='CheckDuplicateList'>
             <div className='container'>
@@ -70,14 +80,46 @@ function CheckDuplicateList() {
                         <br />
                         <h2 className='display-4 text-center'>Duplicate Articles</h2>
 
-                        {/* Return button */}
-                        <div className='text-center'>
-                            <button className='btn btn-outline-secondary m-2' onClick={handleReturn}>
-                                Return to Moderate
-                            </button>
+                        {/* Search Form with Card Layout */}
+                        <div className="row justify-content-center">
+                            <div className="col-md-6">
+                                <div className="card p-4 mb-4">
+                                    <form>
+                                        <div className="mb-3">
+                                            <label htmlFor="practice" className="form-label">Practice</label>
+                                            <input
+                                                type="text"
+                                                id="practice"
+                                                className="form-control"
+                                                placeholder="Enter SE Practice"
+                                                value={searchPractice}
+                                                onChange={(e) => setSearchPractice(e.target.value)}
+                                            />
+                                        </div>
+                                        <div className="mb-3">
+                                            <label htmlFor="claim" className="form-label">Claim</label>
+                                            <input
+                                                type="text"
+                                                id="claim"
+                                                className="form-control"
+                                                placeholder="Enter SE Claim"
+                                                value={searchClaim}
+                                                onChange={(e) => setSearchClaim(e.target.value)}
+                                            />
+                                        </div>
+                                        {/* <div className="d-flex justify-content-end">
+                                            <button type="button" className="btn btn-outline-primary" onClick={handleSearch}>Search</button>
+                                        </div> */}
+                                    </form>
+                                    <div className='d-flex justify-content-end mt-3'>
+                                        <button type="button" className='btn btn-outline-secondary' onClick={handleReturn}>
+                                            Return
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
                         </div>
-
-                        {duplicateArticles.length > 0 ? (
+                        {filteredArticles.length > 0 ? (
                             <div className="table-responsive">
                                 <table className="table table-bordered table-hover">
                                     <thead>
@@ -85,16 +127,18 @@ function CheckDuplicateList() {
                                             <th>Title</th>
                                             <th>Author(s)</th>
                                             <th>Year</th>
+                                            <th>Practice</th>
                                             <th>Claim</th>
                                             <th>Actions</th>
                                         </tr>
                                     </thead>
                                     <tbody>
-                                        {duplicateArticles.map((article, k) => (
+                                        {filteredArticles.map((article, k) => (
                                             <tr key={k}>
                                                 <td>{article.title}</td>
                                                 <td>{article.authors}</td>
                                                 <td>{article.pubyear}</td>
+                                                <td>{article.practice}</td>
                                                 <td>{article.claim}</td>
                                                 <td>
                                                     <button className="btn btn-danger" onClick={() => RejectClick(article._id || '')}>

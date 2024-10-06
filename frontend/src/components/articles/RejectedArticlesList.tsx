@@ -1,11 +1,11 @@
 'use client';
 import { useState } from 'react';
 import { useRouter } from 'next/navigation';
-import { Article } from './Article';  // Assuming you have a common Article interface
+import { Article } from './Article';
 
 export default function SearchRejectedArticles() {
-    const [title, setTitle] = useState('');  // Input for article title
-    const [author, setAuthor] = useState('');  // Input for article author
+    const [title, setTitle] = useState('');  
+    const [author, setAuthor] = useState('');  
     const [results, setResults] = useState<Article[]>([]);
 
     const router = useRouter();
@@ -29,7 +29,7 @@ export default function SearchRejectedArticles() {
     };
 
     const handleReturn = () => {
-        router.push('/moderate');  // Navigate back to the "Moderate" page
+        router.push('/moderate');  
     };
 
     return (
