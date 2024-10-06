@@ -2,7 +2,7 @@
 
 import { useParams, useRouter } from 'next/navigation';
 import { useEffect, useState } from 'react';
-import { Article, DefaultArticle } from './Article';
+import { Article, DefaultArticle } from '../Article';
 
 function ModArticleDetails(){
     const [article, setArticle] = useState<Article>(DefaultArticle);

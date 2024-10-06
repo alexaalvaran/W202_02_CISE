@@ -1,5 +1,5 @@
 import { render, screen, fireEvent, waitFor } from '@testing-library/react';
-import SearchArticle from '../SearchArticle';
+import SearchArticle from '../src/components/articles/SearchArticle';
 import '@testing-library/jest-dom';
 
 // Mock the useRouter from 'next/navigation'

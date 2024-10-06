@@ -1,6 +1,6 @@
 import React, { useState, useEffect, ChangeEvent, FormEvent } from 'react';
 import { useParams, useRouter } from 'next/navigation';
-import { Article, DefaultArticle } from './Article';
+import { Article, DefaultArticle } from '../Article';
 import Link from 'next/link';
 
 function AddArticleInfo() {
@@ -29,24 +29,48 @@ function AddArticleInfo() {
     // Submit form and update article
     const onSubmit = (event: FormEvent<HTMLFormElement>) => {
         event.preventDefault();
-        
+    
+        const emailType = "approved"; // Set your email type here
+    
         // Perform the PUT request to update the article
         fetch(process.env.NEXT_PUBLIC_BACKEND_URL + `/api/articles/${id}`, {
             method: 'PUT',
             headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify(article),
+            body: JSON.stringify(article), // Send the article data to update
         })
         .then((res) => {
-            if (res.ok) {
-                router.push(`/show-articles/${id}`);
-            } else {
+            if (!res.ok) {
                 console.log("Failed to update article");
+                throw new Error("Article update failed");
             }
+    
+            // Prepare the payload for the POST request to send the email
+            const sendEmail = {
+                email: article.email,  // Ensure you're sending the correct email
+                type: emailType,       // Use the predefined email type
+            };
+    
+            // Perform the POST request to send the email
+            return fetch(process.env.NEXT_PUBLIC_BACKEND_URL + `/api/submittedStatus`, {
+                method: 'POST',
+                headers: {'Content-Type': 'application/json'},
+                body: JSON.stringify(sendEmail), // Send the email payload
+            });
+        })
+        .then((res) => {
+            if (!res.ok) {
+                console.log("Failed to send email");
+                throw new Error("Email sending failed");
+            }
+    
+            // Redirect to the article details page
+            router.push(`/show-articles/${id}`);
         })
         .catch((err) => {
             console.log("Error from AddArticleInfo: " + err);
         });
     };
+    
 
     return (
         <div className='UpdateArticleInfo'>

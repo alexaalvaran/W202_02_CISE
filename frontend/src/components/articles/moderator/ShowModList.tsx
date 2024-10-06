@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react';
-import { Article } from './Article';
+import { Article } from '../Article';
 import ModArticleCard from './ModArticleCard';
 
 function ShowModList() {

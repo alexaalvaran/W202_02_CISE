@@ -2,9 +2,9 @@
 
 import React, {useState, useEffect} from 'react';
 import { useParams, useRouter } from 'next/navigation';
-import { Article, DefaultArticle } from './Article';
+import { Article, DefaultArticle } from '../Article';
 import Link from 'next/link';
-import ArticleCard from './ArticleCard';
+import ArticleCard from '../ArticleCard';
 
 
 function ShowArticleDetails(){
