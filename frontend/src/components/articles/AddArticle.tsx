@@ -34,7 +34,7 @@ const CreateArticleComponent = () => {
             type: emailType, 
         };
 
-        return fetch(process.env.NEXT_PUBLIC_BACKEND_URL + `/api/submittedStatus`, {
+        return fetch(process.env.NEXT_PUBLIC_BACKEND_URL + `/api/notifications`, {
             method: 'POST',
             headers: {'Content-Type': 'application/json'},
             body: JSON.stringify(sendEmail), 
@@ -87,7 +87,6 @@ const CreateArticleComponent = () => {
                             className="form-control"
                             value = {article.sources}
                             onChange={onChange}
-                            required
                             />
                         </div>
                         <br/ >
@@ -101,7 +100,6 @@ const CreateArticleComponent = () => {
                             className="form-control"
                             value = {article.pubyear}
                             onChange={onChange}
-                            required
                             />
                         </div>
                         <br/ >

@@ -30,7 +30,7 @@ function AddArticleInfo() {
     const onSubmit = (event: FormEvent<HTMLFormElement>) => {
         event.preventDefault();
     
-        const emailType = "approved"; // Set your email type here
+        const emailType = "approved"; 
     
         // Perform the PUT request to update the article
         fetch(process.env.NEXT_PUBLIC_BACKEND_URL + `/api/articles/${id}`, {
@@ -44,17 +44,17 @@ function AddArticleInfo() {
                 throw new Error("Article update failed");
             }
     
-            // Prepare the payload for the POST request to send the email
+            //Set up email type and the recipient
             const sendEmail = {
-                email: article.email,  // Ensure you're sending the correct email
-                type: emailType,       // Use the predefined email type
+                email: article.email, 
+                type: emailType,     
             };
     
-            // Perform the POST request to send the email
-            return fetch(process.env.NEXT_PUBLIC_BACKEND_URL + `/api/submittedStatus`, {
+            // Send the email
+            return fetch(process.env.NEXT_PUBLIC_BACKEND_URL + `/api/notifications`, {
                 method: 'POST',
                 headers: {'Content-Type': 'application/json'},
-                body: JSON.stringify(sendEmail), // Send the email payload
+                body: JSON.stringify(sendEmail), 
             });
         })
         .then((res) => {

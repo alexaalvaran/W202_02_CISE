@@ -3,6 +3,7 @@
 import { useParams, useRouter } from 'next/navigation';
 import { useEffect, useState } from 'react';
 import { Article, DefaultArticle } from '../Article';
+import { send } from 'process';
 
 function ModArticleDetails(){
     const [article, setArticle] = useState<Article>(DefaultArticle);
@@ -27,6 +28,7 @@ function ModArticleDetails(){
     },[id]);
     
     const onDeleteClick = (id: string) => {
+
         fetch(process.env.NEXT_PUBLIC_BACKEND_URL + `/api/rejectArticles/${id}`, { method: 'DELETE' })
         .then((res) => {
         navigate.push('/');
@@ -70,13 +72,36 @@ function ModArticleDetails(){
     //     }
     // };
 
+    const sendEmailNotification = async (email: string, type: string) => {
+        const sendEmail = {
+            email,
+            type,
+        };
+    
+        try {
+            const emailRes = await fetch(`${process.env.NEXT_PUBLIC_BACKEND_URL}/api/notifications`, {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify(sendEmail), 
+            });
+    
+            if (!emailRes.ok) {
+                throw new Error('Failed to send rejection email');
+            }
+    
+            console.log('Rejection email sent successfully');
+        } catch (error) {
+            console.error('Error sending email:', error);
+        }
+    };
 
     const RejectClick = async (id: string) => {
         try {
             const articleRes = await fetch(`${process.env.NEXT_PUBLIC_BACKEND_URL}/api/articles/${id}`, {
                 method: 'GET',
             });
-    
+
+            
             if (!articleRes.ok) {
                 throw new Error('Failed to fetch article');
             }
@@ -90,18 +115,20 @@ function ModArticleDetails(){
             const rejectRes = await fetch(`${process.env.NEXT_PUBLIC_BACKEND_URL}/api/rejectArticles/${id}`, {
                 method: 'POST',
             });
-    
+
+
             if (!rejectRes.ok) {
                 throw new Error('Failed to reject article');
             }
     
             const rejectData = await rejectRes.json();
             console.log('Article rejected:', rejectData);
-    
+
+            await sendEmailNotification(articleData.email, 'rejected');
             router.push('/moderate');
         } catch (error) {
             console.error('Error handling article rejection:', error);
-        }
+        };
     };
 
     const AcceptClick = async (id: string) => {
@@ -184,8 +211,11 @@ function ModArticleDetails(){
                         <div className='col-md-8 m-auto'>
                             <h1 className='display-4 text-center'>Article Details</h1>
                             {ModArticleItem}
-                            <button className='btn btn-danger' style={{ color: 'black' }}
-                            onClick={() => RejectClick(id)}>
+                            <button 
+                            className='btn btn-danger' 
+                            style={{ color: 'black' }}
+                            onClick={() => RejectClick(id)}
+                            >
                                 Reject Article
                             </button>
                             <button

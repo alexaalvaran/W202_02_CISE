@@ -1,5 +1,5 @@
 'use client'
-import ShowModList from "@/components/articles/ShowModList";
+import ShowModList from "@/components/articles/moderator/ShowModList";
 
 const Moderate = () => {
     return (
