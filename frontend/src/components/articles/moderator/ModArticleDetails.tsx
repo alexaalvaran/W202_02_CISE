@@ -2,7 +2,9 @@
 
 import { useParams, useRouter } from 'next/navigation';
 import { useEffect, useState } from 'react';
-import { Article, DefaultArticle } from './Article';
+import { Article, DefaultArticle } from '../Article';
+import { send } from 'process';
+import React, {ChangeEvent, FormEvent} from "react";
 
 function ModArticleDetails(){
     const [article, setArticle] = useState<Article>(DefaultArticle);
@@ -27,9 +29,10 @@ function ModArticleDetails(){
     },[id]);
     
     const onDeleteClick = (id: string) => {
+
         fetch(process.env.NEXT_PUBLIC_BACKEND_URL + `/api/rejectArticles/${id}`, { method: 'DELETE' })
         .then((res) => {
-        navigate.push('/');
+        navigate.push('/moderate');
         })
         .catch((err) => {
         console.log('Error form ModArticlesDetails_deleteClick: ' + err);
@@ -70,13 +73,54 @@ function ModArticleDetails(){
     //     }
     // };
 
+    const rejectOnClick =  (id: string, event: React.MouseEvent<HTMLButtonElement>) => {
+        event.preventDefault()        
+            const confirmReject = window.confirm('Are you sure you want to reject this article? \nYou will be redirected to the moderation page after clicking "OK".');
+            if (!confirmReject) return;
 
+            fetch(process.env.NEXT_PUBLIC_BACKEND_URL + `/api/rejectArticles/${id}`,{
+                method: 'POST',
+            }).then((res) => {
+                console.log(res);
+                if(res.ok)
+                {
+
+                    const emailType='rejected';
+
+                    const sendEmail = {
+                        email: article.email,
+                        type: emailType,
+                    }
+
+
+                    router.push('/moderate');
+                    
+                    return fetch(process.env.NEXT_PUBLIC_BACKEND_URL + `/api/notifications`, {
+                        method: 'POST',
+                        headers: {'Content-Type': 'application/json'},
+                         body: JSON.stringify(sendEmail), 
+                        });
+                    /*
+                    const articleRes = fetch(process.env.NEXT_PUBLIC_BACKEND_URL + `/api/articles/${id}`,{
+                        method: 'DELETE',
+            
+                    });
+                    */
+
+                
+                }
+            }). catch((err) => {
+                console.log('Error from reject article');
+            });
+    }
+/* James code
     const RejectClick = async (id: string) => {
         try {
             const articleRes = await fetch(`${process.env.NEXT_PUBLIC_BACKEND_URL}/api/articles/${id}`, {
                 method: 'GET',
             });
-    
+
+            
             if (!articleRes.ok) {
                 throw new Error('Failed to fetch article');
             }
@@ -90,20 +134,21 @@ function ModArticleDetails(){
             const rejectRes = await fetch(`${process.env.NEXT_PUBLIC_BACKEND_URL}/api/rejectArticles/${id}`, {
                 method: 'POST',
             });
-    
+
+
             if (!rejectRes.ok) {
                 throw new Error('Failed to reject article');
             }
     
             const rejectData = await rejectRes.json();
             console.log('Article rejected:', rejectData);
-    
+
             router.push('/moderate');
         } catch (error) {
             console.error('Error handling article rejection:', error);
-        }
+        };
     };
-
+*/
     const AcceptClick = async (id: string) => {
         try {
             const articleRes = await fetch(`${process.env.NEXT_PUBLIC_BACKEND_URL}/api/articles/${id}`, {
@@ -184,8 +229,11 @@ function ModArticleDetails(){
                         <div className='col-md-8 m-auto'>
                             <h1 className='display-4 text-center'>Article Details</h1>
                             {ModArticleItem}
-                            <button className='btn btn-danger' style={{ color: 'black' }}
-                            onClick={() => RejectClick(id)}>
+                            <button 
+                            className='btn btn-danger' 
+                            style={{ color: 'black' }}
+                            onClick={(event) => rejectOnClick(id, event)}
+                            >
                                 Reject Article
                             </button>
                             <button

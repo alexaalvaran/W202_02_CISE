@@ -1,4 +1,4 @@
-import ModArticleDetails from "@/components/articles/ModArticleDetails";
+import ModArticleDetails from "@/components/articles/moderator/ModArticleDetails";
 
 export default function ShowArticle() {
     return(

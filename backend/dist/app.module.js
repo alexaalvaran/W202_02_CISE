@@ -16,6 +16,7 @@ const rejectArticle_module_1 = require("./api/rejectArticles/rejectArticle.modul
 const user_module_1 = require("./api/users/user.module");
 const app_controller_1 = require("./app.controller");
 const app_service_1 = require("./app.service");
+const notification_module_1 = require("./api/notifications/notification.module");
 let AppModule = class AppModule {
 };
 exports.AppModule = AppModule;
@@ -27,7 +28,8 @@ exports.AppModule = AppModule = __decorate([
             article_module_1.ArticleModule,
             user_module_1.UserModule,
             rejectArticle_module_1.RejectArticleModule,
-            acceptedArticle_module_1.AcceptArticleModule
+            acceptedArticle_module_1.AcceptArticleModule,
+            notification_module_1.NotificationModule
         ],
         controllers: [app_controller_1.AppController],
         providers: [app_service_1.AppService],
