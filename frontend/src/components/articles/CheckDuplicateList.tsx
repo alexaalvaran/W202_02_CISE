@@ -6,7 +6,8 @@ function CheckDuplicateList() {
     const [articles, setArticles] = useState<Article[]>([]);
     const [duplicateArticles, setDuplicateArticles] = useState<Article[]>([]);
     const [searchPractice, setSearchPractice] = useState('');
-    const [searchClaim, setSearchClaim] = useState('');    
+    const [searchClaim, setSearchClaim] = useState('');
+    const [filteredArticles, setFilteredArticles] = useState<Article[]>([]);
     const router = useRouter();
 
     useEffect(() => {
@@ -21,7 +22,6 @@ function CheckDuplicateList() {
             });
     }, []);
 
-
     const findDuplicates = (articles: Article[]) => {
         const seenTitles = new Set();
         const duplicates = articles.filter((article) => {
@@ -33,6 +33,7 @@ function CheckDuplicateList() {
             }
         });
         setDuplicateArticles(duplicates);
+        setFilteredArticles(duplicates);
     };
 
     const RejectClick = async (_id: string) => {
@@ -52,6 +53,7 @@ function CheckDuplicateList() {
             console.log('Article rejected:', rejectData);
 
             setDuplicateArticles((prevArticles) => prevArticles.filter(article => article._id !== _id));
+            setFilteredArticles((prevArticles) => prevArticles.filter(article => article._id !== _id));
         } catch (error) {
             console.error('Error rejecting article:', error);
         }
@@ -61,15 +63,18 @@ function CheckDuplicateList() {
         router.push('/moderate');
     };
 
-    const filteredArticles = duplicateArticles.filter(article => {
-        return (
-            (searchPractice === '' || article.practice?.toLowerCase().includes(searchPractice.toLowerCase())) &&
-            (searchClaim === '' || article.claim?.toLowerCase().includes(searchClaim.toLowerCase()))
-        );
-    });
-
-    const handleSearch = () => {
-
+    const handleSearch = async () => {
+        try {
+            const filtered = duplicateArticles.filter(article => {
+                return (
+                    (searchPractice === '' || article.practice?.toLowerCase().includes(searchPractice.toLowerCase())) &&
+                    (searchClaim === '' || article.claim?.toLowerCase().includes(searchClaim.toLowerCase()))
+                );
+            });
+            setFilteredArticles(filtered);
+        } catch (error) {
+            console.error('Error filtering articles:', error);
+        }
     };
 
     return (
@@ -79,8 +84,6 @@ function CheckDuplicateList() {
                     <div className='col-md-12'>
                         <br />
                         <h2 className='display-4 text-center'>Duplicate Articles</h2>
-
-                        {/* Search Form with Card Layout */}
                         <div className="row justify-content-center">
                             <div className="col-md-6">
                                 <div className="card p-4 mb-4">
@@ -107,9 +110,9 @@ function CheckDuplicateList() {
                                                 onChange={(e) => setSearchClaim(e.target.value)}
                                             />
                                         </div>
-                                        {/* <div className="d-flex justify-content-end">
+                                        <div className="d-flex justify-content-end">
                                             <button type="button" className="btn btn-outline-primary" onClick={handleSearch}>Search</button>
-                                        </div> */}
+                                        </div>
                                     </form>
                                     <div className='d-flex justify-content-end mt-3'>
                                         <button type="button" className='btn btn-outline-secondary' onClick={handleReturn}>
@@ -119,6 +122,7 @@ function CheckDuplicateList() {
                                 </div>
                             </div>
                         </div>
+
                         {filteredArticles.length > 0 ? (
                             <div className="table-responsive">
                                 <table className="table table-bordered table-hover">
