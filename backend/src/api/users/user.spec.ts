@@ -50,6 +50,7 @@ describe('UserService', () => {
           
             // assert - carry out the tests
             expect(userModel.create).toHaveBeenCalledWith(testUser);
+            
 
         })
     })

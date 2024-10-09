@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import AcceptedArticleCard from "./AcceptedArticleCard";
-import { Article } from "./Article";
+import { Article } from "../Article";
 
 function AcceptedArticleList() {
     const [articles, setArticles] = useState<[Article?]>([]);

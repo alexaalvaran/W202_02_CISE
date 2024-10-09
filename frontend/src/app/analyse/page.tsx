@@ -1,6 +1,6 @@
 'use client'
 // import ShowArticleList from "@/components/articles/ShowArticleList";
-import AcceptedArticleList from "@/components/articles/AcceptedArticleList";
+import AcceptedArticleList from "@/components/articles/analyst/AcceptedArticleList";
 
 
 const Analyse = () => {

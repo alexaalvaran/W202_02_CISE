@@ -1,5 +1,5 @@
 import { useRouter } from "next/navigation";
-import { Article } from "./Article";
+import { Article } from "../Article";
 
 interface IProp {
     article?: Article;
@@ -12,7 +12,7 @@ const ArticleCard = ({ article }: IProp) => {
     }
 
     const onClick = () => {
-        router.push(`/show-articles/${article._id}`)
+        router.push(`/modArticles/${article._id}`);
     };
     return (
         <div className='card-container' onClick={onClick}>
@@ -28,4 +28,5 @@ const ArticleCard = ({ article }: IProp) => {
         </div>
     )
 }
+
 export default ArticleCard;
