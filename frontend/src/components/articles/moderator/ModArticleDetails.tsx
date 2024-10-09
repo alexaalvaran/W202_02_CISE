@@ -149,6 +149,7 @@ function ModArticleDetails(){
         };
     };
 */
+/* James code
     const AcceptClick = async (id: string) => {
         try {
             const articleRes = await fetch(`${process.env.NEXT_PUBLIC_BACKEND_URL}/api/articles/${id}`, {
@@ -181,6 +182,36 @@ function ModArticleDetails(){
             console.error('Error acceptting article:', error);
         }
     };
+*/
+    const acceptOnClick = (id:string, event: React.MouseEvent<HTMLButtonElement>) => {
+        event.preventDefault();
+        const confirmAccept = window.confirm('Are you sure you want to accept this article? \nYou will be redirected to the moderation page after clicking "OK".');
+        if(!confirmAccept) return;
+
+        fetch(process.env.NEXT_PUBLIC_BACKEND_URL + `/api/acceptArticles/${id}`, {
+            method: 'POST',
+        }).then((res) => {
+            console.log(res);
+            if(res.ok)
+            {
+                const emailType = 'analyse';
+                const sendEmail = {
+                    email: 'cisew20202@gmail.com',
+                    type: emailType,
+                }
+
+                router.push('/moderate');
+
+                return fetch(process.env.NEXT_PUBLIC_BACKEND_URL + `/api/notifications`, {
+                    method: 'POST',
+                    headers: {'Content-Type': 'application/json'},
+                    body: JSON.stringify(sendEmail),
+                });
+            }
+        }). catch((err) =>{
+            console.log('Error form accept article');
+        });
+    }
 
     const ModArticleItem = (
         <div>
@@ -237,8 +268,10 @@ function ModArticleDetails(){
                                 Reject Article
                             </button>
                             <button
-                            className='btn btn-primary float-right' style={{ color: 'black' }}
-                            onClick={() => AcceptClick(id)}>
+                            className='btn btn-primary float-right' 
+                            style={{ color: 'black' }}
+                            onClick={(event) => acceptOnClick(id, event)}
+                            >
                                 Accept Article
                             </button>
                         </div>
