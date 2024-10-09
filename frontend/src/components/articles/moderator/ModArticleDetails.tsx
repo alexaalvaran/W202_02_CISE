@@ -196,7 +196,7 @@ function ModArticleDetails(){
             {
                 const emailType = 'analyse';
                 const sendEmail = {
-                    email: 'cisew20202@gmail.com',
+                    email: 'ymw7320@autuni.ac.nz',
                     type: emailType,
                 }
 
