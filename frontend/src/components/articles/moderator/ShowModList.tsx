@@ -1,7 +1,7 @@
 import { useEffect, useState} from 'react';
 import { Article } from '../Article';
 import ModArticleCard from './ModArticleCard';
-import { useRouter } from 'next/router';
+import {useRouter} from "next/navigation";
 
 function ShowModList() {
     const [articles, setArticles] = useState<Article[]>([]);
