@@ -16,14 +16,16 @@ export class AcceptedArticleService {
         return await this.acceptedArticleModel.find().exec();
     }
 
+    async findOne(id:string): Promise<Article>{
+        return await this.acceptedArticleModel.findById(id).exec();
+    }
+
     // Accept an article and move it to the acceptedArticles collection
     async acceptArticle(id: string): Promise<AcceptedArticle> {
-        // Step 1: Find the article in the articles collection
         const article = await this.articleModel.findById(id).exec();
         if (!article) {
             throw new HttpException(`Article with ID ${id} not found`, HttpStatus.NOT_FOUND);
         }
-
         // Create a new entry in the acceptedArticles collection
         const acceptedArticle = new this.acceptedArticleModel({
             title: article.title,

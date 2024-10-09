@@ -14,6 +14,7 @@ var __param = (this && this.__param) || function (paramIndex, decorator) {
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.AcceptedArticleController = void 0;
 const common_1 = require("@nestjs/common");
+const console_1 = require("console");
 const acceptedArticle_service_1 = require("./acceptedArticle.service");
 let AcceptedArticleController = class AcceptedArticleController {
     constructor(acceptArticleService) {
@@ -25,6 +26,17 @@ let AcceptedArticleController = class AcceptedArticleController {
         }
         catch (error) {
             throw new common_1.HttpException('Failed to retrieve rejected articles', common_1.HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+    }
+    async findOne(id) {
+        try {
+            return this.acceptArticleService.findOne(id);
+        }
+        catch {
+            throw new common_1.HttpException({
+                status: common_1.HttpStatus.NOT_FOUND,
+                error: 'No article found',
+            }, common_1.HttpStatus.NOT_FOUND, { cause: console_1.error });
         }
     }
     async acceptedArticle(id) {
@@ -39,11 +51,18 @@ let AcceptedArticleController = class AcceptedArticleController {
 };
 exports.AcceptedArticleController = AcceptedArticleController;
 __decorate([
-    (0, common_1.Get)(),
+    (0, common_1.Get)('/'),
     __metadata("design:type", Function),
     __metadata("design:paramtypes", []),
     __metadata("design:returntype", Promise)
 ], AcceptedArticleController.prototype, "findAll", null);
+__decorate([
+    (0, common_1.Get)('/:id'),
+    __param(0, (0, common_1.Param)('id')),
+    __metadata("design:type", Function),
+    __metadata("design:paramtypes", [String]),
+    __metadata("design:returntype", Promise)
+], AcceptedArticleController.prototype, "findOne", null);
 __decorate([
     (0, common_1.Post)('/:id'),
     __param(0, (0, common_1.Param)('id')),

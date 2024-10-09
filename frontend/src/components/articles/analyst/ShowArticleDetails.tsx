@@ -1,19 +1,17 @@
 'use client'
 
-import React, {useState, useEffect} from 'react';
 import { useParams, useRouter } from 'next/navigation';
+import { useEffect, useState } from 'react';
 import { Article, DefaultArticle } from '../Article';
-import Link from 'next/link';
-import ArticleCard from '../ArticleCard';
 
 
 function ShowArticleDetails(){
-    const [article, setArticle] = useState<Article>(DefaultArticle);
+    const [article, setArticle] = useState<Article | null>(DefaultArticle);
     const id = useParams<{id:string}>().id;
     const navigate = useRouter();
 
     useEffect(() => {
-        fetch(process.env.NEXT_PUBLIC_BACKEND_URL + `/api/articles/${id}`)
+        fetch(process.env.NEXT_PUBLIC_BACKEND_URL + `/api/acceptArticles/${id}`)
         .then((res) => {
             if (!res.ok) {
                 throw new Error('Failed to fetch article');
@@ -27,9 +25,10 @@ function ShowArticleDetails(){
             console.log('Error from ShowArticleDetails: ' + err);
         });
     },[id]);
+
     
     const onDeleteClick = (id: string) => {
-        fetch(process.env.NEXT_PUBLIC_BACKEND_URL + `/api/articles/${id}`, { method: 'DELETE' })
+        fetch(process.env.NEXT_PUBLIC_BACKEND_URL + `/api/acceptArticles/${id}`, { method: 'DELETE' })
         .then((res) => {
         navigate.push('/');
         })
@@ -89,39 +88,32 @@ function ShowArticleDetails(){
     );
 
     return (
-        <div className='ShowArticleDetails'>
+        <div className='ShowArticleDetials'>
             <div className='container'>
                 <div className='row'>
                     <div className='col-md-10 m-auto'>
-                            </div>
-
-                            <br />
-                            <div className='col-md-8 m-auto'>
-                                <h1 className='display-4 text-center'>Article Records</h1>
-                                <p className='lead text-center'>View Article Details</p>
-                            <br />
-                            </div>
-                                <div className='col-md-10 m-auto'>{ArticleItem}</div>
-                                <div className='col-md-6 m-auto'>
-                                    <button 
-                                    type = 'button'
-                                    className='btn btn-outline-danger btn-lg btn block'
-                                    onClick={() => {
-                                        onDeleteClick(article._id || "");
-                                    }}
-                                    >Delete Article</button>
-                                </div>
-                                    <div className='col-md-6 m-auto'>
-                                        <Link
-                                        href ={`/edit-claims/${article._id}`}
-                                        className='btn btn-outline-info btn-lg btn-block'>
-                                            Add Claim and Evidence
-                                            </Link>
-                                    </div>
+                        <div className='col-md-8 m-auto'>
+                            <h1 className='display-4 text-center'>Article Details</h1>
+                            {ArticleItem}
+                            <button
+                            className='btn btn-danger'
+                            style={{ color: 'black' }}
+                            onClick={(event) => onDeleteClick(id)}
+                            >
+                                Delete Article
+                            </button>
+                            <button
+                            className='btn btn-primary float-right' style={{ color: 'black' }}
+                            onClick={() => navigate.push(`/edit-claims/${id}`)}
+                            >
+                                Add Claim and Evidence
+                            </button>
+                        </div>
+                    </div>
                 </div>
-         </div>
-    </div>
-);
+            </div>
+        </div>
+    )
 
 }
 export default ShowArticleDetails;
