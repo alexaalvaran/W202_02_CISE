@@ -55,6 +55,11 @@ let NotificationService = class NotificationService {
                 subject: 'New SPEED Article',
                 text: 'There are new articles to be moderated',
                 html: '<p>There are new articles to be moderated</p>',
+            },
+            analyse: {
+                subject: 'New SPEED Article',
+                text: 'There are new articles to be analysed',
+                html: '<p>There are new articles to be analysed</p>',
             }
         };
         return templates[type] || null;

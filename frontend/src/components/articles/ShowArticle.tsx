@@ -1,13 +1,13 @@
 'use client';
 
 import { useState, useEffect } from 'react';
-import { useParams, useRouter } from 'next/navigation'; // useRouter to navigate back
-import { Article } from './Articles'; // Assuming you have an Article type
+import { useParams, useRouter } from 'next/navigation'; 
+import { Article } from './Articles'; 
 
 export default function ShowArticle() {
-    const { id } = useParams(); // Get the ID from the route
+    const { id } = useParams(); 
     const [article, setArticle] = useState<Article | null>(null);
-    const router = useRouter(); // To navigate between pages
+    const router = useRouter(); 
 
 
     useEffect(() => {
@@ -45,7 +45,7 @@ export default function ShowArticle() {
                 <div className="d-flex justify-content-end">
                 <button
                     className="btn btn-outline-secondary mt-3"
-                    onClick={() => router.push('/search')} // Navigate to /search page
+                    onClick={() => router.push('/search')}
                 >
                     Return
                 </button>

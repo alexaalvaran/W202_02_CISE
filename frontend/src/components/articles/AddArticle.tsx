@@ -30,7 +30,7 @@ const CreateArticleComponent = () => {
         const emailType = 'moderate';
         
         const sendEmail = {
-            email: 'ymw7320@autuni.ac.nz',  
+            email: 'cisew20202@gmail.com',  
             type: emailType, 
         };
 
