@@ -16,22 +16,26 @@ describe('NotificationService', () => {
 
     service = module.get<NotificationService>(NotificationService);
 
+   
     mockSendMail = jest.fn().mockResolvedValue({});
 
+   
     (nodemailer.createTransport as jest.Mock).mockReturnValue({
       sendMail: mockSendMail,
     });
 
+   
     process.env.GMAIL_USER = 'testuser@gmail.com';
     process.env.GMAIL_PASSWORD = 'testpassword';
   });
 
   afterEach(() => {
-    jest.clearAllMocks();
+    jest.clearAllMocks();  
   });
 
   it('should send an email for a valid "approved" type', async () => {
     await service.sendEmailBasedOnType('recipient@example.com', 'approved');
+
 
     expect(nodemailer.createTransport).toHaveBeenCalledWith({
       service: 'gmail',
@@ -55,7 +59,7 @@ describe('NotificationService', () => {
 
   it('should throw an error for an invalid email type', async () => {
     await expect(
-      service.sendEmailBasedOnType('recipient@example.com', 'invalid-type'),
+      service.sendEmailBasedOnType('recipient@example.com', 'invalid-type')
     ).rejects.toThrow('Invalid email type');
 
     expect(mockSendMail).not.toHaveBeenCalled();
@@ -65,7 +69,7 @@ describe('NotificationService', () => {
     mockSendMail.mockRejectedValue(new Error('Failed to send email'));
 
     await expect(
-      service.sendEmailBasedOnType('recipient@example.com', 'approved'),
+      service.sendEmailBasedOnType('recipient@example.com', 'approved')
     ).rejects.toThrow('Failed to send email');
   });
 
