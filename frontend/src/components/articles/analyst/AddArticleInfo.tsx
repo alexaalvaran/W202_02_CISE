@@ -116,7 +116,7 @@ function AddArticleInfo() {
                                         {/* Dropdown for Evidence */}
                                         <tr>
                                             <td>
-                                                <label htmlFor="evidence">Choose an Evidence</label>
+                                                <label htmlFor="evidence">Choose a Practice</label>
                                             </td>
                                             <td>
                                                 <select
