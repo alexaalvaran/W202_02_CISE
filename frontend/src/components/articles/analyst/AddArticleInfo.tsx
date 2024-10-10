@@ -155,6 +155,12 @@ function AddArticleInfo() {
 
                                         <tr>
                                             <td colSpan={2}>
+                                            <button
+                                            className="btn btn-outline-info btn-lg btn-block"
+                                            onClick={() => router.push('/analyse')}
+                                            >
+                                                Return
+                                            </button>
                                                 <button
                                                     type="submit"
                                                     className="btn btn-outline-info btn-lg btn-block"
