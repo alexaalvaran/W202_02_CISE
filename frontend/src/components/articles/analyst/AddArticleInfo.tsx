@@ -116,7 +116,7 @@ function AddArticleInfo() {
                                         {/* Dropdown for Evidence */}
                                         <tr>
                                             <td>
-                                                <label htmlFor="evidence">Choose an Evidence</label>
+                                                <label htmlFor="evidence">Choose a Practice</label>
                                             </td>
                                             <td>
                                                 <select
@@ -155,6 +155,12 @@ function AddArticleInfo() {
 
                                         <tr>
                                             <td colSpan={2}>
+                                            <button
+                                            className="btn btn-outline-info btn-lg btn-block"
+                                            onClick={() => router.push('/analyse')}
+                                            >
+                                                Return
+                                            </button>
                                                 <button
                                                     type="submit"
                                                     className="btn btn-outline-info btn-lg btn-block"

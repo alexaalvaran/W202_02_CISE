@@ -1,4 +1,11 @@
-import { Body, Controller, Post, HttpException, HttpStatus, BadRequestException } from '@nestjs/common';
+import {
+  Body,
+  Controller,
+  Post,
+  HttpException,
+  HttpStatus,
+  BadRequestException,
+} from '@nestjs/common';
 import { NotificationService } from './notification.service';
 
 @Controller('/api/notifications')
@@ -13,17 +20,16 @@ export class NotificationController {
     }
 
     try {
-      await this.submittedStatusService.sendEmailBasedOnType(
-        email,
-        type,
-      );
+      await this.submittedStatusService.sendEmailBasedOnType(email, type);
 
       console.log('Email sent successfully');
       return { status: HttpStatus.OK, message: 'Email sent successfully' };
-
     } catch (error) {
       console.error('Error:', error);
-      throw new HttpException('Failed to send email', HttpStatus.INTERNAL_SERVER_ERROR);
+      throw new HttpException(
+        'Failed to send email',
+        HttpStatus.INTERNAL_SERVER_ERROR,
+      );
     }
   }
 }

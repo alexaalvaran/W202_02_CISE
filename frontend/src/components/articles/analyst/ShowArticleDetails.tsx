@@ -31,7 +31,7 @@ function ShowArticleDetails(){
     const onDeleteClick = (id: string) => {
         fetch(process.env.NEXT_PUBLIC_BACKEND_URL + `/api/articles/${id}`, { method: 'DELETE' })
         .then((res) => {
-        navigate.push('/');
+        navigate.push('/analyse');
         })
         .catch((err) => {
         console.log('Error form ShowArticlesDetails_deleteClick: ' + err);
@@ -75,8 +75,8 @@ function ShowArticleDetails(){
                     </tr>
                     <tr>
                         <th scope='row'>8</th>
-                        <td>Evidence</td>
-                        <td>{article?.evidence || 'No evidence available'}</td>
+                        <td>Practice</td>
+                        <td>{article?.evidence || 'No practice available'}</td>
                     </tr>
                     <tr>
                         <th scope='row'>9</th>
