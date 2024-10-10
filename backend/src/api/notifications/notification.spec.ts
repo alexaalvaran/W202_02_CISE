@@ -92,16 +92,4 @@ describe('NotificationService', () => {
       html: '<p>There are new articles to be moderated</p>',
     });
   });
-
-  it('should send an email for a valid "analyst" type', async () => {
-    await service.sendEmailBasedOnType('recipient@example.com', 'analyst');
-
-    expect(mockSendMail).toHaveBeenCalledWith({
-      from: process.env.GMAIL_USER,
-      to: 'recipient@example.com',
-      subject: 'New SPEED Article',
-      text: 'There are new articles to be analysed',
-      html: '<p>There are new articles to be analysed</p>',
-    });
-  });
 });

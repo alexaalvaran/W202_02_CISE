@@ -75,8 +75,8 @@ function ShowArticleDetails(){
                     </tr>
                     <tr>
                         <th scope='row'>8</th>
-                        <td>Evidence</td>
-                        <td>{article?.evidence || 'No evidence available'}</td>
+                        <td>Practice</td>
+                        <td>{article?.evidence || 'No practice available'}</td>
                     </tr>
                     <tr>
                         <th scope='row'>9</th>
