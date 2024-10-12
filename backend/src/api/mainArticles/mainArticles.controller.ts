@@ -51,20 +51,14 @@ export class MainArticleController {
         }
     }
 
-    // Add an article
-    @Post('/')
-    async create(@Body() createMainArticleDto: CreateArticleDto){
-        try{
-            return this.mainArticleService.create(createMainArticleDto);
-        }catch{
-            throw new HttpException(
-                {
-                    status: HttpStatus.BAD_REQUEST,
-                    error: 'Failed to create article',
-                },
-                HttpStatus.BAD_REQUEST,
-                {cause:error},
-            );
+    // submit an article and move it to the mainArticles collection
+    @Post('/:id')
+    async acceptedArticle(@Param('id') id: string) {
+        try {
+            const acceptedArticle = await this.mainArticleService.mainArticle(id);
+            return { message: 'Article accepted and moved to accepted articles', acceptedArticle };
+        } catch (error) {
+            throw new HttpException(`Failed to accept article with ID ${id}`, HttpStatus.BAD_REQUEST);
         }
     }
 

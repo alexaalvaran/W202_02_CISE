@@ -43,15 +43,13 @@ let MainArticleController = class MainArticleController {
             }, common_1.HttpStatus.NOT_FOUND, { cause: console_1.error });
         }
     }
-    async create(createMainArticleDto) {
+    async acceptedArticle(id) {
         try {
-            return this.mainArticleService.create(createMainArticleDto);
+            const acceptedArticle = await this.mainArticleService.mainArticle(id);
+            return { message: 'Article accepted and moved to accepted articles', acceptedArticle };
         }
-        catch {
-            throw new common_1.HttpException({
-                status: common_1.HttpStatus.BAD_REQUEST,
-                error: 'Failed to create article',
-            }, common_1.HttpStatus.BAD_REQUEST, { cause: console_1.error });
+        catch (error) {
+            throw new common_1.HttpException(`Failed to accept article with ID ${id}`, common_1.HttpStatus.BAD_REQUEST);
         }
     }
     async updateArticle(id, createArticleDto) {
@@ -93,12 +91,12 @@ __decorate([
     __metadata("design:returntype", Promise)
 ], MainArticleController.prototype, "findOne", null);
 __decorate([
-    (0, common_1.Post)('/'),
-    __param(0, (0, common_1.Body)()),
+    (0, common_1.Post)('/:id'),
+    __param(0, (0, common_1.Param)('id')),
     __metadata("design:type", Function),
-    __metadata("design:paramtypes", [create_article_dto_1.CreateArticleDto]),
+    __metadata("design:paramtypes", [String]),
     __metadata("design:returntype", Promise)
-], MainArticleController.prototype, "create", null);
+], MainArticleController.prototype, "acceptedArticle", null);
 __decorate([
     (0, common_1.Put)('/:id'),
     __param(0, (0, common_1.Param)("id")),

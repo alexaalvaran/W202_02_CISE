@@ -9,6 +9,7 @@ function ShowArticleDetails(){
     const [article, setArticle] = useState<Article>(DefaultArticle);
     const id = useParams<{id:string}>().id;
     const navigate = useRouter();
+    const router = useRouter();
 
     useEffect(() => {
         fetch(process.env.NEXT_PUBLIC_BACKEND_URL + `/api/acceptArticles/${id}`)
@@ -27,13 +28,46 @@ function ShowArticleDetails(){
     },[id]);
     
     const onDeleteClick = (id: string) => {
-        fetch(process.env.NEXT_PUBLIC_BACKEND_URL + `/api/acceptArticles/${id}`, { method: 'DELETE' })
+        fetch(process.env.NEXT_PUBLIC_BACKEND_URL + `/api/rejectArticles/${id}`, { method: 'POST' })
         .then((res) => {
-        navigate.push('/');
+        navigate.push('/analyse');
         })
         .catch((err) => {
         console.log('Error form ShowArticlesDetails_deleteClick: ' + err);
         });
+    };
+
+    const submitClick = async (id: string) => {
+        try {
+            const articleRes = await fetch(`${process.env.NEXT_PUBLIC_BACKEND_URL}/api/acceptArticles/${id}`, {
+                method: 'GET',
+            });
+
+            if (!articleRes.ok) {
+                throw new Error('Failed to fetch article');
+            }
+
+            const articleData = await articleRes.json();
+            console.log('Fetched Article:', articleData);
+
+            const confirmAccept = window.confirm('Are you sure you want to accept this article? \nYou will be redirected to the moderation page after clicking "OK".');
+            if (!confirmAccept) return;
+
+            const accpetRes = await fetch(`${process.env.NEXT_PUBLIC_BACKEND_URL}/api/mainArticles/${id}`, {
+                method: 'POST',
+            });
+
+            if (!accpetRes.ok) {
+                throw new Error('Failed submitting article');
+            }
+
+            const acceptData = await accpetRes.json();
+            console.log('Article accept:', acceptData);
+
+            router.push('/moderate');
+        } catch (error) {
+            console.error('Error acceptting article:', error);
+        }
     };
 
 
@@ -94,25 +128,40 @@ function ShowArticleDetails(){
                         <div className='col-md-8 m-auto'>
                             <h1 className='display-4 text-center'>Article Details</h1>
                             {ArticleItem}
-                            <button
-                            className='btn btn-danger'
-                            style={{ color: 'black' }}
-                            onClick={(event) => onDeleteClick(id)}
-                            >
-                                Delete Article
-                            </button>
-                            <button
-                            className='btn btn-primary float-right' style={{ color: 'black' }}
-                            onClick={() => navigate.push(`/edit-claims/${id}`)}
-                            >
-                                Add Claim and Evidence
-                            </button>
+                            <div className="row mt-3">
+                                <div className="col text-center">
+                                    <button
+                                        className='btn btn-danger'
+                                        style={{ color: 'black' }}
+                                        onClick={(event) => onDeleteClick(id)}
+                                    >
+                                        Delete Article
+                                    </button>
+                                </div>
+                                <div className="col text-center">
+                                    <button
+                                        className='btn btn-primary'
+                                        style={{ color: 'black' }}
+                                        onClick={() => navigate.push(`/edit-claims/${id}`)}
+                                    >
+                                        Add Claim and Evidence
+                                    </button>
+                                </div>
+                                <div className="col text-center">
+                                    <button
+                                        className='btn btn-warning'
+                                        style={{ color: 'black' }}
+                                        onClick={() => submitClick(id)}
+                                    >
+                                        Submit to Main Articles
+                                    </button>
+                                </div>
+                            </div>
                         </div>
                     </div>
                 </div>
             </div>
         </div>
     )
-
 }
 export default ShowArticleDetails;

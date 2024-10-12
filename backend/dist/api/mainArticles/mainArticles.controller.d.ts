@@ -5,8 +5,9 @@ export declare class MainArticleController {
     constructor(mainArticleService: MainArticleService);
     findAll(): Promise<import("./mainArticles.schema").MainArticle[]>;
     findOne(id: string): Promise<import("./mainArticles.schema").MainArticle>;
-    create(createMainArticleDto: CreateArticleDto): Promise<import("mongoose").Document<unknown, {}, import("./mainArticles.schema").MainArticle> & import("./mainArticles.schema").MainArticle & {
-        _id: import("mongoose").Types.ObjectId;
+    acceptedArticle(id: string): Promise<{
+        message: string;
+        acceptedArticle: import("./mainArticles.schema").MainArticle;
     }>;
     updateArticle(id: string, createArticleDto: CreateArticleDto): Promise<{
         message: string;

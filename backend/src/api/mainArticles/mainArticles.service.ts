@@ -59,4 +59,25 @@ export class MainArticleService {
         await this.acceptedArticleModel.findByIdAndDelete(id).exec();
         return MainArticle;
     }
+
+    // async mainArticle(id: string): Promise<MainArticle> {
+    //     const acceptedArticle = await this.acceptedArticleModel.findById(id).exec();
+        
+    //     if (!acceptedArticle) {
+    //         throw new HttpException('Accepted article not found', HttpStatus.NOT_FOUND);
+    //     }
+        
+    //     // Assuming you're saving the accepted article into the main articles collection
+    //     const newMainArticle = new this.mainArticleModel({
+    //         title: acceptedArticle.title,
+    //         authors: acceptedArticle.authors,
+    //         // Add other fields here as needed
+    //     });
+        
+    //     await newMainArticle.save();
+    //     await this.acceptedArticleModel.findByIdAndDelete(id).exec();
+        
+    //     return newMainArticle;
+    // }
+    
 }

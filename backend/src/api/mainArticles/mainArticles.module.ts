@@ -8,11 +8,11 @@ import { MainArticleService } from './mainArticles.service';
 @Module({
     imports: [
         MongooseModule.forFeature([
-            {name: MainArticle.name, schema: MainArticleSchema},
-            {name: AcceptedArticle.name, schema: AcceptedArticleSchema},
+            { name: MainArticle.name, schema: MainArticleSchema },
+            { name: AcceptedArticle.name, schema: AcceptedArticleSchema }
         ]),
     ],
     controllers: [MainArticleController],
     providers: [MainArticleService],
 })
-export class MainArticleModule{}
+export class MainArticleModule {}

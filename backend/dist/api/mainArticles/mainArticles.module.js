@@ -21,7 +21,7 @@ exports.MainArticleModule = MainArticleModule = __decorate([
         imports: [
             mongoose_1.MongooseModule.forFeature([
                 { name: mainArticles_schema_1.MainArticle.name, schema: mainArticles_schema_1.MainArticleSchema },
-                { name: acceptedArticle_schema_1.AcceptedArticle.name, schema: acceptedArticle_schema_1.AcceptedArticleSchema },
+                { name: acceptedArticle_schema_1.AcceptedArticle.name, schema: acceptedArticle_schema_1.AcceptedArticleSchema }
             ]),
         ],
         controllers: [mainArticles_controller_1.MainArticleController],
