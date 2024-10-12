@@ -16,6 +16,10 @@ export class AcceptedArticleService {
         return await this.acceptedArticleModel.find().exec();
     }
 
+    async findOne(id:string): Promise<Article>{
+        return await this.acceptedArticleModel.findById(id).exec();
+    }
+
     // Accept an article and move it to the acceptedArticles collection
     async acceptArticle(id: string): Promise<AcceptedArticle> {
         // Step 1: Find the article in the articles collection

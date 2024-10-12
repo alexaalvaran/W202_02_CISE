@@ -1,4 +1,5 @@
 import { Controller, Get, HttpException, HttpStatus, Param, Post } from '@nestjs/common';
+import { error } from 'console';
 import { AcceptedArticleService } from './acceptedArticle.service';
 
 @Controller('/api/acceptArticles')
@@ -11,6 +12,23 @@ export class AcceptedArticleController {
             return await this.acceptArticleService.findAll();
         } catch (error) {
             throw new HttpException('Failed to retrieve rejected articles', HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+    }
+
+    // Get one article
+    @Get('/:id')
+    async findOne(@Param('id') id:string){
+        try{
+            return this.acceptArticleService.findOne(id);
+        } catch{
+            throw new HttpException(
+                {
+                    status: HttpStatus.NOT_FOUND,
+                    error: 'No article found',
+                },
+                HttpStatus.NOT_FOUND,
+                {cause:error},
+            );
         }
     }
 

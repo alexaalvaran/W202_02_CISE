@@ -1,7 +1,6 @@
-import React, { useState, useEffect, ChangeEvent, FormEvent } from 'react';
 import { useParams, useRouter } from 'next/navigation';
+import { ChangeEvent, FormEvent, useEffect, useState } from 'react';
 import { Article, DefaultArticle } from '../Article';
-import Link from 'next/link';
 
 function AddArticleInfo() {
     const [article, setArticle] = useState<Article>(DefaultArticle);
@@ -10,7 +9,7 @@ function AddArticleInfo() {
 
     // Fetch article data when the component mounts
     useEffect(() => {
-        fetch(process.env.NEXT_PUBLIC_BACKEND_URL + `/api/articles/${id}`)
+        fetch(process.env.NEXT_PUBLIC_BACKEND_URL + `/api/acceptArticles/${id}`)
             .then((res) => res.json())
             .then((json) => setArticle(json))
             .catch((err) => console.log('Error from AddArticleInfo: ' + err));
@@ -30,7 +29,7 @@ function AddArticleInfo() {
     const onSubmit = (event: FormEvent<HTMLFormElement>) => {
         event.preventDefault();
     
-        const emailType = "approved"; 
+        const emailType = "approved";
     
         // Perform the PUT request to update the article
         fetch(process.env.NEXT_PUBLIC_BACKEND_URL + `/api/articles/${id}`, {
@@ -46,15 +45,15 @@ function AddArticleInfo() {
     
             //Set up email type and the recipient
             const sendEmail = {
-                email: article.email, 
-                type: emailType,     
+                email: article.email,
+                type: emailType,
             };
     
             // Send the email
             return fetch(process.env.NEXT_PUBLIC_BACKEND_URL + `/api/notifications`, {
                 method: 'POST',
                 headers: {'Content-Type': 'application/json'},
-                body: JSON.stringify(sendEmail), 
+                body: JSON.stringify(sendEmail),
             });
         })
         .then((res) => {
