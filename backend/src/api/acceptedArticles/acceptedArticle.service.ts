@@ -3,6 +3,7 @@ import { InjectModel } from '@nestjs/mongoose';
 import { Model } from 'mongoose';
 import { Article, ArticleDocument } from '../articles/article.schema';
 import { AcceptedArticle, AcceptedArticleDocument } from './acceptedArticle.schema';
+import { CreateArticleDto } from './create-article.dto';
 
 @Injectable()
 export class AcceptedArticleService {
@@ -46,5 +47,9 @@ export class AcceptedArticleService {
         await this.articleModel.findByIdAndDelete(id).exec();
 
         return AcceptedArticle;
+    }
+
+    async update(id: string, createArticleDto:CreateArticleDto){
+        return await this.acceptedArticleModel.findByIdAndUpdate(id, createArticleDto).exec();
     }
 }

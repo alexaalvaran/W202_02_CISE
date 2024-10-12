@@ -1,4 +1,5 @@
 import { AcceptedArticleService } from './acceptedArticle.service';
+import { CreateArticleDto } from './create-article.dto';
 export declare class AcceptedArticleController {
     private readonly acceptArticleService;
     constructor(acceptArticleService: AcceptedArticleService);
@@ -7,5 +8,8 @@ export declare class AcceptedArticleController {
     acceptedArticle(id: string): Promise<{
         message: string;
         acceptedArticle: import("./acceptedArticle.schema").AcceptedArticle;
+    }>;
+    updateArticle(id: string, createArticleDto: CreateArticleDto): Promise<{
+        message: string;
     }>;
 }
