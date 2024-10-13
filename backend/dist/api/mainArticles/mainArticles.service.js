@@ -12,29 +12,42 @@ var __param = (this && this.__param) || function (paramIndex, decorator) {
     return function (target, key) { decorator(target, key, paramIndex); }
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.AcceptedArticleService = void 0;
+exports.MainArticleService = void 0;
 const common_1 = require("@nestjs/common");
 const mongoose_1 = require("@nestjs/mongoose");
 const mongoose_2 = require("mongoose");
-const article_schema_1 = require("../articles/article.schema");
-const acceptedArticle_schema_1 = require("./acceptedArticle.schema");
-let AcceptedArticleService = class AcceptedArticleService {
-    constructor(acceptedArticleModel, articleModel) {
+const acceptedArticle_schema_1 = require("../acceptedArticles/acceptedArticle.schema");
+const mainArticles_schema_1 = require("./mainArticles.schema");
+let MainArticleService = class MainArticleService {
+    constructor(mainArticleModel, acceptedArticleModel) {
+        this.mainArticleModel = mainArticleModel;
         this.acceptedArticleModel = acceptedArticleModel;
-        this.articleModel = articleModel;
+    }
+    test() {
+        return 'book route testing';
     }
     async findAll() {
-        return await this.acceptedArticleModel.find().exec();
+        return await this.mainArticleModel.find().exec();
     }
     async findOne(id) {
-        return await this.acceptedArticleModel.findById(id).exec();
+        return await this.mainArticleModel.findById(id).exec();
     }
-    async acceptArticle(id) {
-        const article = await this.articleModel.findById(id).exec();
+    async create(createMainArticleDto) {
+        return await this.mainArticleModel.create(createMainArticleDto);
+    }
+    async update(id, createMainArticleDto) {
+        return await this.mainArticleModel.findByIdAndUpdate(id, createMainArticleDto).exec();
+    }
+    async delete(id) {
+        const deletedMainArticle = await this.mainArticleModel.findByIdAndDelete(id).exec();
+        return deletedMainArticle;
+    }
+    async mainArticle(id) {
+        const article = await this.acceptedArticleModel.findById(id).exec();
         if (!article) {
             throw new common_1.HttpException(`Article with ID ${id} not found`, common_1.HttpStatus.NOT_FOUND);
         }
-        const acceptedArticle = new this.acceptedArticleModel({
+        const mainArticle = new this.mainArticleModel({
             title: article.title,
             authors: article.authors,
             source: article.source,
@@ -44,24 +57,17 @@ let AcceptedArticleService = class AcceptedArticleService {
             claim: article.claim,
             evidence: article.evidence,
         });
-        const AcceptedArticle = await acceptedArticle.save();
-        await this.articleModel.findByIdAndDelete(id).exec();
-        return AcceptedArticle;
-    }
-    async update(id, createArticleDto) {
-        return await this.acceptedArticleModel.findByIdAndUpdate(id, createArticleDto).exec();
-    }
-    async delete(id) {
-        const deletedArticle = await this.acceptedArticleModel.findByIdAndDelete(id).exec();
-        return deletedArticle;
+        const MainArticle = await mainArticle.save();
+        await this.acceptedArticleModel.findByIdAndDelete(id).exec();
+        return MainArticle;
     }
 };
-exports.AcceptedArticleService = AcceptedArticleService;
-exports.AcceptedArticleService = AcceptedArticleService = __decorate([
+exports.MainArticleService = MainArticleService;
+exports.MainArticleService = MainArticleService = __decorate([
     (0, common_1.Injectable)(),
-    __param(0, (0, mongoose_1.InjectModel)(acceptedArticle_schema_1.AcceptedArticle.name)),
-    __param(1, (0, mongoose_1.InjectModel)(article_schema_1.Article.name)),
+    __param(0, (0, mongoose_1.InjectModel)(mainArticles_schema_1.MainArticle.name)),
+    __param(1, (0, mongoose_1.InjectModel)(acceptedArticle_schema_1.AcceptedArticle.name)),
     __metadata("design:paramtypes", [mongoose_2.Model,
         mongoose_2.Model])
-], AcceptedArticleService);
-//# sourceMappingURL=acceptedArticle.service.js.map
+], MainArticleService);
+//# sourceMappingURL=mainArticles.service.js.map

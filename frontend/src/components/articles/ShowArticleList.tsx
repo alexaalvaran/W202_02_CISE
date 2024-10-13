@@ -7,7 +7,7 @@ function ShowArticleList() {
     const [articles, setArticles] = useState<[Article?]>([]);
 
     useEffect(() => {
-        fetch(process.env.NEXT_PUBLIC_BACKEND_URL + `/api/articles`)
+        fetch(process.env.NEXT_PUBLIC_BACKEND_URL + `/api/mainArticles`)
         .then((res) => {
             return res.json();
         })

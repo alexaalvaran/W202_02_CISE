@@ -12,26 +12,29 @@ var __param = (this && this.__param) || function (paramIndex, decorator) {
     return function (target, key) { decorator(target, key, paramIndex); }
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.AcceptedArticleController = void 0;
+exports.MainArticleController = void 0;
 const common_1 = require("@nestjs/common");
 const console_1 = require("console");
-const acceptedArticle_service_1 = require("./acceptedArticle.service");
 const create_article_dto_1 = require("./create-article.dto");
-let AcceptedArticleController = class AcceptedArticleController {
-    constructor(acceptArticleService) {
-        this.acceptArticleService = acceptArticleService;
+const mainArticles_service_1 = require("./mainArticles.service");
+let MainArticleController = class MainArticleController {
+    constructor(mainArticleService) {
+        this.mainArticleService = mainArticleService;
     }
     async findAll() {
         try {
-            return await this.acceptArticleService.findAll();
+            return this.mainArticleService.findAll();
         }
-        catch (error) {
-            throw new common_1.HttpException('Failed to retrieve rejected articles', common_1.HttpStatus.INTERNAL_SERVER_ERROR);
+        catch {
+            throw new common_1.HttpException({
+                status: common_1.HttpStatus.NOT_FOUND,
+                error: 'No articles found',
+            }, common_1.HttpStatus.NOT_FOUND, { cause: console_1.error });
         }
     }
     async findOne(id) {
         try {
-            return this.acceptArticleService.findOne(id);
+            return this.mainArticleService.findOne(id);
         }
         catch {
             throw new common_1.HttpException({
@@ -42,7 +45,7 @@ let AcceptedArticleController = class AcceptedArticleController {
     }
     async acceptedArticle(id) {
         try {
-            const acceptedArticle = await this.acceptArticleService.acceptArticle(id);
+            const acceptedArticle = await this.mainArticleService.mainArticle(id);
             return { message: 'Article accepted and moved to accepted articles', acceptedArticle };
         }
         catch (error) {
@@ -51,7 +54,7 @@ let AcceptedArticleController = class AcceptedArticleController {
     }
     async updateArticle(id, createArticleDto) {
         try {
-            await this.acceptArticleService.update(id, createArticleDto);
+            await this.mainArticleService.update(id, createArticleDto);
             return { message: 'Article updated' };
         }
         catch {
@@ -63,7 +66,7 @@ let AcceptedArticleController = class AcceptedArticleController {
     }
     async delete(id) {
         try {
-            return this.acceptArticleService.delete(id);
+            return this.mainArticleService.delete(id);
         }
         catch {
             throw new common_1.HttpException({
@@ -73,27 +76,27 @@ let AcceptedArticleController = class AcceptedArticleController {
         }
     }
 };
-exports.AcceptedArticleController = AcceptedArticleController;
+exports.MainArticleController = MainArticleController;
 __decorate([
-    (0, common_1.Get)(),
+    (0, common_1.Get)('/'),
     __metadata("design:type", Function),
     __metadata("design:paramtypes", []),
     __metadata("design:returntype", Promise)
-], AcceptedArticleController.prototype, "findAll", null);
+], MainArticleController.prototype, "findAll", null);
 __decorate([
     (0, common_1.Get)('/:id'),
     __param(0, (0, common_1.Param)('id')),
     __metadata("design:type", Function),
     __metadata("design:paramtypes", [String]),
     __metadata("design:returntype", Promise)
-], AcceptedArticleController.prototype, "findOne", null);
+], MainArticleController.prototype, "findOne", null);
 __decorate([
     (0, common_1.Post)('/:id'),
     __param(0, (0, common_1.Param)('id')),
     __metadata("design:type", Function),
     __metadata("design:paramtypes", [String]),
     __metadata("design:returntype", Promise)
-], AcceptedArticleController.prototype, "acceptedArticle", null);
+], MainArticleController.prototype, "acceptedArticle", null);
 __decorate([
     (0, common_1.Put)('/:id'),
     __param(0, (0, common_1.Param)("id")),
@@ -101,16 +104,16 @@ __decorate([
     __metadata("design:type", Function),
     __metadata("design:paramtypes", [String, create_article_dto_1.CreateArticleDto]),
     __metadata("design:returntype", Promise)
-], AcceptedArticleController.prototype, "updateArticle", null);
+], MainArticleController.prototype, "updateArticle", null);
 __decorate([
-    (0, common_1.Delete)(':/id'),
+    (0, common_1.Delete)('/:id'),
     __param(0, (0, common_1.Param)('id')),
     __metadata("design:type", Function),
     __metadata("design:paramtypes", [String]),
     __metadata("design:returntype", Promise)
-], AcceptedArticleController.prototype, "delete", null);
-exports.AcceptedArticleController = AcceptedArticleController = __decorate([
-    (0, common_1.Controller)('/api/acceptArticles'),
-    __metadata("design:paramtypes", [acceptedArticle_service_1.AcceptedArticleService])
-], AcceptedArticleController);
-//# sourceMappingURL=acceptedArticle.controller.js.map
+], MainArticleController.prototype, "delete", null);
+exports.MainArticleController = MainArticleController = __decorate([
+    (0, common_1.Controller)('/api/mainArticles'),
+    __metadata("design:paramtypes", [mainArticles_service_1.MainArticleService])
+], MainArticleController);
+//# sourceMappingURL=mainArticles.controller.js.map

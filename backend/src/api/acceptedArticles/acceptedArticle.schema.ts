@@ -15,7 +15,7 @@ export class AcceptedArticle {
     source: string;
 
     @Prop({ required: true })
-    pubyear: string;  // Keeping pubyear as a string, as requested
+    pubyear: string;
 
     @Prop()
     email: string;

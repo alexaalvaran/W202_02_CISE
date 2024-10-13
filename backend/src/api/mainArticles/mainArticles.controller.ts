@@ -1,18 +1,36 @@
-import { Body, Controller, Delete, Get, HttpException, HttpStatus, Param, Post, Put } from '@nestjs/common';
+import {
+    Body,
+    Controller,
+    Delete,
+    Get,
+    HttpException,
+    HttpStatus,
+    Param,
+    Post,
+    Put,
+} from '@nestjs/common';
 import { error } from 'console';
-import { AcceptedArticleService } from './acceptedArticle.service';
 import { CreateArticleDto } from './create-article.dto';
+import { MainArticleService } from './mainArticles.service';
 
-@Controller('/api/acceptArticles')
-export class AcceptedArticleController {
-    constructor(private readonly acceptArticleService: AcceptedArticleService) {}
+@Controller('/api/mainArticles')
+export class MainArticleController {
+    constructor(private readonly mainArticleService: MainArticleService) {}
 
-    @Get()
+    // Get all articles
+    @Get('/')
     async findAll() {
-        try {
-            return await this.acceptArticleService.findAll();
-        } catch (error) {
-            throw new HttpException('Failed to retrieve rejected articles', HttpStatus.INTERNAL_SERVER_ERROR);
+        try{
+            return this.mainArticleService.findAll();
+        }catch{
+            throw new HttpException(
+                {
+                    status: HttpStatus.NOT_FOUND,
+                    error: 'No articles found',
+                },
+                HttpStatus.NOT_FOUND,
+                { cause: error },
+            );
         }
     }
 
@@ -20,7 +38,7 @@ export class AcceptedArticleController {
     @Get('/:id')
     async findOne(@Param('id') id:string){
         try{
-            return this.acceptArticleService.findOne(id);
+            return this.mainArticleService.findOne(id);
         } catch{
             throw new HttpException(
                 {
@@ -33,11 +51,11 @@ export class AcceptedArticleController {
         }
     }
 
-    // Accept an article and move it to the acceptedArticles collection
+    // submit an article and move it to the mainArticles collection
     @Post('/:id')
     async acceptedArticle(@Param('id') id: string) {
         try {
-            const acceptedArticle = await this.acceptArticleService.acceptArticle(id);
+            const acceptedArticle = await this.mainArticleService.mainArticle(id);
             return { message: 'Article accepted and moved to accepted articles', acceptedArticle };
         } catch (error) {
             throw new HttpException(`Failed to accept article with ID ${id}`, HttpStatus.BAD_REQUEST);
@@ -51,7 +69,7 @@ export class AcceptedArticleController {
         @Body() createArticleDto:CreateArticleDto,
     ){
         try {
-            await this.acceptArticleService.update(id, createArticleDto);
+            await this.mainArticleService.update(id, createArticleDto);
             return {message: 'Article updated'};
         } catch {
             throw new HttpException(
@@ -65,11 +83,12 @@ export class AcceptedArticleController {
         }
     }
 
-    @Delete(':/id')
-    async delete(@Param('id') id:string){
+    // Delete an article
+    @Delete('/:id')
+    async delete(@Param('id') id: string){
         try{
-            return this.acceptArticleService.delete(id);
-        } catch{
+            return this.mainArticleService.delete(id);
+        }catch{
             throw new HttpException(
                 {
                     status: HttpStatus.BAD_REQUEST,
@@ -80,6 +99,4 @@ export class AcceptedArticleController {
             );
         }
     }
-
-    
 }

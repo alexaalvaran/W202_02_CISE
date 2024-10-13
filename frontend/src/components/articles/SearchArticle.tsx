@@ -12,7 +12,7 @@ export default function SearchArticle() {
 
     const handleSearch = async () => {
         try {
-            const response = await fetch(process.env.NEXT_PUBLIC_BACKEND_URL + '/api/articles/');
+            const response = await fetch(process.env.NEXT_PUBLIC_BACKEND_URL + '/api/mainArticles/');
 
             if (!response.ok) throw new Error('Failed to fetch articles');
 
