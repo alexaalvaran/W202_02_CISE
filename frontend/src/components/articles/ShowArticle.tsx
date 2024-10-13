@@ -2,7 +2,7 @@
 
 import { useState, useEffect } from 'react';
 import { useParams, useRouter } from 'next/navigation'; 
-import { Article } from './Articles'; 
+import { Article } from './Article'; 
 
 export default function ShowArticle() {
     const { id } = useParams(); 
@@ -39,9 +39,8 @@ export default function ShowArticle() {
                 <p><strong>Publication Year:</strong> {article.pubyear}</p>
                 <p><strong>Email:</strong> {article.email}</p>
                 <p><strong>DOI:</strong> {article.doi}</p>
-                <p><strong>Practice:</strong> {article.practice}</p>
+                <p><strong>Practice:</strong> {article.evidence}</p>
                 <p><strong>Claim:</strong> {article.claim}</p>
-                <p><strong>Evidence:</strong> {article.evidence}</p>
                 <div className="d-flex justify-content-end">
                 <button
                     className="btn btn-outline-secondary mt-3"

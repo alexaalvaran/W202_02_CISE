@@ -160,7 +160,7 @@ function ShowArticleDetails(){
                     </tr>
                     <tr>
                         <th scope='row'>8</th>
-                        <td>Evidence</td>
+                        <td>Practice</td>
                         <td>{article?.evidence || 'No evidence available'}</td>
                     </tr>
                     <tr>
@@ -183,6 +183,15 @@ function ShowArticleDetails(){
                             {ArticleItem}
                             <div className="row mt-3">
                                 
+                                <div className="col text-center">
+                                    <button
+                                        className='btn btn-warning'
+                                        style={{ color: 'black' }}
+                                        onClick={() => router.push('/analyse')}
+                                    >
+                                        Return to queue
+                                    </button>
+                                </div>
                         
                                
                                 <div className="col text-center">
