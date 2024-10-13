@@ -200,7 +200,7 @@ function ShowArticleDetails(){
                                         style={{ color: 'black' }}
                                         onClick={() => navigate.push(`/edit-claims/${id}`)}
                                     >
-                                        Add Claim and Evidence
+                                        Add Practice and Claim
                                     </button>                       
                                 </div>
                          
