@@ -16,4 +16,11 @@ export declare class AcceptedArticleService {
     } & Required<{
         _id: import("mongoose").Types.ObjectId;
     }>>;
+    delete(id: string): Promise<import("mongoose").Document<unknown, {}, import("mongoose").Document<unknown, {}, AcceptedArticle> & AcceptedArticle & {
+        _id: import("mongoose").Types.ObjectId;
+    }> & import("mongoose").Document<unknown, {}, AcceptedArticle> & AcceptedArticle & {
+        _id: import("mongoose").Types.ObjectId;
+    } & Required<{
+        _id: import("mongoose").Types.ObjectId;
+    }>>;
 }

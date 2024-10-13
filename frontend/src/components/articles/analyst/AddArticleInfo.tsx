@@ -70,6 +70,7 @@ function AddArticleInfo() {
     //     });
     // };
 
+
     const onSubmit = (event: FormEvent<HTMLFormElement>) => {
         event.preventDefault();
     
@@ -77,7 +78,7 @@ function AddArticleInfo() {
     
         // Perform the PUT request to update the article
         fetch(process.env.NEXT_PUBLIC_BACKEND_URL + `/api/acceptArticles/${id}`, {
-            method: 'PUT',
+            method: 'POST',
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify(article), // Send the article data to update
         })
@@ -87,24 +88,6 @@ function AddArticleInfo() {
                 throw new Error("Article update failed");
             }
     
-            //Set up email type and the recipient
-            const sendEmail = {
-                email: article.email,
-                type: emailType,
-            };
-    
-            // Send the email
-            return fetch(process.env.NEXT_PUBLIC_BACKEND_URL + `/api/notifications`, {
-                method: 'POST',
-                headers: {'Content-Type': 'application/json'},
-                body: JSON.stringify(sendEmail),
-            });
-        })
-        .then((res) => {
-            if (!res.ok) {
-                console.log("Failed to send email");
-                throw new Error("Email sending failed");
-            }
     
             // Redirect to the article details page
             router.push(`/show-articles/${id}`);

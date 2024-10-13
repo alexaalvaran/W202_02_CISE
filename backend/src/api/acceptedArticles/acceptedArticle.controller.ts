@@ -1,4 +1,4 @@
-import { Body, Controller, Get, HttpException, HttpStatus, Param, Post, Put } from '@nestjs/common';
+import { Body, Controller, Delete, Get, HttpException, HttpStatus, Param, Post, Put } from '@nestjs/common';
 import { error } from 'console';
 import { AcceptedArticleService } from './acceptedArticle.service';
 import { CreateArticleDto } from './create-article.dto';
@@ -64,4 +64,22 @@ export class AcceptedArticleController {
             );
         }
     }
+
+    @Delete(':/id')
+    async delete(@Param('id') id:string){
+        try{
+            return this.acceptArticleService.delete(id);
+        } catch{
+            throw new HttpException(
+                {
+                    status: HttpStatus.BAD_REQUEST,
+                    error: 'Failed to delete article',
+                },
+                HttpStatus.BAD_REQUEST,
+                {cause:error},
+            );
+        }
+    }
+
+    
 }

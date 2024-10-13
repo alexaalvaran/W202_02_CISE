@@ -13,7 +13,7 @@ export default function ShowArticle() {
     useEffect(() => {
         const fetchArticle = async () => {
             try {
-                const response = await fetch(process.env.NEXT_PUBLIC_BACKEND_URL + `/api/articles/${id}`);
+                const response = await fetch(process.env.NEXT_PUBLIC_BACKEND_URL + `/api/mainArticles/${id}`);
                 const data = await response.json();
                 setArticle(data);
             } catch (error) {

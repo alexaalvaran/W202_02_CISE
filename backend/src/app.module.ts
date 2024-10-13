@@ -8,6 +8,7 @@ import { UserModule } from './api/users/user.module';
 import { AppController } from './app.controller';
 import { AppService } from './app.service';
 import { NotificationModule } from './api/notifications/notification.module';
+import { MainArticleModule } from './api/mainArticles/mainArticles.module';
 
 @Module({
   imports: [
@@ -17,7 +18,8 @@ import { NotificationModule } from './api/notifications/notification.module';
   UserModule,
   RejectArticleModule,
   AcceptArticleModule,
-  NotificationModule
+  NotificationModule,
+  MainArticleModule,
 ],
   controllers: [AppController],
   providers: [AppService],

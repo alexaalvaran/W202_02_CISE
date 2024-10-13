@@ -51,6 +51,10 @@ let AcceptedArticleService = class AcceptedArticleService {
     async update(id, createArticleDto) {
         return await this.acceptedArticleModel.findByIdAndUpdate(id, createArticleDto).exec();
     }
+    async delete(id) {
+        const deletedArticle = await this.acceptedArticleModel.findByIdAndDelete(id).exec();
+        return deletedArticle;
+    }
 };
 exports.AcceptedArticleService = AcceptedArticleService;
 exports.AcceptedArticleService = AcceptedArticleService = __decorate([

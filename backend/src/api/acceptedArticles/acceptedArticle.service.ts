@@ -52,4 +52,9 @@ export class AcceptedArticleService {
     async update(id: string, createArticleDto:CreateArticleDto){
         return await this.acceptedArticleModel.findByIdAndUpdate(id, createArticleDto).exec();
     }
+
+    async delete(id: string) {
+        const deletedArticle = await this.acceptedArticleModel.findByIdAndDelete(id).exec();
+        return deletedArticle;
+    }
 }

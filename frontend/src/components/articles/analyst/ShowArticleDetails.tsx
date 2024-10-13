@@ -37,7 +37,41 @@ function ShowArticleDetails(){
         });
     };
 
-    const submitClick = async (id: string) => {
+    const submitClick = async (id: string, event:React.MouseEvent<HTMLButtonElement>) => {
+
+        event.preventDefault()
+
+        const confirmAccept = window.confirm('Are you sure you want to accept this article? \nYou will be redirected to the moderation page after clicking "OK".');
+        if (!confirmAccept) return;
+
+        fetch(process.env.NEXT_PUBLIC_BACKEND_URL + `/api/mainArticles/${id}`, {
+            method: 'POST'
+        }).then((res) => {
+            console.log(res);
+            if(res.ok)
+            {
+
+                const emailType='approved';
+
+                const sendEmail = {
+                    email: article.email,
+                    type: emailType,
+                }
+
+                router.push('/analyse');
+
+                return fetch(process.env.NEXT_PUBLIC_BACKEND_URL + `/api/notifications`, {
+                    method: 'POST',
+                    headers: {'Content-Type': 'application/json'},
+                     body: JSON.stringify(sendEmail), 
+                    });
+            }
+        }). catch((err) => {
+            console.log('error from show article details');
+        });
+    }  
+
+        /*
         try {
             const articleRes = await fetch(`${process.env.NEXT_PUBLIC_BACKEND_URL}/api/acceptArticles/${id}`, {
                 method: 'GET',
@@ -63,13 +97,32 @@ function ShowArticleDetails(){
 
             const acceptData = await accpetRes.json();
             console.log('Article accept:', acceptData);
+            router.push('/analyse');
 
-            router.push('/moderate');
+            const emailType = "accepted";
+        const sendEmail = {
+            email: articleData.email,  // Use the fetched article's email
+            type: emailType,
+        };
+
+        // Send the email notification
+        const emailRes = await fetch(`${process.env.NEXT_PUBLIC_BACKEND_URL}/api/notifications`, {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify(sendEmail),
+        });
+
+        if (!emailRes.ok) {
+            throw new Error('Failed to send email');
+        }
+
+        console.log('Email sent successfully');
+
         } catch (error) {
             console.error('Error acceptting article:', error);
         }
     };
-
+*/
 
     const ArticleItem = (
         <div>
@@ -151,7 +204,7 @@ function ShowArticleDetails(){
                                     <button
                                         className='btn btn-warning'
                                         style={{ color: 'black' }}
-                                        onClick={() => submitClick(id)}
+                                        onClick={(event) => submitClick(id, event)}
                                     >
                                         Submit to Main Articles
                                     </button>
