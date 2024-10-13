@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react';
 import { useRouter } from 'next/navigation';
-import { Article } from './Articles';
+import { Article } from './Article';
 
 function CheckDuplicateList() {
     const [articles, setArticles] = useState<Article[]>([]);
@@ -67,7 +67,7 @@ function CheckDuplicateList() {
         try {
             const filtered = duplicateArticles.filter(article => {
                 return (
-                    (searchPractice === '' || article.practice?.toLowerCase().includes(searchPractice.toLowerCase())) &&
+                    (searchPractice === '' || article.evidence?.toLowerCase().includes(searchPractice.toLowerCase())) &&
                     (searchClaim === '' || article.claim?.toLowerCase().includes(searchClaim.toLowerCase()))
                 );
             });
@@ -142,7 +142,7 @@ function CheckDuplicateList() {
                                                 <td>{article.title}</td>
                                                 <td>{article.authors}</td>
                                                 <td>{article.pubyear}</td>
-                                                <td>{article.practice}</td>
+                                                <td>{article.evidence}</td>
                                                 <td>{article.claim}</td>
                                                 <td>
                                                     <button className="btn btn-danger" onClick={() => RejectClick(article._id || '')}>

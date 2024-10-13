@@ -78,7 +78,7 @@ function AddArticleInfo() {
     
         // Perform the PUT request to update the article
         fetch(process.env.NEXT_PUBLIC_BACKEND_URL + `/api/acceptArticles/${id}`, {
-            method: 'POST',
+            method: 'PUT',
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify(article), // Send the article data to update
         })
@@ -141,40 +141,33 @@ function AddArticleInfo() {
                                         {/* Dropdown for Evidence */}
                                         <tr>
                                             <td>
-                                                <label htmlFor="evidence">Choose an Evidence</label>
+                                                <label htmlFor="evidence">Choose a Practice</label>
                                             </td>
                                             <td>
-                                                <select
+                                            <input
+                                                    placeholder='e.g: TDD - Test Driven Development'
                                                     id="evidence"
                                                     name="evidence"
-                                                    value={article.evidence || ''}
-                                                    onChange={selectOnChange}
-                                                >
-                                                    <option value="">select</option>
-                                                    <option value="scrum">Scrum</option>
-                                                    <option value="agile">Agile</option>
-                                                    <option value="TDD">TDD</option>
-                                                    <option value="other">Other</option>
-                                                </select>
+                                                    value={article.evidence|| ''}
+                                                    onChange={inputOnChange}
+                                                />
                                             </td>
                                         </tr>
 
-                                        {/* Dropdown for Claim */}
+                                
                                         <tr>
                                             <td>
                                                 <label htmlFor="claim">Choose a Claim</label>
                                             </td>
                                             <td>
-                                                <select
+                                                <input
+                                                    placeholder='e.g: improves productivity'
                                                     id="claim"
                                                     name="claim"
                                                     value={article.claim || ''}
-                                                    onChange={selectOnChange}
-                                                >
-                                                    <option value="">select</option>
-                                                    <option value="Agree">Agree</option>
-                                                    <option value="Disagree">Disagree</option>
-                                                </select>
+                                                    onChange={inputOnChange}
+                                                />
+                                                
                                             </td>
                                         </tr>
 

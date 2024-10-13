@@ -1,7 +1,7 @@
 'use client';
 import { useState } from 'react';
 import { useRouter } from 'next/navigation';
-import { Article } from './Articles';
+import { Article } from './Article';
 
 export default function SearchArticle() {
     const [practice, setPractice] = useState(''); 
@@ -19,7 +19,7 @@ export default function SearchArticle() {
             const allArticles = await response.json();
 
             setResults(allArticles.filter((article: Article) =>
-                (!practice || article.practice?.toLowerCase().includes(practice.toLowerCase())) &&
+                (!practice || article.evidence?.toLowerCase().includes(practice.toLowerCase())) &&
                 (!claim || article.claim?.toLowerCase().includes(claim.toLowerCase())) 
             ));
         } catch (error) {
@@ -87,7 +87,7 @@ export default function SearchArticle() {
                                         <td>{article.title}</td>
                                         <td>{article.authors}</td>
                                         <td>{article.pubyear}</td>
-                                        <td>{article.practice}</td>
+                                        <td>{article.evidence}</td>
                                         <td>{article.claim}</td>
                                     </tr>
                                 ))}
