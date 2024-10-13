@@ -182,15 +182,9 @@ function ShowArticleDetails(){
                             <h1 className='display-4 text-center'>Article Details</h1>
                             {ArticleItem}
                             <div className="row mt-3">
-                                <div className="col text-center">
-                                    <button
-                                        className='btn btn-danger'
-                                        style={{ color: 'black' }}
-                                        onClick={(event) => onDeleteClick(id)}
-                                    >
-                                        Delete Article
-                                    </button>
-                                </div>
+                                
+                        
+                               
                                 <div className="col text-center">
                                     <button
                                         className='btn btn-primary'
@@ -198,8 +192,9 @@ function ShowArticleDetails(){
                                         onClick={() => navigate.push(`/edit-claims/${id}`)}
                                     >
                                         Add Claim and Evidence
-                                    </button>
+                                    </button>                       
                                 </div>
+                         
                                 <div className="col text-center">
                                     <button
                                         className='btn btn-warning'

@@ -78,7 +78,7 @@ function AddArticleInfo() {
     
         // Perform the PUT request to update the article
         fetch(process.env.NEXT_PUBLIC_BACKEND_URL + `/api/acceptArticles/${id}`, {
-            method: 'POST',
+            method: 'PUT',
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify(article), // Send the article data to update
         })
@@ -165,16 +165,14 @@ function AddArticleInfo() {
                                                 <label htmlFor="claim">Choose a Claim</label>
                                             </td>
                                             <td>
-                                                <select
+                                                <input
+                                                    placeholder='e.g: improves productivity'
                                                     id="claim"
                                                     name="claim"
                                                     value={article.claim || ''}
-                                                    onChange={selectOnChange}
-                                                >
-                                                    <option value="">select</option>
-                                                    <option value="Agree">Agree</option>
-                                                    <option value="Disagree">Disagree</option>
-                                                </select>
+                                                    onChange={inputOnChange}
+                                                />
+                                                
                                             </td>
                                         </tr>
 
